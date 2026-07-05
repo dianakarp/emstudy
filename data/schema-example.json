@@ -1,0 +1,40 @@
+{
+  "_comment": "Import template for your own BCEMP content. Import this file via Settings > Import Content in the app. You may include 'questions', 'flashcards', or both. 'domain' must be one of the domain ids below. Fields marked optional can be omitted. IDs are auto-generated if omitted.",
+  "_valid_domains": [
+    "cv (Cardiovascular)",
+    "resus (Resuscitation & Shock)",
+    "tox (Toxicology & Antidotes)",
+    "neuro (Neurologic)",
+    "id (Infectious Disease)",
+    "trauma (Trauma & Hemostasis)",
+    "resp (Respiratory & Anaphylaxis)",
+    "pain (Analgesia & Sedation)",
+    "endo (Endocrine & Metabolic)",
+    "env (Environmental)",
+    "special (Special Populations)",
+    "safety (Medication & Patient Safety)",
+    "pmr (Practice Management & Research)"
+  ],
+  "questions": [
+    {
+      "id": "custom-q-1",
+      "domain": "cv",
+      "difficulty": 2,
+      "stem": "Your clinical vignette / question stem goes here.",
+      "options": ["Option A", "Option B", "Option C", "Option D"],
+      "correctIndex": 1,
+      "rationale": "Explain why the correct answer is right (and ideally why others are wrong).",
+      "tags": ["optional", "keywords"],
+      "source": "Optional citation"
+    }
+  ],
+  "flashcards": [
+    {
+      "id": "custom-fc-1",
+      "domain": "tox",
+      "front": "Prompt / question side of the card.",
+      "back": "Answer side of the card.",
+      "tags": ["optional"]
+    }
+  ]
+}
