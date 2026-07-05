@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>BCEMP Trainer — Emergency Medicine Pharmacist Exam Prep</title>
+
+  <!-- PWA / installable + offline -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0e1220" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="BCEMP" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">Rx</div>
+        <div>
+          <h1>BCEMP Trainer</h1>
+          <small>EMERGENCY MEDICINE PHARMACIST PREP</small>
+        </div>
+      </div>
+      <nav class="nav" id="nav">
+        <button data-view="dashboard" class="active">Home</button>
+        <button data-view="progress">Progress</button>
+        <button data-view="settings">Settings</button>
+      </nav>
+    </div>
+
+    <main id="app"><!-- rendered by ui.js --></main>
+
+    <div class="disclaimer">
+      ⚕️ <b>Study aid only.</b> Content is authored for exam preparation and may contain simplifications or errors.
+      Always verify dosing and management against current guidelines, primary literature, and your institution's
+      protocols before applying to patient care. Not medical advice.
+    </div>
+  </div>
+
+  <!-- data (assign to window.*) -->
+  <script src="data/domains.js"></script>
+  <script src="data/questions.js"></script>
+  <script src="data/flashcards.js"></script>
+  <!-- logic -->
+  <script src="js/state.js"></script>
+  <script src="js/srs.js"></script>
+  <script src="js/content.js"></script>
+  <script src="js/analytics.js"></script>
+  <script src="js/gamification.js"></script>
+  <script src="js/session.js"></script>
+  <script src="js/import.js"></script>
+  <!-- ui + bootstrap -->
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- register offline service worker (no-op on file://; active when hosted over http/https) -->
+  <script>
+    if ("serviceWorker" in navigator && location.protocol.indexOf("http") === 0) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("sw.js").catch(function (e) { console.warn("SW registration failed:", e); });
+      });
+    }
+  </script>
+</body>
+</html>

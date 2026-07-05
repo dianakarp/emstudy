@@ -1,0 +1,1909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="theme-color" content="#0e1220" />
+<title>BCEMP Trainer</title>
+<style>
+:root {
+  --bg: #0e1220;
+  --bg-elev: #171d2f;
+  --bg-elev2: #1f2740;
+  --border: #2a3350;
+  --text: #e8ecf6;
+  --text-dim: #9aa6c4;
+  --text-faint: #6b7699;
+  --accent: #5b8cff;
+  --accent2: #8b5cf6;
+  --good: #34d399;
+  --bad: #f87171;
+  --warn: #fbbf24;
+  --radius: 14px;
+  --shadow: 0 8px 30px rgba(0,0,0,.35);
+  --grad: linear-gradient(135deg, var(--accent), var(--accent2));
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: radial-gradient(1200px 600px at 80% -10%, #1b2540, transparent),
+              radial-gradient(900px 500px at -10% 10%, #17203a, transparent), var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+.wrap { max-width: 920px; margin: 0 auto; padding: 20px 18px 80px; }
+
+/* ---------- top bar ---------- */
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand .logo { width: 38px; height: 38px; border-radius: 10px; background: var(--grad); display: grid; place-items: center; font-weight: 800; color: #fff; box-shadow: var(--shadow); }
+.brand h1 { font-size: 18px; margin: 0; letter-spacing: .3px; }
+.brand small { display: block; color: var(--text-faint); font-size: 11px; font-weight: 600; letter-spacing: .5px; }
+.nav { display: flex; gap: 6px; }
+.nav button { background: var(--bg-elev); color: var(--text-dim); border: 1px solid var(--border); padding: 8px 14px; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600; transition: .15s; }
+.nav button:hover { color: var(--text); border-color: var(--accent); }
+.nav button.active { background: var(--grad); color: #fff; border-color: transparent; }
+
+/* ---------- cards ---------- */
+.card { background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
+.grid { display: grid; gap: 14px; }
+.grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 700px) { .grid.cols-3, .grid.cols-2 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .grid.cols-3, .grid.cols-2 { grid-template-columns: 1fr; } }
+
+.section-title { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-faint); margin: 22px 4px 10px; font-weight: 700; }
+
+/* ---------- stat tiles ---------- */
+.tile { text-align: center; }
+.tile .big { font-size: 30px; font-weight: 800; line-height: 1.1; }
+.tile .lbl { color: var(--text-dim); font-size: 12px; margin-top: 4px; font-weight: 600; }
+.tile .sub { color: var(--text-faint); font-size: 11px; margin-top: 2px; }
+.flame { color: var(--warn); }
+.countdown .big { background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+
+/* ---------- level ring ---------- */
+.hero { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+.ring-wrap { position: relative; width: 120px; height: 120px; flex: 0 0 auto; }
+.ring-wrap .center { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; }
+.ring-wrap .center .lv { font-size: 26px; font-weight: 800; }
+.ring-wrap .center .lvl { font-size: 10px; letter-spacing: 1px; color: var(--text-faint); text-transform: uppercase; }
+.hero .meta { flex: 1; min-width: 220px; }
+.hero .meta h2 { margin: 0 0 4px; font-size: 20px; }
+.hero .xpbar { height: 8px; background: var(--bg-elev2); border-radius: 6px; overflow: hidden; margin-top: 10px; }
+.hero .xpbar > span { display: block; height: 100%; background: var(--grad); border-radius: 6px; transition: width .5s; }
+
+/* ---------- buttons ---------- */
+.btn { border: none; border-radius: 12px; padding: 13px 20px; font-size: 15px; font-weight: 700; cursor: pointer; transition: .15s; }
+.btn-primary { background: var(--grad); color: #fff; box-shadow: var(--shadow); }
+.btn-primary:hover { transform: translateY(-1px); filter: brightness(1.07); }
+.btn-ghost { background: var(--bg-elev2); color: var(--text); border: 1px solid var(--border); }
+.btn-ghost:hover { border-color: var(--accent); }
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+
+/* ---------- progress bars ---------- */
+.dom-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; }
+.dom-row .name { flex: 0 0 42%; font-size: 13px; font-weight: 600; }
+.dom-row .track { flex: 1; height: 9px; background: var(--bg-elev2); border-radius: 6px; overflow: hidden; }
+.dom-row .track > span { display: block; height: 100%; border-radius: 6px; }
+.dom-row .pct { flex: 0 0 62px; text-align: right; font-size: 12px; color: var(--text-dim); font-variant-numeric: tabular-nums; }
+.bar-good { background: var(--good); } .bar-mid { background: var(--warn); } .bar-bad { background: var(--bad); } .bar-none { background: #3a4568; }
+
+/* ---------- heatmap ---------- */
+.heat { display: grid; grid-template-columns: repeat(15, 1fr); gap: 5px; }
+.heat .cell { aspect-ratio: 1; border-radius: 4px; background: var(--bg-elev2); }
+.heat .l1 { background: rgba(91,140,255,.35); } .heat .l2 { background: rgba(91,140,255,.6); }
+.heat .l3 { background: rgba(139,92,246,.75); } .heat .l4 { background: var(--accent2); }
+
+/* ---------- badges ---------- */
+.badges { display: flex; flex-wrap: wrap; gap: 10px; }
+.badge { display: flex; align-items: center; gap: 8px; background: var(--bg-elev2); border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px; font-size: 12px; }
+.badge.locked { opacity: .35; filter: grayscale(1); }
+.badge .ic { font-size: 18px; }
+.badge .bn { font-weight: 700; } .badge .bd { color: var(--text-faint); font-size: 11px; }
+
+/* ---------- session ---------- */
+.session-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.pill { background: var(--bg-elev2); border: 1px solid var(--border); border-radius: 999px; padding: 5px 12px; font-size: 12px; font-weight: 700; color: var(--text-dim); }
+.prog { height: 8px; background: var(--bg-elev2); border-radius: 6px; overflow: hidden; margin-bottom: 18px; }
+.prog > span { display: block; height: 100%; background: var(--grad); transition: width .3s; }
+
+.q-domain { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); font-weight: 700; margin-bottom: 8px; }
+.q-stem { font-size: 18px; font-weight: 600; margin-bottom: 18px; }
+.opt { display: block; width: 100%; text-align: left; background: var(--bg-elev2); color: var(--text); border: 1.5px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer; font-size: 15px; transition: .12s; }
+.opt:hover:not(:disabled) { border-color: var(--accent); }
+.opt:disabled { cursor: default; }
+.opt.correct { border-color: var(--good); background: rgba(52,211,153,.12); }
+.opt.wrong { border-color: var(--bad); background: rgba(248,113,113,.12); }
+.opt .mark { float: right; font-weight: 800; }
+
+.rationale { background: var(--bg-elev2); border-left: 3px solid var(--accent); border-radius: 8px; padding: 14px 16px; margin: 6px 0 16px; font-size: 14px; color: var(--text-dim); }
+.rationale b { color: var(--text); }
+
+/* flashcard */
+.flash { text-align: center; padding: 10px 6px; }
+.flash .front { font-size: 20px; font-weight: 700; margin: 24px 0; }
+.flash .back { font-size: 16px; color: var(--text-dim); background: var(--bg-elev2); border-radius: 12px; padding: 16px; margin: 12px 0 20px; text-align: left; }
+.rate-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.rate { border: 1.5px solid var(--border); background: var(--bg-elev2); color: var(--text); border-radius: 10px; padding: 12px 6px; cursor: pointer; font-weight: 700; font-size: 13px; }
+.rate small { display: block; font-weight: 500; color: var(--text-faint); font-size: 10px; }
+.rate.again:hover { border-color: var(--bad); } .rate.hard:hover { border-color: var(--warn); }
+.rate.good:hover { border-color: var(--accent); } .rate.easy:hover { border-color: var(--good); }
+
+/* ---------- summary ---------- */
+.summary-hero { text-align: center; padding: 10px 0 6px; }
+.summary-hero .score { font-size: 48px; font-weight: 800; background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.reward { display: flex; align-items: center; gap: 10px; background: var(--bg-elev2); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; margin: 10px 0; }
+.reward .ic { font-size: 22px; }
+.pop-badge { animation: pop .4s ease; }
+@keyframes pop { 0% { transform: scale(.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+/* ---------- settings / forms ---------- */
+.field { margin-bottom: 16px; }
+.field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-dim); }
+.field input, .field select { width: 100%; background: var(--bg-elev2); border: 1px solid var(--border); border-radius: 10px; padding: 11px 12px; color: var(--text); font-size: 14px; }
+.hint { font-size: 12px; color: var(--text-faint); margin-top: 6px; }
+.notice { border-radius: 10px; padding: 12px 14px; font-size: 13px; margin: 10px 0; }
+.notice.ok { background: rgba(52,211,153,.12); border: 1px solid var(--good); color: #b7f3da; }
+.notice.err { background: rgba(248,113,113,.12); border: 1px solid var(--bad); color: #ffd0d0; white-space: pre-wrap; }
+
+.disclaimer { font-size: 11px; color: var(--text-faint); text-align: center; margin-top: 34px; line-height: 1.6; border-top: 1px solid var(--border); padding-top: 16px; }
+
+.empty { text-align: center; color: var(--text-dim); padding: 30px 10px; }
+.center { text-align: center; }
+.mt { margin-top: 14px; } .mb { margin-bottom: 14px; }
+.toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); background: var(--bg-elev2); border: 1px solid var(--accent); color: var(--text); padding: 12px 20px; border-radius: 12px; box-shadow: var(--shadow); font-weight: 600; font-size: 14px; z-index: 50; animation: pop .3s ease; }
+
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">Rx</div>
+        <div>
+          <h1>BCEMP Trainer</h1>
+          <small>EMERGENCY MEDICINE PHARMACIST PREP</small>
+        </div>
+      </div>
+      <nav class="nav" id="nav">
+        <button data-view="dashboard" class="active">Home</button>
+        <button data-view="progress">Progress</button>
+        <button data-view="settings">Settings</button>
+      </nav>
+    </div>
+
+    <main id="app"><!-- rendered by ui.js --></main>
+
+    <div class="disclaimer">
+      &#9877;&#65039; <b>Study aid only.</b> Content is authored for exam preparation and may contain simplifications or errors.
+      Always verify dosing and management against current guidelines, primary literature, and your institution's
+      protocols before applying to patient care. Not medical advice.
+    </div>
+  </div>
+<script>
+/* BCEMP content domains, mirroring the BPS Emergency Medicine Pharmacist
+ * content outline. `weight` is an approximate share of exam emphasis and is
+ * used to (a) proportionally build daily sessions and (b) compute a weighted
+ * exam-readiness estimate. Weights are relative and need not sum to 100. */
+window.BCEMP_DOMAINS = [
+  { id: "cv",        name: "Cardiovascular Emergencies",        weight: 14, blurb: "ACS, arrhythmias, ACLS, hypertensive emergency, acute HF" },
+  { id: "resus",     name: "Resuscitation & Shock",             weight: 13, blurb: "Sepsis, vasopressors, RSI, post-arrest care" },
+  { id: "tox",       name: "Toxicology & Antidotes",            weight: 12, blurb: "Tox syndromes, antidotes, decontamination" },
+  { id: "neuro",     name: "Neurologic Emergencies",            weight: 9,  blurb: "Acute stroke (alteplase/tenecteplase), status epilepticus, ICH" },
+  { id: "id",        name: "Infectious Disease",                weight: 9,  blurb: "Empiric antibiotics, sepsis, meningitis" },
+  { id: "trauma",    name: "Trauma & Hemostasis",               weight: 8,  blurb: "TXA, anticoagulant reversal, massive transfusion" },
+  { id: "resp",      name: "Respiratory & Anaphylaxis",         weight: 7,  blurb: "Asthma/COPD, anaphylaxis" },
+  { id: "pain",      name: "Analgesia & Sedation",              weight: 6,  blurb: "Procedural sedation, opioids, non-opioid analgesia" },
+  { id: "endo",      name: "Endocrine & Metabolic",             weight: 6,  blurb: "DKA/HHS, hyperkalemia, electrolyte emergencies" },
+  { id: "env",       name: "Environmental Emergencies",         weight: 3,  blurb: "Hyperthermia, hypothermia, envenomation" },
+  { id: "special",   name: "Special Populations",               weight: 5,  blurb: "Peds, pregnancy, renal/hepatic, geriatric dosing" },
+  { id: "safety",    name: "Medication & Patient Safety",       weight: 5,  blurb: "Systems, high-alert meds, error prevention" },
+  { id: "pmr",       name: "Practice Management & Research",     weight: 3,  blurb: "Evidence appraisal, guidelines, EM pharmacist role" }
+];
+
+window.BCEMP_DOMAIN_MAP = window.BCEMP_DOMAINS.reduce(function (m, d) { m[d.id] = d; return m; }, {});
+
+</script>
+<script>
+/* Seed MCQ bank for the BCEMP study tool.
+ * Schema: { id, domain, difficulty(1-3), stem, options[], correctIndex, rationale, tags[], source? }
+ * This is a study aid authored from common EM pharmacotherapy guidelines/references.
+ * ALWAYS verify against primary literature, current guidelines, and institutional
+ * protocols before applying to patient care. Expand this bank via Import.
+ */
+window.BCEMP_QUESTIONS = [
+  /* ===================== CARDIOVASCULAR ===================== */
+  {
+    id: "cv-001", domain: "cv", difficulty: 2,
+    stem: "A 62-year-old man presents with STEMI. He is going to primary PCI. He has no contraindications to anticoagulation. Which loading dose of aspirin is most appropriate?",
+    options: ["81 mg", "162–325 mg chewed", "600 mg", "No aspirin until after PCI"],
+    correctIndex: 1, tags: ["ACS","antiplatelet","aspirin"],
+    rationale: "Non–enteric-coated aspirin 162–325 mg chewed provides rapid platelet inhibition and is recommended as soon as possible for suspected ACS. Chewing speeds absorption. 81 mg is the typical maintenance dose."
+  },
+  {
+    id: "cv-002", domain: "cv", difficulty: 2,
+    stem: "For a patient with new-onset stable, narrow-complex SVT that failed vagal maneuvers, which first-line pharmacologic agent is preferred?",
+    options: ["Amiodarone 150 mg IV", "Adenosine 6 mg rapid IV push", "Metoprolol 5 mg IV", "Diltiazem 0.25 mg/kg IV"],
+    correctIndex: 1, tags: ["SVT","adenosine","arrhythmia"],
+    rationale: "Adenosine 6 mg rapid IV push (followed by 12 mg if needed) is first-line for stable regular narrow-complex SVT after vagal maneuvers fail. Give via a proximal vein with a rapid saline flush because of its ~10-second half-life."
+  },
+  {
+    id: "cv-003", domain: "cv", difficulty: 2,
+    stem: "A patient in cardiac arrest is in refractory VF after 3 shocks, epinephrine, and amiodarone 300 mg. What is the recommended second dose of amiodarone?",
+    options: ["150 mg IV/IO", "300 mg IV/IO", "1 mg/kg IV/IO", "No further amiodarone"],
+    correctIndex: 0, tags: ["ACLS","amiodarone","VF"],
+    rationale: "In refractory VF/pVT, amiodarone is dosed 300 mg IV/IO first, then a second dose of 150 mg IV/IO. Lidocaine 1–1.5 mg/kg (then 0.5–0.75 mg/kg) is an acceptable alternative antiarrhythmic."
+  },
+  {
+    id: "cv-004", domain: "cv", difficulty: 3,
+    stem: "A patient with aortic dissection has a HR of 110 and BP 190/110. Per guidelines, which agent should be initiated FIRST to reach the HR goal before adding a vasodilator?",
+    options: ["Nitroprusside", "Hydralazine", "Esmolol", "Nicardipine"],
+    correctIndex: 2, tags: ["aortic dissection","beta-blocker","hypertensive emergency"],
+    rationale: "Rate control with an IV beta-blocker (e.g., esmolol or labetalol) should precede vasodilators in aortic dissection to blunt reflex tachycardia and reduce aortic wall shear stress (dP/dt). Adding a pure vasodilator first can cause reflex tachycardia and worsen shear. Target HR <60."
+  },
+  {
+    id: "cv-005", domain: "cv", difficulty: 2,
+    stem: "Which is the preferred IV antihypertensive for a hypertensive emergency with acute sympathetic crisis suspected from cocaine toxicity?",
+    options: ["Metoprolol", "Labetalol as monotherapy", "A benzodiazepine ± nicardipine/phentolamine", "Esmolol infusion"],
+    correctIndex: 2, tags: ["cocaine","hypertensive emergency","unopposed alpha"],
+    rationale: "In cocaine-associated hypertension/chest pain, benzodiazepines are first-line; if further BP control is needed, use nitroglycerin, phentolamine, or nicardipine. Non-selective beta-blockade is traditionally avoided due to concern for unopposed alpha stimulation."
+  },
+  {
+    id: "cv-006", domain: "cv", difficulty: 2,
+    stem: "A patient with acute decompensated heart failure and pulmonary edema (SBP 160) needs afterload/preload reduction. Which is the most appropriate initial IV vasodilator?",
+    options: ["Nitroglycerin infusion", "Nesiritide", "Milrinone", "Dobutamine"],
+    correctIndex: 0, tags: ["acute HF","nitroglycerin","vasodilator"],
+    rationale: "IV nitroglycerin is a first-line vasodilator for hypertensive acute pulmonary edema, reducing preload (and afterload at higher doses). Inotropes (milrinone/dobutamine) are reserved for low-output/hypotensive states, not hypertensive flash edema."
+  },
+  {
+    id: "cv-007", domain: "cv", difficulty: 3,
+    stem: "A patient on maintenance sotalol develops torsades de pointes. In addition to stopping the offending drug and correcting K+, what is the first-line treatment?",
+    options: ["Amiodarone 150 mg IV", "Magnesium sulfate 1–2 g IV", "Procainamide", "Immediate synchronized cardioversion"],
+    correctIndex: 1, tags: ["torsades","magnesium","QT"],
+    rationale: "IV magnesium sulfate 1–2 g is first-line for torsades de pointes (even with normal Mg). Correct K+ (goal high-normal), stop QT-prolonging drugs, and consider overdrive pacing/isoproterenol for bradycardia-dependent TdP. Class III antiarrhythmics like amiodarone can worsen QT."
+  },
+
+  /* ===================== RESUSCITATION & SHOCK ===================== */
+  {
+    id: "resus-001", domain: "resus", difficulty: 2,
+    stem: "Per Surviving Sepsis guidelines, which vasopressor is first-line for septic shock refractory to fluids?",
+    options: ["Dopamine", "Norepinephrine", "Phenylephrine", "Vasopressin"],
+    correctIndex: 1, tags: ["sepsis","norepinephrine","vasopressor"],
+    rationale: "Norepinephrine is the first-line vasopressor in septic shock. Vasopressin (fixed 0.03 units/min) is added to raise MAP or reduce norepinephrine dose. Dopamine is reserved for select bradycardic patients due to arrhythmia risk."
+  },
+  {
+    id: "resus-002", domain: "resus", difficulty: 2,
+    stem: "For RSI of a hemodynamically unstable patient in septic shock, which induction agent is most likely to preserve blood pressure?",
+    options: ["Propofol", "Ketamine", "Midazolam 0.3 mg/kg", "Thiopental"],
+    correctIndex: 1, tags: ["RSI","ketamine","induction"],
+    rationale: "Ketamine (1–2 mg/kg IV) is hemodynamically favorable and is preferred for RSI in shock. Propofol commonly causes hypotension. Etomidate is also hemodynamically neutral but carries adrenal-suppression concerns in sepsis."
+  },
+  {
+    id: "resus-003", domain: "resus", difficulty: 2,
+    stem: "A 90 kg patient requires paralysis for RSI and you want the fastest onset with the shortest duration, assuming no contraindications. Which agent and dose?",
+    options: ["Rocuronium 1.2 mg/kg", "Succinylcholine 1.5 mg/kg", "Vecuronium 0.1 mg/kg", "Cisatracurium 0.15 mg/kg"],
+    correctIndex: 1, tags: ["RSI","paralytic","succinylcholine"],
+    rationale: "Succinylcholine 1.5 mg/kg has rapid onset (~45 s) and short duration (~6–10 min). Contraindications include hyperkalemia, several-day-old burns/denervation injury, and history of malignant hyperthermia—use rocuronium 1.2 mg/kg in those cases."
+  },
+  {
+    id: "resus-004", domain: "resus", difficulty: 3,
+    stem: "Which statement about push-dose phenylephrine for transient peri-intubation hypotension is MOST accurate?",
+    options: ["Typical bolus is 50–200 mcg with onset in ~1 min", "It is preferred over norepinephrine for septic shock", "It reliably increases heart rate", "Standard bolus is 1 mg"],
+    correctIndex: 0, tags: ["push-dose pressor","phenylephrine"],
+    rationale: "Push-dose phenylephrine is given in ~50–200 mcg boluses with onset within about a minute; it is a pure alpha-agonist bridge for transient hypotension, not definitive therapy. Because it raises afterload without beta activity, it can cause reflex bradycardia. (Push-dose epinephrine, by contrast, is ~5–20 mcg.)"
+  },
+  {
+    id: "resus-005", domain: "resus", difficulty: 2,
+    stem: "In the 2020+ ACLS adult cardiac arrest algorithm, what is the recommended epinephrine dose and interval?",
+    options: ["1 mg IV/IO every 3–5 minutes", "1 mg IV/IO every 1 minute", "0.5 mg IV/IO every 5 minutes", "High-dose 0.1 mg/kg every 3–5 minutes"],
+    correctIndex: 0, tags: ["ACLS","epinephrine"],
+    rationale: "Standard-dose epinephrine 1 mg IV/IO every 3–5 minutes is recommended. For nonshockable rhythms, give epinephrine as soon as feasible. High-dose epinephrine is not recommended."
+  },
+  {
+    id: "resus-006", domain: "resus", difficulty: 3,
+    stem: "A septic shock patient remains hypotensive on norepinephrine 0.5 mcg/kg/min and vasopressin 0.03 units/min. Guidelines suggest adding which agent, and considering which adjunct?",
+    options: ["Add epinephrine; consider IV hydrocortisone", "Add phenylephrine; consider bicarbonate", "Add dopamine; consider albumin bolus", "Add dobutamine; consider calcium"],
+    correctIndex: 0, tags: ["sepsis","steroids","catecholamine-refractory"],
+    rationale: "For norepinephrine + vasopressin–refractory septic shock, epinephrine is a reasonable third agent, and IV hydrocortisone (e.g., 200 mg/day) is suggested for patients with ongoing vasopressor requirements."
+  },
+
+  /* ===================== TOXICOLOGY ===================== */
+  {
+    id: "tox-001", domain: "tox", difficulty: 1,
+    stem: "Which is the antidote for acetaminophen (paracetamol) toxicity?",
+    options: ["N-acetylcysteine", "Fomepizole", "Flumazenil", "Naloxone"],
+    correctIndex: 0, tags: ["acetaminophen","NAC","antidote"],
+    rationale: "N-acetylcysteine replenishes glutathione and detoxifies NAPQI. It is most effective within 8 hours of ingestion; use the Rumack-Matthew nomogram for single acute ingestions with a known time."
+  },
+  {
+    id: "tox-002", domain: "tox", difficulty: 2,
+    stem: "A patient with a suspected toxic alcohol ingestion (methanol) has an elevated osmolar and anion gap. Besides supportive care, what is the preferred antidote?",
+    options: ["Ethanol infusion", "Fomepizole", "Sodium bicarbonate only", "Thiamine"],
+    correctIndex: 1, tags: ["methanol","fomepizole","toxic alcohol"],
+    rationale: "Fomepizole inhibits alcohol dehydrogenase, preventing formation of toxic metabolites (formic acid in methanol, glycolic/oxalic acid in ethylene glycol). It is preferred over ethanol due to easier dosing and fewer adverse effects. Hemodialysis may still be required."
+  },
+  {
+    id: "tox-003", domain: "tox", difficulty: 2,
+    stem: "A patient overdoses on a tricyclic antidepressant and has a QRS of 130 ms with hypotension. What is the first-line therapy?",
+    options: ["Sodium bicarbonate bolus", "Amiodarone", "Physostigmine", "Calcium gluconate"],
+    correctIndex: 0, tags: ["TCA","sodium bicarbonate","sodium channel"],
+    rationale: "Sodium bicarbonate (1–2 mEq/kg boluses) is first-line for TCA cardiotoxicity with QRS widening (>100 ms), overcoming sodium-channel blockade and providing serum alkalinization. Avoid class Ia/Ic/III antiarrhythmics. Physostigmine is contraindicated in TCA overdose."
+  },
+  {
+    id: "tox-004", domain: "tox", difficulty: 2,
+    stem: "A farmer presents with miosis, salivation, lacrimation, bronchorrhea, and bradycardia after pesticide exposure. Which is the primary antidote to counter muscarinic effects?",
+    options: ["Pralidoxime alone", "Atropine titrated to dry secretions", "Naloxone", "Glycopyrrolate 1 mg once"],
+    correctIndex: 1, tags: ["organophosphate","atropine","cholinergic"],
+    rationale: "In cholinergic (organophosphate) toxicity, atropine is titrated (often large, escalating doses) to the endpoint of dried pulmonary secretions. Pralidoxime (2-PAM) is added to reactivate acetylcholinesterase and address nicotinic/muscle effects but does not replace atropine."
+  },
+  {
+    id: "tox-005", domain: "tox", difficulty: 3,
+    stem: "A patient with a calcium-channel blocker overdose remains hypotensive and bradycardic despite calcium, glucagon, and vasopressors. Which therapy specifically improves myocardial glucose uptake and inotropy?",
+    options: ["High-dose insulin euglycemia therapy (HIET)", "Sodium bicarbonate", "Digoxin immune Fab", "Hydroxocobalamin"],
+    correctIndex: 0, tags: ["CCB overdose","HIET","insulin"],
+    rationale: "High-dose insulin euglycemia therapy (e.g., regular insulin 1 unit/kg bolus then 0.5–1 unit/kg/hr, titrated, with dextrose and K+ monitoring) improves cardiac contractility and metabolism in CCB (and beta-blocker) toxicity. Monitor glucose and potassium closely."
+  },
+  {
+    id: "tox-006", domain: "tox", difficulty: 2,
+    stem: "A patient rescued from a house fire has soot in the airway, altered mental status, and lactate of 12 mmol/L. Which antidote targets suspected cyanide toxicity?",
+    options: ["Hydroxocobalamin", "Methylene blue", "Deferoxamine", "Dimercaprol"],
+    correctIndex: 0, tags: ["cyanide","hydroxocobalamin","smoke inhalation"],
+    rationale: "Hydroxocobalamin (5 g IV) binds cyanide to form cyanocobalamin, which is renally excreted, and is preferred in smoke-inhalation victims because it does not induce methemoglobinemia. A markedly elevated lactate (≥8–10) supports cyanide toxicity."
+  },
+  {
+    id: "tox-007", domain: "tox", difficulty: 2,
+    stem: "Which opioid-overdose statement about naloxone is most accurate for a patient with respiratory depression who is opioid-dependent?",
+    options: ["Start with the smallest effective dose (e.g., 0.04–0.4 mg) and titrate", "Always give 2 mg IV push immediately", "Naloxone has a longer duration than most opioids", "Naloxone reverses benzodiazepine sedation"],
+    correctIndex: 0, tags: ["naloxone","opioid","overdose"],
+    rationale: "In opioid-dependent patients, titrate naloxone from low doses to restore adequate ventilation without precipitating severe withdrawal. Because naloxone's duration (~30–90 min) is often shorter than the offending opioid, re-sedation can occur and repeat dosing or an infusion may be needed."
+  },
+
+  /* ===================== NEUROLOGY ===================== */
+  {
+    id: "neuro-001", domain: "neuro", difficulty: 2,
+    stem: "For acute ischemic stroke within 3 hours of onset in an eligible patient, what is the alteplase dose?",
+    options: ["0.9 mg/kg (max 90 mg), 10% bolus then remainder over 60 min", "0.6 mg/kg (max 60 mg)", "0.25 mg/kg single bolus", "100 mg over 2 hours"],
+    correctIndex: 0, tags: ["stroke","alteplase","thrombolysis"],
+    rationale: "IV alteplase for acute ischemic stroke is 0.9 mg/kg (maximum 90 mg): 10% as an initial bolus over 1 minute, then the remaining 90% infused over 60 minutes. Tenecteplase 0.25 mg/kg is an increasingly used single-bolus alternative."
+  },
+  {
+    id: "neuro-002", domain: "neuro", difficulty: 2,
+    stem: "Prior to giving alteplase for acute ischemic stroke, what is the blood pressure threshold that must be achieved?",
+    options: ["<220/120 mmHg", "<185/110 mmHg", "<160/90 mmHg", "<140/90 mmHg"],
+    correctIndex: 1, tags: ["stroke","blood pressure","alteplase"],
+    rationale: "BP must be lowered to <185/110 mmHg before IV thrombolysis and maintained <180/105 mmHg for 24 hours afterward. Labetalol or nicardipine infusions are commonly used. Without thrombolysis, permissive hypertension up to <220/120 is generally tolerated."
+  },
+  {
+    id: "neuro-003", domain: "neuro", difficulty: 2,
+    stem: "A patient in generalized convulsive status epilepticus has an IV. What is the first-line benzodiazepine and appropriate initial dose?",
+    options: ["Lorazepam 0.1 mg/kg IV (max ~4 mg/dose)", "Diazepam 20 mg IV once", "Levetiracetam 60 mg/kg IV", "Phenytoin 20 mg/kg IV"],
+    correctIndex: 0, tags: ["status epilepticus","lorazepam","benzodiazepine"],
+    rationale: "First-line for status epilepticus is a benzodiazepine: IV lorazepam 0.1 mg/kg (up to ~4 mg/dose, may repeat), IV diazepam 0.15–0.2 mg/kg, or IM midazolam 10 mg if no IV. Levetiracetam, fosphenytoin, or valproate are second-line (after benzodiazepines)."
+  },
+  {
+    id: "neuro-004", domain: "neuro", difficulty: 3,
+    stem: "A patient on warfarin (INR 3.5) presents with a large intracerebral hemorrhage. What is the preferred reversal strategy?",
+    options: ["Vitamin K 10 mg IV alone", "4-factor PCC plus IV vitamin K", "FFP 2 units only", "Idarucizumab"],
+    correctIndex: 1, tags: ["ICH","warfarin reversal","PCC"],
+    rationale: "For warfarin-associated major/intracranial hemorrhage, 4-factor PCC is preferred over FFP (faster correction, lower volume) and MUST be combined with IV vitamin K 10 mg to sustain reversal, since PCC factors are short-lived. Idarucizumab reverses dabigatran, not warfarin."
+  },
+
+  /* ===================== INFECTIOUS DISEASE ===================== */
+  {
+    id: "id-001", domain: "id", difficulty: 2,
+    stem: "An adult with suspected community-acquired bacterial meningitis should receive empiric antibiotics. Which regimen is most appropriate before culture data?",
+    options: ["Ceftriaxone + vancomycin (+ dexamethasone)", "Ceftriaxone alone", "Vancomycin alone", "Meropenem + azithromycin"],
+    correctIndex: 0, tags: ["meningitis","empiric antibiotics","dexamethasone"],
+    rationale: "Empiric therapy for adult bacterial meningitis is vancomycin + a third-generation cephalosporin (ceftriaxone/cefotaxime). Add ampicillin if Listeria is a concern (>50 yrs, immunocompromised, pregnant). Adjunctive dexamethasone (given before/with first dose) reduces morbidity in pneumococcal meningitis."
+  },
+  {
+    id: "id-002", domain: "id", difficulty: 2,
+    stem: "Per Surviving Sepsis, once septic shock is recognized, empiric broad-spectrum antibiotics should be administered within what timeframe?",
+    options: ["Within 1 hour", "Within 3 hours", "Within 6 hours", "After blood cultures result"],
+    correctIndex: 0, tags: ["sepsis","antibiotic timing"],
+    rationale: "For septic shock (and probable sepsis), guidelines recommend administering antimicrobials immediately, ideally within 1 hour of recognition. Obtain blood cultures before antibiotics only if doing so does not substantially delay therapy."
+  },
+  {
+    id: "id-003", domain: "id", difficulty: 3,
+    stem: "A patient with necrotizing soft tissue infection is started on broad-spectrum antibiotics. Which agent is added specifically to suppress toxin production in streptococcal/staphylococcal necrotizing infections?",
+    options: ["Clindamycin", "Metronidazole", "Gentamicin", "Daptomycin"],
+    correctIndex: 0, tags: ["necrotizing fasciitis","clindamycin","toxin"],
+    rationale: "Clindamycin is added for its ribosomal (protein-synthesis) inhibition, which suppresses exotoxin production in group A Streptococcus and toxin-producing S. aureus ('Eagle effect'). Empiric coverage also includes broad gram-negative/anaerobic and MRSA agents plus surgical debridement."
+  },
+  {
+    id: "id-004", domain: "id", difficulty: 2,
+    stem: "Which empiric regimen best covers Pseudomonas for a neutropenic febrile patient?",
+    options: ["Cefepime (or piperacillin-tazobactam or meropenem)", "Ceftriaxone", "Ertapenem", "Ampicillin-sulbactam"],
+    correctIndex: 0, tags: ["febrile neutropenia","pseudomonas","cefepime"],
+    rationale: "Empiric monotherapy for febrile neutropenia uses an antipseudomonal beta-lactam: cefepime, piperacillin-tazobactam, or a carbapenem (meropenem/imipenem). Ertapenem and ceftriaxone lack reliable Pseudomonas coverage. Add vancomycin only for specific indications (e.g., catheter infection, MRSA risk)."
+  },
+
+  /* ===================== TRAUMA & HEMOSTASIS ===================== */
+  {
+    id: "trauma-001", domain: "trauma", difficulty: 2,
+    stem: "Per CRASH-2, tranexamic acid (TXA) in trauma reduces mortality when given within what window from injury?",
+    options: ["Within 3 hours", "Within 8 hours", "Within 12 hours", "Any time in the first 24 hours"],
+    correctIndex: 0, tags: ["TXA","trauma","hemorrhage"],
+    rationale: "TXA improves survival in bleeding trauma patients when started within 3 hours of injury; administration after 3 hours may increase bleeding-related mortality. Typical dosing: 1 g IV over 10 min, then 1 g over 8 hours."
+  },
+  {
+    id: "trauma-002", domain: "trauma", difficulty: 3,
+    stem: "A patient on apixaban presents with life-threatening GI hemorrhage. Which specific reversal agent is FDA-approved for apixaban/rivaroxaban?",
+    options: ["Idarucizumab", "Andexanet alfa", "Protamine", "Vitamin K"],
+    correctIndex: 1, tags: ["DOAC reversal","andexanet","factor Xa inhibitor"],
+    rationale: "Andexanet alfa is the specific reversal agent for apixaban and rivaroxaban (factor Xa inhibitors). Idarucizumab reverses dabigatran. Where andexanet is unavailable/cost-prohibitive, 4-factor PCC is a common off-label alternative."
+  },
+  {
+    id: "trauma-003", domain: "trauma", difficulty: 2,
+    stem: "During massive transfusion for hemorrhagic shock, which electrolyte derangement is most associated with citrate from stored blood and warrants monitoring/repletion?",
+    options: ["Hypercalcemia", "Ionized hypocalcemia", "Hypernatremia", "Hypophosphatemia"],
+    correctIndex: 1, tags: ["massive transfusion","hypocalcemia","citrate"],
+    rationale: "Citrate in stored blood chelates calcium, causing ionized hypocalcemia during massive transfusion, which impairs coagulation and cardiac function. Monitor ionized calcium and replete with calcium chloride/gluconate."
+  },
+
+  /* ===================== RESPIRATORY & ANAPHYLAXIS ===================== */
+  {
+    id: "resp-001", domain: "resp", difficulty: 1,
+    stem: "A patient with anaphylaxis has hypotension and airway swelling. What is the first-line drug, route, and initial adult dose?",
+    options: ["Epinephrine 0.3–0.5 mg IM (1 mg/mL) into the anterolateral thigh", "Epinephrine 1 mg IV push", "Diphenhydramine 50 mg IV", "Methylprednisolone 125 mg IV"],
+    correctIndex: 0, tags: ["anaphylaxis","epinephrine","IM"],
+    rationale: "Intramuscular epinephrine (0.3–0.5 mg of the 1 mg/mL concentration) into the anterolateral thigh is first-line and may repeat every 5–15 minutes. Antihistamines and steroids are adjuncts only and never replace epinephrine. IV epinephrine (infusion) is reserved for refractory shock with monitoring."
+  },
+  {
+    id: "resp-002", domain: "resp", difficulty: 2,
+    stem: "For a severe asthma exacerbation not responding to continuous albuterol and ipratropium plus systemic steroids, which IV agent is recommended by guidelines as adjunct bronchodilation?",
+    options: ["Magnesium sulfate 2 g IV over 20 min", "Aminophylline infusion", "IV montelukast", "Racemic epinephrine nebulizer"],
+    correctIndex: 0, tags: ["asthma","magnesium","bronchodilator"],
+    rationale: "IV magnesium sulfate (2 g over 20 minutes) is recommended for severe/life-threatening asthma exacerbations refractory to initial therapy. Aminophylline is not recommended due to its adverse-effect profile without clear benefit."
+  },
+  {
+    id: "resp-003", domain: "resp", difficulty: 2,
+    stem: "A patient on a nonselective beta-blocker has anaphylaxis refractory to repeated IM epinephrine. Which adjunct is specifically recommended?",
+    options: ["Glucagon", "Calcium chloride", "High-dose diphenhydramine", "Vasopressin bolus"],
+    correctIndex: 0, tags: ["anaphylaxis","glucagon","beta-blocker"],
+    rationale: "Glucagon (1–5 mg IV) bypasses the beta-receptor to increase cAMP and is recommended for anaphylaxis refractory to epinephrine in patients taking beta-blockers. Protect the airway due to glucagon-induced emesis."
+  },
+
+  /* ===================== ANALGESIA & SEDATION ===================== */
+  {
+    id: "pain-001", domain: "pain", difficulty: 2,
+    stem: "Which agent provides dissociative sedation with analgesia and preserved airway reflexes, making it useful for procedural sedation?",
+    options: ["Ketamine", "Propofol", "Etomidate", "Fentanyl"],
+    correctIndex: 0, tags: ["procedural sedation","ketamine","analgesia"],
+    rationale: "Ketamine produces dissociative sedation with analgesia and generally maintains respiratory drive and airway reflexes, making it valuable for procedural sedation (e.g., 1 mg/kg IV). Propofol and etomidate lack analgesia; fentanyl alone provides analgesia without dissociation."
+  },
+  {
+    id: "pain-002", domain: "pain", difficulty: 2,
+    stem: "A subdissociative ('analgesic-dose') ketamine strategy for acute pain in the ED typically uses which dose range?",
+    options: ["0.1–0.3 mg/kg IV", "1–2 mg/kg IV", "3–5 mg/kg IM", "0.01 mg/kg IV"],
+    correctIndex: 0, tags: ["ketamine","analgesia","subdissociative"],
+    rationale: "Low-dose/subdissociative ketamine for analgesia is ~0.1–0.3 mg/kg IV (often infused over 10–15 minutes to reduce psychoperceptual effects). Dissociative sedation doses are ~1–2 mg/kg IV."
+  },
+  {
+    id: "pain-003", domain: "pain", difficulty: 1,
+    stem: "Which opioid is generally preferred in a patient with significant renal impairment because it lacks clinically significant active metabolites?",
+    options: ["Morphine", "Hydromorphone", "Fentanyl", "Codeine"],
+    correctIndex: 2, tags: ["opioid","renal","fentanyl"],
+    rationale: "Fentanyl lacks active/renally-cleared metabolites and is preferred in renal impairment. Morphine accumulates morphine-6-glucuronide (active), and codeine relies on variable CYP2D6 conversion; both are problematic in renal dysfunction."
+  },
+
+  /* ===================== ENDOCRINE & METABOLIC ===================== */
+  {
+    id: "endo-001", domain: "endo", difficulty: 2,
+    stem: "In DKA management, when should potassium be repleted BEFORE starting the insulin infusion?",
+    options: ["When serum K+ is <3.3 mEq/L", "When serum K+ is >5.3 mEq/L", "Never—always start insulin first", "Only if the patient is symptomatic"],
+    correctIndex: 0, tags: ["DKA","potassium","insulin"],
+    rationale: "If serum K+ <3.3 mEq/L, hold insulin and replete potassium first, because insulin drives K+ intracellularly and can precipitate life-threatening hypokalemia/arrhythmias. If K+ 3.3–5.3, give insulin and add K+ to fluids; if K+ >5.3, start insulin and monitor."
+  },
+  {
+    id: "endo-002", domain: "endo", difficulty: 2,
+    stem: "A patient with hyperkalemia (K+ 7.2) has peaked T waves on ECG. What is the FIRST agent to administer to stabilize the myocardium?",
+    options: ["IV calcium gluconate or chloride", "Regular insulin with dextrose", "Sodium polystyrene sulfonate", "Albuterol nebulizer"],
+    correctIndex: 0, tags: ["hyperkalemia","calcium","membrane stabilization"],
+    rationale: "IV calcium (gluconate or chloride) is given first to stabilize the cardiac membrane when ECG changes are present; it does not lower K+. Then shift K+ intracellularly (insulin/dextrose, beta-agonist, bicarbonate if acidotic) and remove it (diuresis, GI binders, dialysis)."
+  },
+  {
+    id: "endo-003", domain: "endo", difficulty: 3,
+    stem: "A patient in myxedema coma requires thyroid hormone replacement. What critical therapy must be given before or with thyroid hormone to avoid precipitating adrenal crisis?",
+    options: ["IV hydrocortisone (stress-dose steroids)", "IV insulin", "Oral levothyroxine only", "Beta-blocker"],
+    correctIndex: 0, tags: ["myxedema","hydrocortisone","adrenal"],
+    rationale: "Empiric stress-dose hydrocortisone should be given because coexisting adrenal insufficiency is common, and thyroid hormone increases cortisol metabolism—giving thyroid hormone alone could precipitate adrenal crisis. IV levothyroxine (± liothyronine) plus supportive care is standard."
+  },
+
+  /* ===================== ENVIRONMENTAL ===================== */
+  {
+    id: "env-001", domain: "env", difficulty: 3,
+    stem: "A patient with severe serotonin syndrome has hyperthermia and rigidity refractory to benzodiazepines and cooling. Which specific antidote may be considered?",
+    options: ["Cyproheptadine", "Dantrolene", "Bromocriptine", "Physostigmine"],
+    correctIndex: 0, tags: ["serotonin syndrome","cyproheptadine"],
+    rationale: "Cyproheptadine, a 5-HT2A antagonist, is the pharmacologic antidote considered for moderate–severe serotonin syndrome after supportive care and benzodiazepines. Dantrolene and bromocriptine are used for neuroleptic malignant syndrome, not serotonin syndrome."
+  },
+  {
+    id: "env-002", domain: "env", difficulty: 2,
+    stem: "Which agent is the definitive treatment for malignant hyperthermia triggered by inhaled anesthetics or succinylcholine?",
+    options: ["Dantrolene", "Acetaminophen", "Bromocriptine", "Ice packs alone"],
+    correctIndex: 0, tags: ["malignant hyperthermia","dantrolene"],
+    rationale: "Dantrolene (2.5 mg/kg IV, repeated as needed) is the specific treatment for malignant hyperthermia; it inhibits ryanodine-receptor–mediated calcium release. Stop the trigger, provide aggressive cooling, and correct hyperkalemia/acidosis."
+  },
+
+  /* ===================== SPECIAL POPULATIONS ===================== */
+  {
+    id: "special-001", domain: "special", difficulty: 2,
+    stem: "A pregnant patient at 30 weeks presents in status epilepticus due to eclampsia. Which agent is first-line for seizure control/prophylaxis?",
+    options: ["Magnesium sulfate", "Lorazepam", "Levetiracetam", "Phenytoin"],
+    correctIndex: 0, tags: ["eclampsia","magnesium","pregnancy"],
+    rationale: "Magnesium sulfate (e.g., 4–6 g IV load, then 1–2 g/hr) is first-line for eclamptic seizures and prevention, superior to standard antiepileptics in this setting. Monitor for magnesium toxicity (loss of reflexes, respiratory depression); antidote is IV calcium."
+  },
+  {
+    id: "special-002", domain: "special", difficulty: 2,
+    stem: "For pediatric anaphylaxis, what is the recommended IM epinephrine dose?",
+    options: ["0.01 mg/kg (max 0.3–0.5 mg) of 1 mg/mL", "0.1 mg/kg IV", "0.5 mg/kg IM", "1 mg IM regardless of weight"],
+    correctIndex: 0, tags: ["pediatrics","anaphylaxis","epinephrine"],
+    rationale: "Pediatric IM epinephrine is 0.01 mg/kg of the 1 mg/mL concentration (maximum 0.3 mg for prepubertal, up to 0.5 mg), into the anterolateral thigh, repeatable every 5–15 minutes."
+  },
+  {
+    id: "special-003", domain: "special", difficulty: 3,
+    stem: "Which analgesic/sedative consideration is MOST important when dosing in a patient with severe hepatic dysfunction?",
+    options: ["Reduce/avoid drugs with high hepatic metabolism and prolonged sedation risk (e.g., diazepam, midazolam accumulation)", "Hepatic dysfunction has no effect on benzodiazepine dosing", "Fentanyl is contraindicated in liver disease", "Acetaminophen is always safe at full dose"],
+    correctIndex: 0, tags: ["hepatic","benzodiazepine","dosing"],
+    rationale: "In severe liver disease, hepatically metabolized sedatives accumulate; lorazepam/oxazepam (glucuronidated) are often preferred over diazepam/midazolam. Acetaminophen dosing should be reduced (e.g., ≤2 g/day) in significant hepatic impairment."
+  },
+
+  /* ===================== MEDICATION & PATIENT SAFETY ===================== */
+  {
+    id: "safety-001", domain: "safety", difficulty: 1,
+    stem: "According to ISMP, which of the following is classified as a 'high-alert medication' warranting extra safeguards in the ED?",
+    options: ["IV insulin", "Oral acetaminophen", "Normal saline maintenance fluid", "Oral multivitamin"],
+    correctIndex: 0, tags: ["high-alert","ISMP","safety"],
+    rationale: "IV insulin, heparin/anticoagulants, opioids, and concentrated electrolytes (e.g., KCl) are ISMP high-alert medications—those with heightened risk of significant patient harm when used in error—requiring safeguards such as independent double-checks and standardized concentrations."
+  },
+  {
+    id: "safety-002", domain: "safety", difficulty: 2,
+    stem: "Which strategy is the most effective error-prevention safeguard for high-alert continuous infusions like heparin or insulin in the ED?",
+    options: ["Standardized concentrations with smart-pump dose-error reduction software", "Verbal orders for all infusions", "Allowing each nurse to choose a concentration", "Removing pump alerts to reduce alarm fatigue"],
+    correctIndex: 0, tags: ["smart pump","standardization","safety"],
+    rationale: "Standardized concentrations paired with smart-pump libraries (dose-error reduction software / guardrails) are among the most effective safeguards, reducing variability and catching programming errors. Independent double-checks add another layer for the highest-risk agents."
+  },
+  {
+    id: "safety-003", domain: "safety", difficulty: 2,
+    stem: "A look-alike/sound-alike (LASA) mix-up between which pair is a classic ED medication-safety concern?",
+    options: ["Hydromorphone vs. morphine", "Sodium chloride vs. dextrose", "Aspirin vs. acetaminophen", "Lisinopril vs. metoprolol"],
+    correctIndex: 0, tags: ["LASA","opioid","safety"],
+    rationale: "Hydromorphone and morphine are a well-known LASA/high-alert pair; confusing them (and their very different potencies) can cause serious opioid overdose. Tall-man lettering, separation, and independent checks help mitigate LASA errors."
+  },
+
+  /* ===================== PRACTICE MANAGEMENT & RESEARCH ===================== */
+  {
+    id: "pmr-001", domain: "pmr", difficulty: 2,
+    stem: "A trial reports a number needed to treat (NNT) of 25 for a therapy. What does this indicate?",
+    options: ["25 patients must be treated to prevent one additional bad outcome", "25% relative risk reduction", "The therapy harms 1 in 25 patients", "The p-value is 0.25"],
+    correctIndex: 0, tags: ["evidence","NNT","statistics"],
+    rationale: "NNT = 1 / absolute risk reduction; an NNT of 25 means treating 25 patients prevents one additional adverse outcome. Lower NNTs indicate greater treatment effect. NNT is not a measure of relative risk or of harm (that's NNH)."
+  },
+  {
+    id: "pmr-002", domain: "pmr", difficulty: 2,
+    stem: "Which role best exemplifies the emergency medicine pharmacist's value during a resuscitation/code?",
+    options: ["Real-time dosing, preparation, and verification of emergency medications at bedside", "Retrospective chart review only", "Managing the hospital formulary during the code", "Performing chest compressions exclusively"],
+    correctIndex: 0, tags: ["EM pharmacist","role","resuscitation"],
+    rationale: "Bedside EM pharmacists improve safety and timeliness by providing real-time medication dosing, preparation, verification, and guideline expertise during resuscitations, RSI, and time-critical therapies (e.g., thrombolytics, antidotes)."
+  }
+];
+
+</script>
+<script>
+/* Seed flashcard bank for the BCEMP study tool.
+ * Schema: { id, domain, front, back, tags[] }
+ * Study aid only — verify against current guidelines and institutional protocols.
+ */
+window.BCEMP_FLASHCARDS = [
+  /* CARDIOVASCULAR */
+  { id: "fc-cv-01", domain: "cv", front: "Amiodarone dosing in cardiac arrest (VF/pVT)?", back: "300 mg IV/IO first dose, then 150 mg IV/IO second dose.", tags: ["ACLS","amiodarone"] },
+  { id: "fc-cv-02", domain: "cv", front: "Lidocaine dosing as antiarrhythmic in arrest?", back: "1–1.5 mg/kg IV/IO, then 0.5–0.75 mg/kg every 5–10 min (max ~3 mg/kg).", tags: ["ACLS","lidocaine"] },
+  { id: "fc-cv-03", domain: "cv", front: "Adenosine dosing for stable regular narrow-complex SVT?", back: "6 mg rapid IV push → 12 mg if no response (some protocols repeat 12 mg). Fast flush, proximal vein.", tags: ["SVT","adenosine"] },
+  { id: "fc-cv-04", domain: "cv", front: "First-line therapy for torsades de pointes?", back: "Magnesium sulfate 1–2 g IV; correct K+; stop QT-prolonging drugs; overdrive pacing/isoproterenol if bradycardia-dependent.", tags: ["torsades","magnesium"] },
+  { id: "fc-cv-05", domain: "cv", front: "Aortic dissection: which drug class FIRST and target HR?", back: "IV beta-blocker (esmolol/labetalol) FIRST to reduce dP/dt; target HR <60 before adding a vasodilator (e.g., nicardipine/nitroprusside).", tags: ["aortic dissection"] },
+  { id: "fc-cv-06", domain: "cv", front: "Cocaine chest pain/hypertension: first-line drug?", back: "Benzodiazepines first; add nitroglycerin, phentolamine, or nicardipine. Avoid nonselective beta-blockade (unopposed alpha concern).", tags: ["cocaine"] },
+  { id: "fc-cv-07", domain: "cv", front: "STEMI aspirin loading dose?", back: "162–325 mg non–enteric-coated, chewed, ASAP.", tags: ["ACS","aspirin"] },
+
+  /* RESUSCITATION & SHOCK */
+  { id: "fc-resus-01", domain: "resus", front: "First-line vasopressor in septic shock?", back: "Norepinephrine. Add vasopressin (fixed 0.03 units/min) to raise MAP / spare norepinephrine; epinephrine third-line.", tags: ["sepsis","vasopressor"] },
+  { id: "fc-resus-02", domain: "resus", front: "ACLS epinephrine dose/interval?", back: "1 mg IV/IO every 3–5 minutes (give early in nonshockable rhythms).", tags: ["ACLS","epinephrine"] },
+  { id: "fc-resus-03", domain: "resus", front: "Preferred RSI induction agent in shock?", back: "Ketamine 1–2 mg/kg IV (hemodynamically stable). Etomidate 0.3 mg/kg is an alternative; propofol causes hypotension.", tags: ["RSI","ketamine"] },
+  { id: "fc-resus-04", domain: "resus", front: "Succinylcholine RSI dose and key contraindications?", back: "1.5 mg/kg IV. Avoid in hyperkalemia, subacute burns/denervation/crush (days+), malignant hyperthermia history.", tags: ["RSI","succinylcholine"] },
+  { id: "fc-resus-05", domain: "resus", front: "Rocuronium RSI dose?", back: "1.2 mg/kg IV (rapid onset ~60 s; longer duration ~45+ min).", tags: ["RSI","rocuronium"] },
+  { id: "fc-resus-06", domain: "resus", front: "Push-dose pressors: phenylephrine vs epinephrine?", back: "Phenylephrine 50–200 mcg boluses (pure alpha); epinephrine 5–20 mcg boluses (alpha+beta). Bridges only.", tags: ["push-dose"] },
+  { id: "fc-resus-07", domain: "resus", front: "Steroid for vasopressor-dependent septic shock?", back: "IV hydrocortisone ~200 mg/day (e.g., 50 mg q6h or infusion) when ongoing vasopressor requirement.", tags: ["sepsis","hydrocortisone"] },
+
+  /* TOXICOLOGY */
+  { id: "fc-tox-01", domain: "tox", front: "Antidote: acetaminophen?", back: "N-acetylcysteine (replenishes glutathione; detoxifies NAPQI). Most effective <8 h.", tags: ["acetaminophen","NAC"] },
+  { id: "fc-tox-02", domain: "tox", front: "Antidote: methanol/ethylene glycol?", back: "Fomepizole (inhibits alcohol dehydrogenase). ± hemodialysis. Cofactors: folate (methanol), thiamine/pyridoxine (ethylene glycol).", tags: ["toxic alcohol","fomepizole"] },
+  { id: "fc-tox-03", domain: "tox", front: "TCA overdose with wide QRS: treatment?", back: "Sodium bicarbonate 1–2 mEq/kg boluses for QRS >100 ms/hypotension. Avoid class Ia/Ic/III antiarrhythmics.", tags: ["TCA","bicarbonate"] },
+  { id: "fc-tox-04", domain: "tox", front: "Antidote: organophosphate (cholinergic) toxicity?", back: "Atropine titrated to dried secretions + pralidoxime (2-PAM) for nicotinic/AChE reactivation. Benzos for seizures.", tags: ["organophosphate","atropine"] },
+  { id: "fc-tox-05", domain: "tox", front: "Antidote: cyanide (smoke inhalation)?", back: "Hydroxocobalamin 5 g IV (preferred—no methemoglobinemia). Alt: sodium thiosulfate ± nitrites.", tags: ["cyanide"] },
+  { id: "fc-tox-06", domain: "tox", front: "CCB/beta-blocker overdose refractory therapy?", back: "High-dose insulin euglycemia therapy (HIET): regular insulin 1 unit/kg bolus then 0.5–1 unit/kg/hr + dextrose; monitor glucose/K+. Plus calcium, glucagon, vasopressors; lipid emulsion in extremis.", tags: ["CCB","HIET"] },
+  { id: "fc-tox-07", domain: "tox", front: "Antidote: benzodiazepine? Caution?", back: "Flumazenil—rarely used; avoid in chronic use / co-ingestion (seizure and withdrawal risk).", tags: ["flumazenil"] },
+  { id: "fc-tox-08", domain: "tox", front: "Antidote: digoxin toxicity?", back: "Digoxin immune Fab (DigiFab). Indicated for life-threatening arrhythmia, K+ >5 in acute toxicity, or large ingestion.", tags: ["digoxin","Fab"] },
+  { id: "fc-tox-09", domain: "tox", front: "Antidote: iron overdose?", back: "Deferoxamine (chelation) for severe toxicity (shock, acidosis, high serum iron).", tags: ["iron","deferoxamine"] },
+  { id: "fc-tox-10", domain: "tox", front: "Antidote: methemoglobinemia?", back: "Methylene blue 1–2 mg/kg IV. Avoid/ineffective in G6PD deficiency.", tags: ["methemoglobinemia","methylene blue"] },
+  { id: "fc-tox-11", domain: "tox", front: "Antidote: local anesthetic systemic toxicity (LAST)?", back: "IV lipid emulsion 20% (1.5 mL/kg bolus, then infusion) + ACLS (reduced epinephrine doses, avoid vasopressin).", tags: ["LAST","lipid emulsion"] },
+
+  /* NEUROLOGY */
+  { id: "fc-neuro-01", domain: "neuro", front: "Alteplase dose for acute ischemic stroke?", back: "0.9 mg/kg (max 90 mg): 10% bolus over 1 min, remainder over 60 min.", tags: ["stroke","alteplase"] },
+  { id: "fc-neuro-02", domain: "neuro", front: "Tenecteplase dose for stroke?", back: "0.25 mg/kg IV single bolus (max 25 mg) — increasingly used alternative to alteplase.", tags: ["stroke","tenecteplase"] },
+  { id: "fc-neuro-03", domain: "neuro", front: "BP targets around IV thrombolysis for stroke?", back: "<185/110 before tPA; maintain <180/105 for 24 h after. Use labetalol or nicardipine.", tags: ["stroke","BP"] },
+  { id: "fc-neuro-04", domain: "neuro", front: "Status epilepticus: first-line and doses?", back: "Benzodiazepine: lorazepam 0.1 mg/kg IV (≤4 mg/dose), diazepam 0.15–0.2 mg/kg, or IM midazolam 10 mg. Then second-line: levetiracetam, fosphenytoin, or valproate.", tags: ["status epilepticus"] },
+  { id: "fc-neuro-05", domain: "neuro", front: "Warfarin-associated ICH reversal?", back: "4-factor PCC + IV vitamin K 10 mg (vitamin K sustains reversal; PCC acts fast).", tags: ["ICH","warfarin"] },
+
+  /* INFECTIOUS DISEASE */
+  { id: "fc-id-01", domain: "id", front: "Empiric antibiotics for adult bacterial meningitis?", back: "Vancomycin + ceftriaxone (or cefotaxime); add ampicillin if Listeria risk (>50, immunocompromised, pregnant). Dexamethasone with/before first dose for pneumococcal.", tags: ["meningitis"] },
+  { id: "fc-id-02", domain: "id", front: "Antibiotic timing in septic shock?", back: "Within 1 hour of recognition (Surviving Sepsis).", tags: ["sepsis"] },
+  { id: "fc-id-03", domain: "id", front: "Add-on antibiotic to suppress toxin in necrotizing/strep TSS?", back: "Clindamycin (protein synthesis inhibition → decreased exotoxin).", tags: ["necrotizing","clindamycin"] },
+  { id: "fc-id-04", domain: "id", front: "Antipseudomonal beta-lactams for febrile neutropenia?", back: "Cefepime, piperacillin-tazobactam, or meropenem/imipenem. (Ceftriaxone & ertapenem do NOT cover Pseudomonas.)", tags: ["pseudomonas"] },
+
+  /* TRAUMA & HEMOSTASIS */
+  { id: "fc-trauma-01", domain: "trauma", front: "TXA in trauma: window and dose?", back: "Within 3 h of injury. 1 g IV over 10 min, then 1 g over 8 h. (CRASH-2)", tags: ["TXA"] },
+  { id: "fc-trauma-02", domain: "trauma", front: "Reversal of dabigatran?", back: "Idarucizumab (Praxbind). Alt: activated PCC / hemodialysis.", tags: ["dabigatran","idarucizumab"] },
+  { id: "fc-trauma-03", domain: "trauma", front: "Reversal of apixaban/rivaroxaban?", back: "Andexanet alfa (approved). Alt: 4-factor PCC (off-label).", tags: ["Xa inhibitor","andexanet"] },
+  { id: "fc-trauma-04", domain: "trauma", front: "Reversal of unfractionated heparin?", back: "Protamine sulfate (1 mg per ~100 units heparin, max 50 mg). Partial reversal of LMWH.", tags: ["heparin","protamine"] },
+  { id: "fc-trauma-05", domain: "trauma", front: "Key electrolyte to monitor/replete in massive transfusion?", back: "Ionized calcium (citrate chelates Ca2+ → hypocalcemia). Also watch K+ and temperature.", tags: ["massive transfusion","calcium"] },
+
+  /* RESPIRATORY & ANAPHYLAXIS */
+  { id: "fc-resp-01", domain: "resp", front: "Anaphylaxis first-line drug/route/dose (adult)?", back: "Epinephrine 0.3–0.5 mg IM (1 mg/mL) anterolateral thigh; repeat q5–15 min. IV infusion if refractory.", tags: ["anaphylaxis"] },
+  { id: "fc-resp-02", domain: "resp", front: "Anaphylaxis refractory to epi in a patient on beta-blockers?", back: "Glucagon 1–5 mg IV (bypasses beta receptor). Protect airway (emesis risk).", tags: ["anaphylaxis","glucagon"] },
+  { id: "fc-resp-03", domain: "resp", front: "Severe asthma adjunct IV bronchodilator?", back: "Magnesium sulfate 2 g IV over 20 min. (Aminophylline NOT recommended.)", tags: ["asthma","magnesium"] },
+  { id: "fc-resp-04", domain: "resp", front: "Anaphylaxis adjuncts (not first-line)?", back: "H1 antihistamine (diphenhydramine), H2 blocker, corticosteroids, bronchodilators, IV fluids — none replace epinephrine.", tags: ["anaphylaxis"] },
+
+  /* ANALGESIA & SEDATION */
+  { id: "fc-pain-01", domain: "pain", front: "Analgesic (subdissociative) ketamine dose?", back: "0.1–0.3 mg/kg IV (often over 10–15 min to reduce dysphoria).", tags: ["ketamine"] },
+  { id: "fc-pain-02", domain: "pain", front: "Dissociative sedation ketamine dose?", back: "~1–2 mg/kg IV (or 4–5 mg/kg IM).", tags: ["ketamine"] },
+  { id: "fc-pain-03", domain: "pain", front: "Preferred opioid in renal failure?", back: "Fentanyl (no active/renally-cleared metabolites). Avoid morphine (M6G) and meperidine (normeperidine).", tags: ["opioid","renal"] },
+  { id: "fc-pain-04", domain: "pain", front: "Etomidate: benefit and caution?", back: "Hemodynamically neutral induction (0.3 mg/kg); causes transient adrenal suppression—caution in sepsis.", tags: ["etomidate"] },
+
+  /* ENDOCRINE & METABOLIC */
+  { id: "fc-endo-01", domain: "endo", front: "DKA: when to hold insulin for potassium?", back: "Hold insulin if K+ <3.3 mEq/L and replete first. K+ 3.3–5.3: insulin + add K+ to fluids. K+ >5.3: insulin, monitor.", tags: ["DKA","potassium"] },
+  { id: "fc-endo-02", domain: "endo", front: "Hyperkalemia with ECG changes: first drug?", back: "IV calcium (gluconate or chloride) to stabilize myocardium (does not lower K+).", tags: ["hyperkalemia","calcium"] },
+  { id: "fc-endo-03", domain: "endo", front: "Hyperkalemia: agents that SHIFT K+ intracellularly?", back: "Insulin + dextrose, beta-2 agonist (albuterol high-dose), sodium bicarbonate (if acidotic).", tags: ["hyperkalemia"] },
+  { id: "fc-endo-04", domain: "endo", front: "Hyperkalemia: agents that REMOVE K+?", back: "Loop diuretics (if making urine), GI cation binders (patiromer, SZC, SPS), dialysis.", tags: ["hyperkalemia"] },
+  { id: "fc-endo-05", domain: "endo", front: "Myxedema coma: co-therapy with thyroid hormone?", back: "Stress-dose hydrocortisone (avoid precipitating adrenal crisis) + IV levothyroxine ± liothyronine + supportive care.", tags: ["myxedema"] },
+
+  /* ENVIRONMENTAL */
+  { id: "fc-env-01", domain: "env", front: "Serotonin syndrome antidote?", back: "Cyproheptadine (5-HT2A antagonist) + benzodiazepines + cooling/supportive care.", tags: ["serotonin syndrome"] },
+  { id: "fc-env-02", domain: "env", front: "Neuroleptic malignant syndrome treatment?", back: "Stop antipsychotic; dantrolene and/or bromocriptine + supportive care/cooling + benzodiazepines.", tags: ["NMS"] },
+  { id: "fc-env-03", domain: "env", front: "Malignant hyperthermia treatment?", back: "Dantrolene 2.5 mg/kg IV (repeat); stop trigger; cool; treat hyperkalemia/acidosis.", tags: ["malignant hyperthermia"] },
+
+  /* SPECIAL POPULATIONS */
+  { id: "fc-special-01", domain: "special", front: "Eclampsia seizure treatment?", back: "Magnesium sulfate 4–6 g IV load then 1–2 g/hr. Toxicity antidote: IV calcium gluconate.", tags: ["eclampsia"] },
+  { id: "fc-special-02", domain: "special", front: "Pediatric IM epinephrine dose for anaphylaxis?", back: "0.01 mg/kg of 1 mg/mL (max 0.3 mg prepubertal, up to 0.5 mg), anterolateral thigh, repeat q5–15 min.", tags: ["pediatrics","anaphylaxis"] },
+  { id: "fc-special-03", domain: "special", front: "Acetaminophen max in significant hepatic impairment?", back: "Reduce to ≤2 g/day (some say avoid in severe/active disease).", tags: ["hepatic","acetaminophen"] },
+
+  /* MEDICATION & PATIENT SAFETY */
+  { id: "fc-safety-01", domain: "safety", front: "Examples of ISMP high-alert medications in the ED?", back: "Insulin, anticoagulants/heparin, opioids, concentrated electrolytes (KCl, hypertonic saline), neuromuscular blockers, chemo, IV inotropes.", tags: ["high-alert"] },
+  { id: "fc-safety-02", domain: "safety", front: "Most effective safeguards for high-alert infusions?", back: "Standardized concentrations + smart-pump DERS (guardrails) + independent double-checks + limiting available concentrations.", tags: ["smart pump"] },
+  { id: "fc-safety-03", domain: "safety", front: "What is a LASA error? Mitigations?", back: "Look-Alike/Sound-Alike name confusion (e.g., hydromorphone/morphine). Mitigate with tall-man lettering, separation, barcode scanning, independent checks.", tags: ["LASA"] },
+
+  /* PRACTICE MANAGEMENT & RESEARCH */
+  { id: "fc-pmr-01", domain: "pmr", front: "NNT formula and meaning?", back: "NNT = 1 / absolute risk reduction. Number of patients treated to prevent one additional bad outcome. Lower = more effective.", tags: ["evidence","NNT"] },
+  { id: "fc-pmr-02", domain: "pmr", front: "Intention-to-treat vs per-protocol analysis?", back: "ITT analyzes patients by assigned group (preserves randomization, real-world estimate); per-protocol includes only compliant completers (efficacy, prone to bias).", tags: ["evidence","ITT"] }
+];
+
+</script>
+<script>
+/* state.js — localStorage persistence, schema, date helpers, export/import.
+ * Everything hangs off the global `App` namespace (no modules, works on file://). */
+window.App = window.App || {};
+
+App.STORAGE_KEY = "bcemp_state_v1";
+App.DEFAULT_EXAM_DATE = "2026-08-05"; // ~1 month out; editable in Settings
+
+/* ---------- date helpers (local time, YYYY-MM-DD) ---------- */
+App.date = {
+  today: function () { return App.date.fmt(new Date()); },
+  fmt: function (d) {
+    var y = d.getFullYear();
+    var m = String(d.getMonth() + 1).padStart(2, "0");
+    var day = String(d.getDate()).padStart(2, "0");
+    return y + "-" + m + "-" + day;
+  },
+  parse: function (s) { var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); },
+  addDays: function (s, n) { var d = App.date.parse(s); d.setDate(d.getDate() + n); return App.date.fmt(d); },
+  diffDays: function (a, b) { // a - b in whole days
+    return Math.round((App.date.parse(a).getTime() - App.date.parse(b).getTime()) / 86400000);
+  },
+  daysUntil: function (target) { return App.date.diffDays(target, App.date.today()); }
+};
+
+/* ---------- default state ---------- */
+App.defaultState = function () {
+  return {
+    version: 1,
+    settings: { examDate: App.DEFAULT_EXAM_DATE, dailyGoalQuestions: 10, name: "" },
+    profile: {
+      xp: 0, level: 1, streak: 0, longestStreak: 0,
+      lastSessionDate: null, graceUsedDate: null,
+      badges: [], totalQuestions: 0, totalCorrect: 0,
+      totalFlashcards: 0, totalSessions: 0
+    },
+    srs: { questions: {}, flashcards: {} },
+    domainStats: {}, // { domainId: { answered, correct } }
+    activity: {},    // { "YYYY-MM-DD": { sessions, questions, xp } }
+    customContent: { questions: [], flashcards: [] }
+  };
+};
+
+/* ---------- load / save ---------- */
+App.Store = {
+  _state: null,
+  load: function () {
+    if (this._state) return this._state;
+    var raw = null;
+    try { raw = localStorage.getItem(App.STORAGE_KEY); } catch (e) { /* private mode */ }
+    if (raw) {
+      try {
+        var parsed = JSON.parse(raw);
+        this._state = App.migrate(parsed);
+      } catch (e) { this._state = App.defaultState(); }
+    } else {
+      this._state = App.defaultState();
+    }
+    return this._state;
+  },
+  save: function () {
+    try { localStorage.setItem(App.STORAGE_KEY, JSON.stringify(this._state)); }
+    catch (e) { console.warn("Could not persist state:", e); }
+  },
+  get: function () { return this.load(); },
+  reset: function () { this._state = App.defaultState(); this.save(); return this._state; }
+};
+
+/* fill in any missing keys from newer versions */
+App.migrate = function (s) {
+  var def = App.defaultState();
+  function merge(target, source) {
+    Object.keys(source).forEach(function (k) {
+      if (target[k] === undefined) target[k] = source[k];
+      else if (source[k] && typeof source[k] === "object" && !Array.isArray(source[k])) merge(target[k], source[k]);
+    });
+    return target;
+  }
+  return merge(s, def);
+};
+
+/* ---------- domain stat helper ---------- */
+App.recordAnswer = function (domainId, correct) {
+  var st = App.Store.get();
+  if (!st.domainStats[domainId]) st.domainStats[domainId] = { answered: 0, correct: 0 };
+  st.domainStats[domainId].answered++;
+  if (correct) st.domainStats[domainId].correct++;
+  st.profile.totalQuestions++;
+  if (correct) st.profile.totalCorrect++;
+};
+
+App.recordActivity = function (d) {
+  var st = App.Store.get();
+  var day = App.date.today();
+  if (!st.activity[day]) st.activity[day] = { sessions: 0, questions: 0, flashcards: 0, xp: 0 };
+  var a = st.activity[day];
+  a.sessions += d.sessions || 0;
+  a.questions += d.questions || 0;
+  a.flashcards += d.flashcards || 0;
+  a.xp += d.xp || 0;
+};
+
+App.todayActivity = function () {
+  var a = App.Store.get().activity[App.date.today()];
+  return a || { sessions: 0, questions: 0, flashcards: 0, xp: 0 };
+};
+
+/* ---------- backup export / import ---------- */
+App.exportProgress = function () {
+  var data = JSON.stringify(App.Store.get(), null, 2);
+  var blob = new Blob([data], { type: "application/json" });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = "bcemp-progress-" + App.date.today() + ".json";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
+
+App.importProgress = function (obj) {
+  if (!obj || typeof obj !== "object" || !obj.profile) throw new Error("This does not look like a BCEMP progress backup.");
+  App.Store._state = App.migrate(obj);
+  App.Store.save();
+};
+
+</script>
+<script>
+/* srs.js — SM-2-lite spaced-repetition scheduling shared by flashcards and
+ * missed questions. Ratings: "again" | "hard" | "good" | "easy".
+ * A card record: { ease, interval(days), dueDate, reps, lapses, lastSeen } */
+window.App = window.App || {};
+
+App.SRS = {
+  newCard: function () {
+    return { ease: 2.5, interval: 0, dueDate: App.date.today(), reps: 0, lapses: 0, lastSeen: null };
+  },
+
+  /* is this stored card due today (or overdue)? un-tracked items are "new". */
+  isDue: function (card) {
+    if (!card) return true;
+    return App.date.diffDays(App.date.today(), card.dueDate) >= 0;
+  },
+  overdueDays: function (card) {
+    if (!card || !card.dueDate) return 0;
+    return Math.max(0, App.date.diffDays(App.date.today(), card.dueDate));
+  },
+
+  /* apply a rating, return the updated card */
+  rate: function (card, rating) {
+    card = card || this.newCard();
+    var today = App.date.today();
+
+    if (rating === "again") {
+      card.reps = 0;
+      card.lapses = (card.lapses || 0) + 1;
+      card.interval = 0;                       // resurfaces in the next session
+      card.ease = Math.max(1.3, card.ease - 0.2);
+    } else {
+      if (card.reps === 0) {
+        card.interval = rating === "easy" ? 3 : 1;
+      } else if (card.reps === 1) {
+        card.interval = rating === "easy" ? 6 : (rating === "hard" ? 3 : 4);
+      } else {
+        var mult = rating === "hard" ? 0.8 : (rating === "easy" ? 1.3 : 1);
+        card.interval = Math.max(1, Math.round(card.interval * card.ease * mult));
+      }
+      card.reps++;
+      var delta = rating === "hard" ? -0.15 : (rating === "easy" ? 0.15 : 0);
+      card.ease = Math.min(3.0, Math.max(1.3, card.ease + delta));
+    }
+
+    card.dueDate = App.date.addDays(today, card.interval);
+    card.lastSeen = today;
+    return card;
+  },
+
+  /* convenience wrappers that persist into the store */
+  rateFlashcard: function (id, rating) {
+    var st = App.Store.get();
+    st.srs.flashcards[id] = this.rate(st.srs.flashcards[id], rating);
+    return st.srs.flashcards[id];
+  },
+  rateQuestion: function (id, rating) {
+    var st = App.Store.get();
+    st.srs.questions[id] = this.rate(st.srs.questions[id], rating);
+    return st.srs.questions[id];
+  }
+};
+
+</script>
+<script>
+/* content.js — unified access to seed + user-imported content. */
+window.App = window.App || {};
+
+App.Content = {
+  questions: function () {
+    var custom = App.Store.get().customContent.questions || [];
+    return (window.BCEMP_QUESTIONS || []).concat(custom);
+  },
+  flashcards: function () {
+    var custom = App.Store.get().customContent.flashcards || [];
+    return (window.BCEMP_FLASHCARDS || []).concat(custom);
+  },
+  questionById: function (id) {
+    return this.questions().filter(function (q) { return q.id === id; })[0];
+  },
+  flashcardById: function (id) {
+    return this.flashcards().filter(function (f) { return f.id === id; })[0];
+  },
+  byDomain: function (list, domainId) {
+    return list.filter(function (x) { return x.domain === domainId; });
+  }
+};
+
+</script>
+<script>
+/* analytics.js — per-domain accuracy, mastery, exam-readiness, activity heatmap. */
+window.App = window.App || {};
+
+App.Analytics = {
+  MIN_ATTEMPTS: 5, // attempts before a domain's mastery is considered "established"
+
+  domainStat: function (domainId) {
+    var s = App.Store.get().domainStats[domainId] || { answered: 0, correct: 0 };
+    var accuracy = s.answered ? s.correct / s.answered : 0;
+    return { answered: s.answered, correct: s.correct, accuracy: accuracy };
+  },
+
+  /* mastery blends accuracy with a confidence penalty for low sample size */
+  mastery: function (domainId) {
+    var s = this.domainStat(domainId);
+    if (s.answered === 0) return 0;
+    var confidence = Math.min(1, s.answered / this.MIN_ATTEMPTS);
+    return s.accuracy * confidence; // 0..1
+  },
+
+  /* domains sorted weakest-first; only those with at least one attempt */
+  weakestDomains: function (limit) {
+    var self = this;
+    var attempted = App.BCEMP_DOMAINS_WITH_ATTEMPTS();
+    attempted.sort(function (a, b) { return self.mastery(a.id) - self.mastery(b.id); });
+    return limit ? attempted.slice(0, limit) : attempted;
+  },
+
+  /* weighted readiness estimate (0..100). Untouched domains count as 0 so that
+   * coverage matters — you can't be "ready" in a domain you've never practiced. */
+  readiness: function () {
+    var self = this;
+    var totalW = 0, acc = 0;
+    (window.BCEMP_DOMAINS || []).forEach(function (d) {
+      totalW += d.weight;
+      acc += d.weight * self.mastery(d.id);
+    });
+    return totalW ? Math.round((acc / totalW) * 100) : 0;
+  },
+
+  readinessLabel: function (pct) {
+    if (pct >= 80) return "Exam-ready";
+    if (pct >= 65) return "On track";
+    if (pct >= 45) return "Building";
+    if (pct >= 20) return "Getting started";
+    return "Just beginning";
+  },
+
+  /* activity map for the last `days` days -> [{date, count, level(0-4)}] */
+  heatmap: function (days) {
+    var st = App.Store.get();
+    var out = [];
+    for (var i = days - 1; i >= 0; i--) {
+      var d = App.date.addDays(App.date.today(), -i);
+      var a = st.activity[d];
+      var q = a ? (a.questions + (a.flashcards || 0)) : 0;
+      var level = q === 0 ? 0 : q < 5 ? 1 : q < 12 ? 2 : q < 25 ? 3 : 4;
+      out.push({ date: d, count: q, level: level });
+    }
+    return out;
+  },
+
+  overallAccuracy: function () {
+    var p = App.Store.get().profile;
+    return p.totalQuestions ? Math.round((p.totalCorrect / p.totalQuestions) * 100) : 0;
+  },
+
+  /* number of question/flashcard reviews due today */
+  dueCounts: function () {
+    var st = App.Store.get();
+    var qDue = 0, fDue = 0;
+    App.Content.questions().forEach(function (q) {
+      var c = st.srs.questions[q.id];
+      if (c && App.SRS.isDue(c)) qDue++;
+    });
+    App.Content.flashcards().forEach(function (f) {
+      var c = st.srs.flashcards[f.id];
+      if (c && App.SRS.isDue(c)) fDue++;
+    });
+    return { questions: qDue, flashcards: fDue };
+  }
+};
+
+/* small helper so weakestDomains stays readable */
+App.BCEMP_DOMAINS_WITH_ATTEMPTS = function () {
+  var st = App.Store.get();
+  return (window.BCEMP_DOMAINS || []).filter(function (d) {
+    var s = st.domainStats[d.id];
+    return s && s.answered > 0;
+  });
+};
+
+</script>
+<script>
+/* gamification.js — XP, levels, streaks (with a grace day), and badges. */
+window.App = window.App || {};
+
+App.Game = {
+  XP: { correct: 10, incorrect: 4, flashcard: 5, sessionComplete: 25, overdueBonus: 3, perfectBonus: 20 },
+
+  /* ---------- levels: gently escalating cumulative thresholds ---------- */
+  xpForLevel: function (level) { // total XP required to REACH this level
+    // level 1 = 0, 2 = 100, 3 = 250, 4 = 450, ... (+50 each step)
+    var total = 0;
+    for (var l = 1; l < level; l++) total += 100 + (l - 1) * 50;
+    return total;
+  },
+  levelForXp: function (xp) {
+    var level = 1;
+    while (xp >= this.xpForLevel(level + 1)) level++;
+    return level;
+  },
+  levelProgress: function (xp) {
+    var level = this.levelForXp(xp);
+    var floor = this.xpForLevel(level);
+    var next = this.xpForLevel(level + 1);
+    return { level: level, into: xp - floor, need: next - floor, pct: Math.round(((xp - floor) / (next - floor)) * 100) };
+  },
+
+  addXp: function (amount) {
+    var p = App.Store.get().profile;
+    var before = p.level;
+    p.xp += amount;
+    p.level = this.levelForXp(p.xp);
+    return { gained: amount, leveledUp: p.level > before, level: p.level };
+  },
+
+  /* ---------- streak (called once per completed session) ---------- */
+  updateStreak: function () {
+    var p = App.Store.get().profile;
+    var today = App.date.today();
+    var result = { changed: false, streak: p.streak, graceUsed: false };
+
+    if (p.lastSessionDate === today) { result.streak = p.streak; return result; } // already counted today
+
+    if (!p.lastSessionDate) {
+      p.streak = 1;
+    } else {
+      var gap = App.date.diffDays(today, p.lastSessionDate);
+      if (gap === 1) {
+        p.streak += 1;
+      } else if (gap === 2 && this._graceAvailable(p, today)) {
+        p.streak += 1;               // forgive a single missed day
+        p.graceUsedDate = today;
+        result.graceUsed = true;
+      } else {
+        p.streak = 1;                // streak broken
+      }
+    }
+    p.lastSessionDate = today;
+    if (p.streak > p.longestStreak) p.longestStreak = p.streak;
+    result.changed = true;
+    result.streak = p.streak;
+    return result;
+  },
+  _graceAvailable: function (p, today) {
+    // at most one grace day per rolling 7 days
+    if (!p.graceUsedDate) return true;
+    return App.date.diffDays(today, p.graceUsedDate) >= 7;
+  },
+
+  /* ---------- badges ---------- */
+  BADGES: [
+    { id: "first-session", icon: "🎯", name: "First Steps", desc: "Complete your first study session." },
+    { id: "streak-3",   icon: "🔥", name: "Warming Up", desc: "Reach a 3-day streak." },
+    { id: "streak-7",   icon: "🔥", name: "One Week Strong", desc: "Reach a 7-day streak." },
+    { id: "streak-14",  icon: "🔥", name: "Fortnight Focus", desc: "Reach a 14-day streak." },
+    { id: "streak-30",  icon: "🏆", name: "Exam-Month Discipline", desc: "Reach a 30-day streak." },
+    { id: "q-100",      icon: "💯", name: "Century", desc: "Answer 100 practice questions." },
+    { id: "q-500",      icon: "🚀", name: "Question Machine", desc: "Answer 500 practice questions." },
+    { id: "perfect",    icon: "⭐", name: "Flawless", desc: "Score 100% on a full session (≥8 questions)." },
+    { id: "mastery",    icon: "🧠", name: "Domain Master", desc: "≥85% accuracy over ≥15 questions in any domain." },
+    { id: "full-syllabus", icon: "🗺️", name: "Full Sweep", desc: "Answer a question in every content domain." },
+    { id: "comeback",   icon: "💪", name: "Comeback", desc: "Clear 10+ overdue reviews in one day." },
+    { id: "level-5",    icon: "📈", name: "Rising", desc: "Reach level 5." }
+  ],
+
+  /* evaluate all badges against current state; returns newly-earned badge objects */
+  checkBadges: function (sessionResult) {
+    var st = App.Store.get();
+    var p = st.profile;
+    var earned = [];
+    var self = this;
+
+    function award(id) {
+      if (p.badges.indexOf(id) === -1) {
+        p.badges.push(id);
+        earned.push(self.BADGES.filter(function (b) { return b.id === id; })[0]);
+      }
+    }
+
+    if (p.totalSessions >= 1) award("first-session");
+    if (p.streak >= 3) award("streak-3");
+    if (p.streak >= 7) award("streak-7");
+    if (p.streak >= 14) award("streak-14");
+    if (p.streak >= 30) award("streak-30");
+    if (p.totalQuestions >= 100) award("q-100");
+    if (p.totalQuestions >= 500) award("q-500");
+    if (p.level >= 5) award("level-5");
+
+    if (sessionResult) {
+      if (sessionResult.total >= 8 && sessionResult.correct === sessionResult.total) award("perfect");
+      if (sessionResult.overdueCleared >= 10) award("comeback");
+    }
+
+    // domain mastery
+    (window.BCEMP_DOMAINS || []).forEach(function (d) {
+      var s = st.domainStats[d.id];
+      if (s && s.answered >= 15 && (s.correct / s.answered) >= 0.85) award("mastery");
+    });
+
+    // full syllabus coverage
+    var covered = (window.BCEMP_DOMAINS || []).every(function (d) {
+      var s = st.domainStats[d.id]; return s && s.answered > 0;
+    });
+    if (covered) award("full-syllabus");
+
+    return earned;
+  }
+};
+
+</script>
+<script>
+/* session.js — assembles the daily study session: due flashcards (warm-up),
+ * then a weighted mix of due-review + new + weak-topic questions. */
+window.App = window.App || {};
+
+App.Session = {
+  MODES: {
+    quick: { flashcards: 3, questions: 6, label: "Quick (~15 min)" },
+    full:  { flashcards: 5, questions: 12, label: "Full (~25–30 min)" }
+  },
+
+  _shuffle: function (arr) {
+    arr = arr.slice();
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  },
+
+  build: function (mode) {
+    var cfg = this.MODES[mode] || this.MODES.full;
+    var st = App.Store.get();
+
+    /* ---------- warm-up flashcards (due first, then new) ---------- */
+    var allF = App.Content.flashcards();
+    var dueF = [], newF = [];
+    allF.forEach(function (f) {
+      var c = st.srs.flashcards[f.id];
+      if (!c) newF.push(f);
+      else if (App.SRS.isDue(c)) dueF.push(f);
+    });
+    // prioritize most-overdue
+    dueF.sort(function (a, b) {
+      return App.SRS.overdueDays(st.srs.flashcards[b.id]) - App.SRS.overdueDays(st.srs.flashcards[a.id]);
+    });
+    var flashcards = dueF.concat(this._shuffle(newF)).slice(0, cfg.flashcards);
+
+    /* ---------- questions: due review + weak-topic + new ---------- */
+    var allQ = App.Content.questions();
+    var dueQ = [], newQ = [], seenQ = [];
+    allQ.forEach(function (q) {
+      var c = st.srs.questions[q.id];
+      if (!c) newQ.push(q);
+      else if (App.SRS.isDue(c)) dueQ.push(q);
+      else seenQ.push(q);
+    });
+    dueQ.sort(function (a, b) {
+      return App.SRS.overdueDays(st.srs.questions[b.id]) - App.SRS.overdueDays(st.srs.questions[a.id]);
+    });
+
+    var picked = [];
+    var usedIds = {};
+    function add(list, n) {
+      for (var i = 0; i < list.length && n > 0; i++) {
+        if (!usedIds[list[i].id]) { usedIds[list[i].id] = true; picked.push(list[i]); n--; }
+      }
+    }
+
+    // ~40% due reviews (spaced repetition priority)
+    add(dueQ, Math.ceil(cfg.questions * 0.4));
+
+    // ~30% weighted toward the two weakest domains
+    var weak = App.Analytics.weakestDomains(2).map(function (d) { return d.id; });
+    if (weak.length) {
+      var weakPool = this._shuffle(newQ.concat(seenQ).filter(function (q) { return weak.indexOf(q.domain) !== -1; }));
+      add(weakPool, Math.ceil(cfg.questions * 0.3));
+    }
+
+    // fill remainder with new questions, proportional to domain exam weight
+    var weightedNew = this._weightByDomain(this._shuffle(newQ));
+    add(weightedNew, cfg.questions - picked.length);
+
+    // last resort: any not-yet-used seen questions
+    add(this._shuffle(seenQ), cfg.questions - picked.length);
+
+    return {
+      mode: mode,
+      flashcards: flashcards,
+      questions: this._shuffle(picked).slice(0, cfg.questions)
+    };
+  },
+
+  /* order a list so higher-weight domains appear earlier (roughly proportional) */
+  _weightByDomain: function (list) {
+    return list.slice().sort(function (a, b) {
+      var wa = (window.BCEMP_DOMAIN_MAP[a.domain] || { weight: 1 }).weight;
+      var wb = (window.BCEMP_DOMAIN_MAP[b.domain] || { weight: 1 }).weight;
+      return (wb - wa) + (Math.random() - 0.5) * 6; // weight-biased with jitter
+    });
+  }
+};
+
+</script>
+<script>
+/* import.js — parse & validate user-supplied questions/flashcards (JSON or CSV)
+ * and merge them into custom content. Returns a summary; throws on hard errors. */
+window.App = window.App || {};
+
+App.Import = {
+  validDomains: function () { return (window.BCEMP_DOMAINS || []).map(function (d) { return d.id; }); },
+
+  _uid: function (prefix) {
+    return prefix + "-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 7);
+  },
+
+  /* ---------- JSON ---------- */
+  fromJson: function (text) {
+    var obj;
+    try { obj = JSON.parse(text); } catch (e) { throw new Error("Invalid JSON: " + e.message); }
+    var questions = obj.questions || [];
+    var flashcards = obj.flashcards || [];
+    if (!Array.isArray(questions) || !Array.isArray(flashcards)) {
+      throw new Error("Expected 'questions' and/or 'flashcards' arrays.");
+    }
+    return this._merge(questions, flashcards);
+  },
+
+  /* ---------- CSV ---------- */
+  /* Questions CSV header: domain,difficulty,stem,optionA,optionB,optionC,optionD,correct(1-4 or A-D),rationale,tags
+     Flashcards CSV header: domain,front,back,tags
+     Type is auto-detected from the header row. */
+  fromCsv: function (text) {
+    var rows = this._parseCsv(text);
+    if (rows.length < 2) throw new Error("CSV appears to be empty.");
+    var header = rows[0].map(function (h) { return h.trim().toLowerCase(); });
+    var isFlash = header.indexOf("front") !== -1 && header.indexOf("back") !== -1;
+    var questions = [], flashcards = [];
+
+    for (var r = 1; r < rows.length; r++) {
+      var row = rows[r];
+      if (row.length === 1 && row[0].trim() === "") continue; // blank line
+      var rec = {};
+      header.forEach(function (h, i) { rec[h] = (row[i] || "").trim(); });
+
+      if (isFlash) {
+        flashcards.push({ domain: rec.domain, front: rec.front, back: rec.back, tags: this._tags(rec.tags) });
+      } else {
+        var opts = [rec.optiona, rec.optionb, rec.optionc, rec.optiond].filter(function (o) { return o !== undefined && o !== ""; });
+        questions.push({
+          domain: rec.domain,
+          difficulty: parseInt(rec.difficulty, 10) || 2,
+          stem: rec.stem,
+          options: opts,
+          correctIndex: this._parseCorrect(rec.correct),
+          rationale: rec.rationale || "",
+          tags: this._tags(rec.tags)
+        });
+      }
+    }
+    return this._merge(questions, flashcards);
+  },
+
+  _parseCorrect: function (v) {
+    if (v === undefined || v === "") return 0;
+    v = String(v).trim().toUpperCase();
+    var letters = { A: 0, B: 1, C: 2, D: 3, E: 4 };
+    if (letters[v] !== undefined) return letters[v];
+    var n = parseInt(v, 10);
+    return isNaN(n) ? 0 : n - 1; // 1-based in CSV -> 0-based
+  },
+  _tags: function (v) { return v ? v.split(/[;|]/).map(function (t) { return t.trim(); }).filter(Boolean) : []; },
+
+  /* minimal RFC-4180-ish CSV parser (handles quotes, commas, newlines) */
+  _parseCsv: function (text) {
+    var rows = [], row = [], field = "", inQuotes = false;
+    text = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+    for (var i = 0; i < text.length; i++) {
+      var c = text.charAt(i);
+      if (inQuotes) {
+        if (c === '"') {
+          if (text.charAt(i + 1) === '"') { field += '"'; i++; } else { inQuotes = false; }
+        } else field += c;
+      } else {
+        if (c === '"') inQuotes = true;
+        else if (c === ",") { row.push(field); field = ""; }
+        else if (c === "\n") { row.push(field); rows.push(row); row = []; field = ""; }
+        else field += c;
+      }
+    }
+    if (field !== "" || row.length) { row.push(field); rows.push(row); }
+    return rows;
+  },
+
+  /* validate + assign ids + dedupe + persist */
+  _merge: function (questions, flashcards) {
+    var valid = this.validDomains();
+    var errors = [];
+    var st = App.Store.get();
+    var existingQ = {}, existingF = {};
+    App.Content.questions().forEach(function (q) { existingQ[(q.stem || "").trim().toLowerCase()] = true; });
+    App.Content.flashcards().forEach(function (f) { existingF[(f.front || "").trim().toLowerCase()] = true; });
+
+    var addedQ = 0, addedF = 0, skipped = 0;
+    var self = this;
+
+    questions.forEach(function (q, idx) {
+      if (!q.stem || !q.domain) { errors.push("Question row " + (idx + 1) + ": missing stem or domain."); return; }
+      if (valid.indexOf(q.domain) === -1) { errors.push("Question row " + (idx + 1) + ": unknown domain '" + q.domain + "'."); return; }
+      if (!Array.isArray(q.options) || q.options.length < 2) { errors.push("Question row " + (idx + 1) + ": needs at least 2 options."); return; }
+      if (typeof q.correctIndex !== "number" || q.correctIndex < 0 || q.correctIndex >= q.options.length) {
+        errors.push("Question row " + (idx + 1) + ": correct answer index out of range."); return;
+      }
+      if (existingQ[q.stem.trim().toLowerCase()]) { skipped++; return; }
+      q.id = q.id || self._uid("cq");
+      q.difficulty = q.difficulty || 2;
+      q.tags = q.tags || [];
+      st.customContent.questions.push(q);
+      existingQ[q.stem.trim().toLowerCase()] = true;
+      addedQ++;
+    });
+
+    flashcards.forEach(function (f, idx) {
+      if (!f.front || !f.back || !f.domain) { errors.push("Flashcard row " + (idx + 1) + ": missing front, back, or domain."); return; }
+      if (valid.indexOf(f.domain) === -1) { errors.push("Flashcard row " + (idx + 1) + ": unknown domain '" + f.domain + "'."); return; }
+      if (existingF[f.front.trim().toLowerCase()]) { skipped++; return; }
+      f.id = f.id || self._uid("cf");
+      f.tags = f.tags || [];
+      st.customContent.flashcards.push(f);
+      existingF[f.front.trim().toLowerCase()] = true;
+      addedF++;
+    });
+
+    App.Store.save();
+    return { addedQuestions: addedQ, addedFlashcards: addedF, skipped: skipped, errors: errors };
+  }
+};
+
+</script>
+<script>
+/* ui.js — rendering + interaction for all screens (vanilla DOM, no framework). */
+window.App = window.App || {};
+
+App.UI = {
+  root: null,
+  view: "dashboard",
+  active: null, // in-progress session runtime
+
+  /* ---------- utilities ---------- */
+  esc: function (s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  },
+  domainName: function (id) { var d = window.BCEMP_DOMAIN_MAP[id]; return d ? d.name : id; },
+  toast: function (msg) {
+    var t = document.createElement("div");
+    t.className = "toast"; t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(function () { t.style.opacity = "0"; t.style.transition = "opacity .4s"; }, 1800);
+    setTimeout(function () { t.remove(); }, 2300);
+  },
+  masteryClass: function (m) { return m >= 0.8 ? "bar-good" : m >= 0.55 ? "bar-mid" : m > 0 ? "bar-bad" : "bar-none"; },
+
+  ring: function (pct, centerTop, centerBottom) {
+    var r = 52, c = 2 * Math.PI * r, off = c * (1 - Math.max(0, Math.min(100, pct)) / 100);
+    return '<div class="ring-wrap"><svg width="120" height="120" viewBox="0 0 120 120">' +
+      '<circle cx="60" cy="60" r="52" fill="none" stroke="var(--bg-elev2)" stroke-width="10"/>' +
+      '<circle cx="60" cy="60" r="52" fill="none" stroke="url(#ringg)" stroke-width="10" stroke-linecap="round" ' +
+      'stroke-dasharray="' + c + '" stroke-dashoffset="' + off + '" transform="rotate(-90 60 60)"/>' +
+      '<defs><linearGradient id="ringg" x1="0" y1="0" x2="1" y2="1">' +
+      '<stop offset="0" stop-color="#5b8cff"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>' +
+      '</svg><div class="center"><div class="lv">' + centerTop + '</div><div class="lvl">' + centerBottom + '</div></div></div>';
+  },
+
+  /* ---------- router ---------- */
+  route: function (view) {
+    this.view = view;
+    this.active = null;
+    Array.prototype.forEach.call(document.querySelectorAll("#nav button"), function (b) {
+      b.classList.toggle("active", b.getAttribute("data-view") === view);
+    });
+    this.render();
+    window.scrollTo(0, 0);
+  },
+
+  render: function () {
+    if (!this.root) this.root = document.getElementById("app");
+    if (this.active) return; // session screens render themselves
+    if (this.view === "dashboard") this.renderDashboard();
+    else if (this.view === "progress") this.renderProgress();
+    else if (this.view === "settings") this.renderSettings();
+  },
+
+  /* ==================================================================
+   * DASHBOARD
+   * ================================================================== */
+  renderDashboard: function () {
+    var st = App.Store.get();
+    var p = st.profile;
+    var prog = App.Game.levelProgress(p.xp);
+    var days = App.date.daysUntil(st.settings.examDate);
+    var readiness = App.Analytics.readiness();
+    var due = App.Analytics.dueCounts();
+    var today = App.todayActivity();
+    var goal = st.settings.dailyGoalQuestions || 10;
+    var todayPct = Math.min(100, Math.round((today.questions / goal) * 100));
+    var name = st.settings.name ? (", " + this.esc(st.settings.name)) : "";
+
+    var html = "";
+
+    // hero
+    html += '<div class="card hero">' +
+      this.ring(prog.pct, "Lv " + prog.level, "level") +
+      '<div class="meta">' +
+        '<h2>Welcome back' + name + ' 👋</h2>' +
+        '<div style="color:var(--text-dim);font-size:14px">' + prog.into + " / " + prog.need + " XP to level " + (prog.level + 1) + '</div>' +
+        '<div class="xpbar"><span style="width:' + prog.pct + '%"></span></div>' +
+        '<div style="margin-top:8px;color:var(--text-faint);font-size:12px">Total XP: ' + p.xp + " · " + p.badges.length + " / " + App.Game.BADGES.length + ' badges</div>' +
+      '</div></div>';
+
+    // stat tiles
+    html += '<div class="grid cols-3 mt">' +
+      '<div class="card tile"><div class="big flame">' + p.streak + ' 🔥</div><div class="lbl">Day streak</div><div class="sub">Longest: ' + p.longestStreak + '</div></div>' +
+      '<div class="card tile countdown"><div class="big">' + (days >= 0 ? days : 0) + '</div><div class="lbl">Days to exam</div><div class="sub">' + this.esc(st.settings.examDate) + '</div></div>' +
+      '<div class="card tile"><div class="big">' + readiness + '%</div><div class="lbl">Exam readiness</div><div class="sub">' + App.Analytics.readinessLabel(readiness) + '</div></div>' +
+    '</div>';
+
+    // today's session
+    html += '<div class="section-title">Today\'s session</div>';
+    html += '<div class="card">' +
+      '<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">' +
+        this.ring(todayPct, today.questions + "/" + goal, "goal") +
+        '<div style="flex:1;min-width:220px">' +
+          '<div style="font-size:15px;margin-bottom:6px">' +
+            '<b>' + due.flashcards + '</b> flashcards &amp; <b>' + due.questions + '</b> questions due for review' +
+          '</div>' +
+          '<div style="color:var(--text-dim);font-size:13px;margin-bottom:14px">A daily session mixes spaced-repetition reviews, weak-topic drilling, and new material. Keep the streak alive!</div>' +
+          '<div class="btn-row">' +
+            '<button class="btn btn-primary" id="startFull">Start Full Session</button>' +
+            '<button class="btn btn-ghost" id="startQuick">Quick Session</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+    // focus areas
+    var weak = App.Analytics.weakestDomains(3);
+    if (weak.length) {
+      html += '<div class="section-title">Focus areas (weakest first)</div><div class="card">';
+      weak.forEach(function (d) {
+        var m = App.Analytics.mastery(d.id);
+        html += App.UI._domRow(d, m);
+      });
+      html += '</div>';
+    } else {
+      html += '<div class="section-title">Focus areas</div><div class="card empty">Complete a session to reveal your weakest domains — the app will then target them automatically.</div>';
+    }
+
+    // recent badges
+    var earned = p.badges.slice(-4).reverse();
+    if (earned.length) {
+      html += '<div class="section-title">Recent badges</div><div class="badges">';
+      earned.forEach(function (id) {
+        var b = App.Game.BADGES.filter(function (x) { return x.id === id; })[0];
+        if (b) html += '<div class="badge"><span class="ic">' + b.icon + '</span><span><span class="bn">' + b.name + '</span></span></div>';
+      });
+      html += '</div>';
+    }
+
+    this.root.innerHTML = html;
+    document.getElementById("startFull").onclick = function () { App.UI.startSession("full"); };
+    document.getElementById("startQuick").onclick = function () { App.UI.startSession("quick"); };
+  },
+
+  _domRow: function (d, mastery) {
+    var pct = Math.round(mastery * 100);
+    var s = App.Analytics.domainStat(d.id);
+    var label = s.answered ? pct + "% · " + s.correct + "/" + s.answered : "—";
+    return '<div class="dom-row"><div class="name">' + App.UI.esc(d.name) + '</div>' +
+      '<div class="track"><span class="' + App.UI.masteryClass(mastery) + '" style="width:' + Math.max(3, pct) + '%"></span></div>' +
+      '<div class="pct">' + label + '</div></div>';
+  },
+
+  /* ==================================================================
+   * PROGRESS
+   * ================================================================== */
+  renderProgress: function () {
+    var st = App.Store.get();
+    var readiness = App.Analytics.readiness();
+    var html = "";
+
+    html += '<div class="card center">' +
+      '<div style="font-size:44px;font-weight:800" class="countdown"><span class="big">' + readiness + '%</span></div>' +
+      '<div style="color:var(--text-dim)">' + App.Analytics.readinessLabel(readiness) + ' · weighted across all exam domains</div>' +
+      '<div style="color:var(--text-faint);font-size:12px;margin-top:6px">Overall accuracy ' + App.Analytics.overallAccuracy() + '% over ' + st.profile.totalQuestions + ' questions · ' + st.profile.totalSessions + ' sessions</div>' +
+    '</div>';
+
+    // all domains
+    html += '<div class="section-title">Mastery by domain</div><div class="card">';
+    (window.BCEMP_DOMAINS || []).forEach(function (d) {
+      html += App.UI._domRow(d, App.Analytics.mastery(d.id));
+    });
+    html += '</div>';
+
+    // heatmap
+    html += '<div class="section-title">Study activity (last 30 days)</div><div class="card">';
+    html += '<div class="heat">';
+    App.Analytics.heatmap(30).forEach(function (c) {
+      html += '<div class="cell' + (c.level ? " l" + c.level : "") + '" title="' + c.date + ": " + c.count + ' items"></div>';
+    });
+    html += '</div><div style="color:var(--text-faint);font-size:11px;margin-top:8px">Each square is a day; brighter = more reviews.</div></div>';
+
+    // badges
+    html += '<div class="section-title">Achievements (' + st.profile.badges.length + " / " + App.Game.BADGES.length + ')</div><div class="badges">';
+    App.Game.BADGES.forEach(function (b) {
+      var earned = st.profile.badges.indexOf(b.id) !== -1;
+      html += '<div class="badge' + (earned ? "" : " locked") + '"><span class="ic">' + b.icon + '</span>' +
+        '<span><span class="bn">' + b.name + '</span><br><span class="bd">' + App.UI.esc(b.desc) + '</span></span></div>';
+    });
+    html += '</div>';
+
+    this.root.innerHTML = html;
+  },
+
+  /* ==================================================================
+   * SETTINGS
+   * ================================================================== */
+  renderSettings: function () {
+    var st = App.Store.get();
+    var qCount = App.Content.questions().length, fCount = App.Content.flashcards().length;
+    var custom = st.customContent.questions.length + st.customContent.flashcards.length;
+
+    var html = "";
+    html += '<div class="section-title">Your plan</div><div class="card">' +
+      '<div class="field"><label>Your name (optional)</label><input id="setName" value="' + this.esc(st.settings.name) + '" placeholder="e.g. Diana"/></div>' +
+      '<div class="field"><label>Exam date</label><input id="setExam" type="date" value="' + this.esc(st.settings.examDate) + '"/><div class="hint">Drives the countdown and pacing.</div></div>' +
+      '<div class="field"><label>Daily question goal</label><input id="setGoal" type="number" min="4" max="60" value="' + (st.settings.dailyGoalQuestions || 10) + '"/></div>' +
+      '<button class="btn btn-primary" id="saveSettings">Save plan</button>' +
+      '<div id="settingsMsg"></div>' +
+    '</div>';
+
+    html += '<div class="section-title">Content library</div><div class="card">' +
+      '<div style="color:var(--text-dim);font-size:14px;margin-bottom:10px">Loaded: <b>' + qCount + '</b> questions · <b>' + fCount + '</b> flashcards (' + custom + ' imported by you).</div>' +
+      '<div class="field"><label>Import your own questions / flashcards (JSON or CSV)</label>' +
+        '<input id="importContent" type="file" accept=".json,.csv"/>' +
+        '<div class="hint">JSON must match <b>data/schema-example.json</b>. CSV headers — questions: <code>domain,difficulty,stem,optionA,optionB,optionC,optionD,correct,rationale,tags</code>; flashcards: <code>domain,front,back,tags</code>.</div>' +
+      '</div>' +
+      '<div id="importMsg"></div>' +
+    '</div>';
+
+    html += '<div class="section-title">Backup &amp; data</div><div class="card">' +
+      '<div style="color:var(--text-dim);font-size:14px;margin-bottom:12px">Your progress lives in this browser only. Export a backup regularly so a cleared cache doesn\'t erase your streak.</div>' +
+      '<div class="btn-row">' +
+        '<button class="btn btn-ghost" id="exportBtn">⬇ Export progress</button>' +
+        '<label class="btn btn-ghost" style="display:inline-block">⬆ Restore progress<input id="restoreInput" type="file" accept=".json" style="display:none"/></label>' +
+        '<button class="btn btn-ghost" id="resetBtn" style="color:var(--bad)">Reset all data</button>' +
+      '</div>' +
+      '<div id="dataMsg"></div>' +
+    '</div>';
+
+    this.root.innerHTML = html;
+    this._wireSettings();
+  },
+
+  _wireSettings: function () {
+    var st = App.Store.get();
+
+    document.getElementById("saveSettings").onclick = function () {
+      st.settings.name = document.getElementById("setName").value.trim();
+      var exam = document.getElementById("setExam").value;
+      if (exam) st.settings.examDate = exam;
+      var g = parseInt(document.getElementById("setGoal").value, 10);
+      st.settings.dailyGoalQuestions = (g >= 4 && g <= 60) ? g : 10;
+      App.Store.save();
+      document.getElementById("settingsMsg").innerHTML = '<div class="notice ok">Saved. ✔</div>';
+    };
+
+    document.getElementById("importContent").onchange = function (e) {
+      var file = e.target.files[0]; if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function () {
+        var msg = document.getElementById("importMsg");
+        try {
+          var res = file.name.toLowerCase().slice(-4) === ".csv"
+            ? App.Import.fromCsv(reader.result)
+            : App.Import.fromJson(reader.result);
+          var out = '<div class="notice ok">Imported ' + res.addedQuestions + ' questions and ' + res.addedFlashcards + ' flashcards';
+          if (res.skipped) out += ' (' + res.skipped + ' duplicates skipped)';
+          out += '. ✔</div>';
+          if (res.errors && res.errors.length) out += '<div class="notice err">Some rows were skipped:\n• ' + res.errors.slice(0, 12).map(App.UI.esc).join("\n• ") + '</div>';
+          msg.innerHTML = out;
+        } catch (err) {
+          msg.innerHTML = '<div class="notice err">' + App.UI.esc(err.message) + '</div>';
+        }
+        e.target.value = "";
+      };
+      reader.readAsText(file);
+    };
+
+    document.getElementById("exportBtn").onclick = function () { App.exportProgress(); App.UI.toast("Backup downloaded"); };
+
+    document.getElementById("restoreInput").onchange = function (e) {
+      var file = e.target.files[0]; if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function () {
+        var msg = document.getElementById("dataMsg");
+        try {
+          App.importProgress(JSON.parse(reader.result));
+          msg.innerHTML = '<div class="notice ok">Progress restored. ✔</div>';
+          App.UI.toast("Progress restored");
+          setTimeout(function () { App.UI.route("dashboard"); }, 700);
+        } catch (err) {
+          msg.innerHTML = '<div class="notice err">' + App.UI.esc(err.message) + '</div>';
+        }
+        e.target.value = "";
+      };
+      reader.readAsText(file);
+    };
+
+    document.getElementById("resetBtn").onclick = function () {
+      if (confirm("Erase ALL progress, streaks, and imported content? This cannot be undone.")) {
+        App.Store.reset();
+        App.UI.toast("All data reset");
+        App.UI.route("dashboard");
+      }
+    };
+  },
+
+  /* ==================================================================
+   * SESSION FLOW
+   * ================================================================== */
+  startSession: function (mode) {
+    var data = App.Session.build(mode);
+    if (!data.flashcards.length && !data.questions.length) {
+      this.toast("No content available — import some in Settings.");
+      return;
+    }
+    this.active = {
+      data: data,
+      phase: data.flashcards.length ? "flashcards" : "questions",
+      fIndex: 0, qIndex: 0,
+      results: { correct: 0, total: 0, xp: 0, overdueCleared: 0, flashcardsDone: 0 }
+    };
+    this.renderSession();
+  },
+
+  _sessionHeader: function (label, pct) {
+    return '<div class="session-head"><span class="pill">' + label + '</span>' +
+      '<button class="pill" id="quitSession" style="cursor:pointer">✕ End</button></div>' +
+      '<div class="prog"><span style="width:' + pct + '%"></span></div>';
+  },
+
+  renderSession: function () {
+    if (this.active.phase === "flashcards") this._renderFlashcard();
+    else this._renderQuestion();
+    var q = document.getElementById("quitSession");
+    if (q) q.onclick = function () {
+      if (confirm("End this session now? Progress so far is kept, but the session won't be marked complete.")) {
+        App.Store.save(); App.UI.route("dashboard");
+      }
+    };
+  },
+
+  _renderFlashcard: function () {
+    var a = this.active;
+    var fc = a.data.flashcards[a.fIndex];
+    var totalSteps = a.data.flashcards.length + a.data.questions.length;
+    var doneSteps = a.fIndex;
+    var pct = Math.round((doneSteps / totalSteps) * 100);
+
+    var html = this._sessionHeader("Warm-up · Flashcard " + (a.fIndex + 1) + "/" + a.data.flashcards.length, pct);
+    html += '<div class="card flash">' +
+      '<div class="q-domain">' + this.esc(this.domainName(fc.domain)) + '</div>' +
+      '<div class="front">' + this.esc(fc.front) + '</div>' +
+      '<div id="backWrap" style="display:none">' +
+        '<div class="back">' + this.esc(fc.back) + '</div>' +
+        '<div style="color:var(--text-faint);font-size:12px;margin-bottom:10px">How well did you recall this?</div>' +
+        '<div class="rate-row">' +
+          '<button class="rate again" data-r="again">Again<small>&lt;1d</small></button>' +
+          '<button class="rate hard" data-r="hard">Hard<small>soon</small></button>' +
+          '<button class="rate good" data-r="good">Good<small>days</small></button>' +
+          '<button class="rate easy" data-r="easy">Easy<small>longer</small></button>' +
+        '</div>' +
+      '</div>' +
+      '<button class="btn btn-primary" id="showBack" style="margin-top:10px">Show answer</button>' +
+    '</div>';
+
+    this.root.innerHTML = html;
+    document.getElementById("showBack").onclick = function () {
+      document.getElementById("backWrap").style.display = "block";
+      this.style.display = "none";
+    };
+    Array.prototype.forEach.call(document.querySelectorAll(".rate"), function (btn) {
+      btn.onclick = function () { App.UI._rateFlashcard(fc, btn.getAttribute("data-r")); };
+    });
+  },
+
+  _rateFlashcard: function (fc, rating) {
+    var a = this.active, st = App.Store.get();
+    App.SRS.rateFlashcard(fc.id, rating);
+    st.profile.totalFlashcards++;
+    var xp = App.Game.XP.flashcard;
+    a.results.xp += xp; a.results.flashcardsDone++;
+    App.Game.addXp(xp);
+    App.recordActivity({ flashcards: 1, xp: xp });
+    App.Store.save();
+
+    a.fIndex++;
+    if (a.fIndex >= a.data.flashcards.length) {
+      a.phase = a.data.questions.length ? "questions" : "done";
+      if (a.phase === "done") return this._finishSession();
+    }
+    this.renderSession();
+  },
+
+  _renderQuestion: function () {
+    var a = this.active;
+    var q = a.data.questions[a.qIndex];
+    var totalSteps = a.data.flashcards.length + a.data.questions.length;
+    var doneSteps = a.data.flashcards.length + a.qIndex;
+    var pct = Math.round((doneSteps / totalSteps) * 100);
+
+    var html = this._sessionHeader("Question " + (a.qIndex + 1) + "/" + a.data.questions.length, pct);
+    html += '<div class="card">' +
+      '<div class="q-domain">' + this.esc(this.domainName(q.domain)) + '</div>' +
+      '<div class="q-stem">' + this.esc(q.stem) + '</div>' +
+      '<div id="opts">';
+    q.options.forEach(function (opt, i) {
+      html += '<button class="opt" data-i="' + i + '">' + App.UI.esc(opt) + '</button>';
+    });
+    html += '</div><div id="afterQ"></div></div>';
+
+    this.root.innerHTML = html;
+    Array.prototype.forEach.call(document.querySelectorAll(".opt"), function (btn) {
+      btn.onclick = function () { App.UI._answerQuestion(q, parseInt(btn.getAttribute("data-i"), 10)); };
+    });
+  },
+
+  _answerQuestion: function (q, choice) {
+    var a = this.active, st = App.Store.get();
+    var correct = choice === q.correctIndex;
+    var wasOverdue = st.srs.questions[q.id] && App.SRS.isDue(st.srs.questions[q.id]) && App.SRS.overdueDays(st.srs.questions[q.id]) > 0;
+
+    // lock & mark options
+    Array.prototype.forEach.call(document.querySelectorAll(".opt"), function (btn) {
+      var i = parseInt(btn.getAttribute("data-i"), 10);
+      btn.disabled = true;
+      if (i === q.correctIndex) btn.classList.add("correct"), btn.innerHTML += '<span class="mark">✓</span>';
+      else if (i === choice) btn.classList.add("wrong"), btn.innerHTML += '<span class="mark">✕</span>';
+    });
+
+    // record
+    App.recordAnswer(q.domain, correct);
+    App.SRS.rateQuestion(q.id, correct ? "good" : "again");
+    var xp = correct ? App.Game.XP.correct : App.Game.XP.incorrect;
+    if (correct && wasOverdue) { xp += App.Game.XP.overdueBonus; a.results.overdueCleared++; }
+    a.results.total++; if (correct) a.results.correct++;
+    a.results.xp += xp;
+    App.Game.addXp(xp);
+    App.recordActivity({ questions: 1, xp: xp });
+    App.Store.save();
+
+    // rationale + next
+    var after = document.getElementById("afterQ");
+    after.innerHTML =
+      '<div class="rationale"><b>' + (correct ? "Correct." : "Not quite.") + '</b> ' + this.esc(q.rationale) +
+        '<div style="margin-top:8px;color:var(--text-faint);font-size:12px">+' + xp + ' XP' + (wasOverdue && correct ? ' · overdue review cleared' : '') + '</div>' +
+      '</div>' +
+      '<button class="btn btn-primary" id="nextQ">' + (a.qIndex + 1 >= a.data.questions.length ? "Finish session →" : "Next question →") + '</button>';
+    document.getElementById("nextQ").onclick = function () {
+      a.qIndex++;
+      if (a.qIndex >= a.data.questions.length) App.UI._finishSession();
+      else App.UI.renderSession();
+    };
+  },
+
+  _finishSession: function () {
+    var a = this.active, st = App.Store.get();
+    st.profile.totalSessions++;
+    var streak = App.Game.updateStreak();
+    var bonusXp = App.Game.XP.sessionComplete;
+    // perfect-session bonus
+    var perfect = a.results.total >= 8 && a.results.correct === a.results.total;
+    if (perfect) bonusXp += App.Game.XP.perfectBonus;
+    a.results.xp += bonusXp;
+    App.Game.addXp(bonusXp);
+    App.recordActivity({ sessions: 1, xp: bonusXp });
+
+    var newBadges = App.Game.checkBadges({ total: a.results.total, correct: a.results.correct, overdueCleared: a.results.overdueCleared });
+    App.Store.save();
+
+    this._renderSummary(streak, newBadges, perfect, bonusXp);
+  },
+
+  _renderSummary: function (streak, newBadges, perfect, bonusXp) {
+    var a = this.active;
+    var st = App.Store.get();
+    var pct = a.results.total ? Math.round((a.results.correct / a.results.total) * 100) : 0;
+    var prog = App.Game.levelProgress(st.profile.xp);
+
+    var html = '<div class="card summary-hero">' +
+      '<div style="color:var(--text-dim);font-size:13px;letter-spacing:1px;text-transform:uppercase">Session complete</div>' +
+      '<div class="score">' + (a.results.total ? pct + "%" : "✓") + '</div>' +
+      '<div style="color:var(--text-dim)">' + a.results.correct + " / " + a.results.total + " questions · " + a.results.flashcardsDone + ' flashcards reviewed</div>' +
+      (perfect ? '<div style="color:var(--good);font-weight:700;margin-top:6px">⭐ Perfect session!</div>' : '') +
+    '</div>';
+
+    html += '<div class="reward"><span class="ic">✨</span><div><b>+' + a.results.xp + ' XP</b> earned this session' +
+      '<div style="color:var(--text-faint);font-size:12px">Now level ' + prog.level + ' · ' + prog.into + '/' + prog.need + ' to next</div></div></div>';
+
+    html += '<div class="reward"><span class="ic">🔥</span><div><b>' + st.profile.streak + '-day streak</b>' +
+      (streak.graceUsed ? ' <span style="color:var(--warn)">(grace day used)</span>' : '') +
+      '<div style="color:var(--text-faint);font-size:12px">' + App.date.daysUntil(st.settings.examDate) + ' days until your exam — keep it going.</div></div></div>';
+
+    if (newBadges.length) {
+      newBadges.forEach(function (b) {
+        html += '<div class="reward pop-badge"><span class="ic">' + b.icon + '</span><div><b>Badge unlocked: ' + b.name + '</b>' +
+          '<div style="color:var(--text-faint);font-size:12px">' + App.UI.esc(b.desc) + '</div></div></div>';
+      });
+    }
+
+    // weakest domain callout
+    var weak = App.Analytics.weakestDomains(1)[0];
+    if (weak) {
+      html += '<div class="section-title">Tomorrow\'s focus</div><div class="card">' +
+        '<div style="font-size:14px">Your weakest area right now is <b>' + this.esc(weak.name) + '</b> (' + Math.round(App.Analytics.mastery(weak.id) * 100) + '% mastery). The next session will lean into it.</div></div>';
+    }
+
+    html += '<div class="btn-row mt center" style="justify-content:center">' +
+      '<button class="btn btn-primary" id="anotherFull">Another session</button>' +
+      '<button class="btn btn-ghost" id="toHome">Back to home</button></div>';
+
+    this.active = null; // session over
+    this.root.innerHTML = html;
+    document.getElementById("anotherFull").onclick = function () { App.UI.startSession("full"); };
+    document.getElementById("toHome").onclick = function () { App.UI.route("dashboard"); };
+  }
+};
+
+</script>
+<script>
+/* app.js — bootstrap: load state, wire navigation, render the first screen. */
+(function () {
+  function boot() {
+    App.Store.load();
+
+    // nav
+    Array.prototype.forEach.call(document.querySelectorAll("#nav button"), function (btn) {
+      btn.addEventListener("click", function () {
+        App.UI.route(btn.getAttribute("data-view"));
+      });
+    });
+
+    App.UI.root = document.getElementById("app");
+    App.UI.route("dashboard");
+
+    // dev helper: App.debugAdvanceDay(n) shifts stored dates back n days so
+    // reviews/streaks can be tested without changing the system clock.
+    App.debugAdvanceDay = function (n) {
+      n = n || 1;
+      var st = App.Store.get();
+      function shift(map) {
+        Object.keys(map).forEach(function (id) {
+          if (map[id] && map[id].dueDate) map[id].dueDate = App.date.addDays(map[id].dueDate, -n);
+          if (map[id] && map[id].lastSeen) map[id].lastSeen = App.date.addDays(map[id].lastSeen, -n);
+        });
+      }
+      shift(st.srs.questions); shift(st.srs.flashcards);
+      if (st.profile.lastSessionDate) st.profile.lastSessionDate = App.date.addDays(st.profile.lastSessionDate, -n);
+      App.Store.save();
+      App.UI.route("dashboard");
+      console.log("Advanced " + n + " day(s): reviews should now be due.");
+    };
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+
+</script>
+</body>
+</html>
