@@ -5,6 +5,7 @@ App.UI = {
   root: null,
   view: "dashboard",
   active: null, // in-progress session runtime
+  compareFilter: "all",
 
   /* ---------- utilities ---------- */
   esc: function (s) {
@@ -22,6 +23,50 @@ App.UI = {
   },
   masteryClass: function (m) { return m >= 0.8 ? "bar-good" : m >= 0.55 ? "bar-mid" : m > 0 ? "bar-bad" : "bar-none"; },
 
+  /* kawaii capsule mascot (inline SVG, offline). px = width/height */
+  mascot: function (px, cls) {
+    px = px || 32;
+    return '<svg class="' + (cls || "") + '" viewBox="0 0 48 48" width="' + px + '" height="' + px + '" aria-hidden="true">' +
+      '<rect x="8" y="16" width="32" height="16" rx="8" fill="#F3EFE6" stroke="#4F8A72" stroke-width="2.2"/>' +
+      '<path d="M16 16h8v16h-8a8 8 0 0 1-8-8 8 8 0 0 1 8-8z" fill="#E0895B" opacity="0.22"/>' +
+      '<path d="M24 17.2V30.8" stroke="#4F8A72" stroke-width="2.2"/>' +
+      '<circle cx="18.4" cy="24" r="1.7" fill="#3A382F"/><circle cx="29.6" cy="24" r="1.7" fill="#3A382F"/>' +
+      '<circle cx="14.8" cy="26.4" r="1.5" fill="#EE9BB6" opacity="0.75"/><circle cx="33.2" cy="26.4" r="1.5" fill="#EE9BB6" opacity="0.75"/>' +
+      '<path d="M21.6 27q2.4 2.1 4.8 0" stroke="#3A382F" stroke-width="1.4" fill="none" stroke-linecap="round"/>' +
+      '</svg>';
+  },
+
+  /* offline confetti burst using emoji particles */
+  confetti: function (count) {
+    count = count || 44;
+    var pieces = ["🎉", "✨", "💕", "⭐", "🌸", "🎀"]; // 🎉 ✨ 💕 ⭐ 🌸 🎀
+    var wrap = document.createElement("div");
+    wrap.className = "confetti-wrap";
+    for (var i = 0; i < count; i++) {
+      var s = document.createElement("span");
+      s.className = "confetti-piece";
+      s.textContent = pieces[Math.floor(Math.random() * pieces.length)];
+      s.style.left = (Math.random() * 100) + "vw";
+      s.style.fontSize = (13 + Math.random() * 15) + "px";
+      s.style.animationDelay = (Math.random() * 0.35) + "s";
+      s.style.animationDuration = (1.5 + Math.random() * 1.3) + "s";
+      wrap.appendChild(s);
+    }
+    document.body.appendChild(wrap);
+    setTimeout(function () { wrap.remove(); }, 3200);
+  },
+
+  /* Fisher-Yates: return [0..n-1] in random order (used to shuffle MCQ options) */
+  _shuffleIndices: function (n) {
+    var a = [];
+    for (var i = 0; i < n; i++) a.push(i);
+    for (var j = n - 1; j > 0; j--) {
+      var k = Math.floor(Math.random() * (j + 1));
+      var t = a[j]; a[j] = a[k]; a[k] = t;
+    }
+    return a;
+  },
+
   ring: function (pct, centerTop, centerBottom) {
     var r = 52, c = 2 * Math.PI * r, off = c * (1 - Math.max(0, Math.min(100, pct)) / 100);
     return '<div class="ring-wrap"><svg width="120" height="120" viewBox="0 0 120 120">' +
@@ -29,7 +74,7 @@ App.UI = {
       '<circle cx="60" cy="60" r="52" fill="none" stroke="url(#ringg)" stroke-width="10" stroke-linecap="round" ' +
       'stroke-dasharray="' + c + '" stroke-dashoffset="' + off + '" transform="rotate(-90 60 60)"/>' +
       '<defs><linearGradient id="ringg" x1="0" y1="0" x2="1" y2="1">' +
-      '<stop offset="0" stop-color="#5b8cff"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>' +
+      '<stop offset="0" stop-color="#5B9E82"/><stop offset="1" stop-color="#86C0A2"/></linearGradient></defs>' +
       '</svg><div class="center"><div class="lv">' + centerTop + '</div><div class="lvl">' + centerBottom + '</div></div></div>';
   },
 
@@ -48,6 +93,7 @@ App.UI = {
     if (!this.root) this.root = document.getElementById("app");
     if (this.active) return; // session screens render themselves
     if (this.view === "dashboard") this.renderDashboard();
+    else if (this.view === "compare") this.renderComparisons();
     else if (this.view === "progress") this.renderProgress();
     else if (this.view === "settings") this.renderSettings();
   },
@@ -114,7 +160,7 @@ App.UI = {
       });
       html += '</div>';
     } else {
-      html += '<div class="section-title">Focus areas</div><div class="card empty">Complete a session to reveal your weakest domains — the app will then target them automatically.</div>';
+      html += '<div class="section-title">Focus areas</div><div class="card empty">' + this.mascot(64, "mascot-lg") + '<div style="margin-top:6px">Complete a session and I\'ll reveal your weakest domains — then target them for you automatically. You\'ve got this! 🌸</div></div>';
     }
 
     // recent badges
@@ -181,6 +227,50 @@ App.UI = {
     html += '</div>';
 
     this.root.innerHTML = html;
+  },
+
+  /* ==================================================================
+   * COMPARE (side-by-side review cards)
+   * ================================================================== */
+  renderComparisons: function () {
+    var self = this;
+    var list = window.BCEMP_COMPARISONS || [];
+    var filter = this.compareFilter || "all";
+
+    var sections = ["all"];
+    list.forEach(function (c) { if (sections.indexOf(c.section) === -1) sections.push(c.section); });
+    var shown = filter === "all" ? list : list.filter(function (c) { return c.section === filter; });
+
+    var html = '<div class="section-title" style="margin-top:6px">Comparison review · ' + list.length + ' cards</div>';
+    html += '<div style="color:var(--text-dim);font-size:13px;margin:0 4px 12px">High-yield side-by-side distinctions. Tap a topic to filter.</div>';
+
+    html += '<div class="cmp-filters">';
+    sections.forEach(function (s) {
+      html += '<button class="cmp-chip' + (s === filter ? " on" : "") + '" data-s="' + self.esc(s) + '">' + (s === "all" ? "All" : self.esc(s)) + '</button>';
+    });
+    html += '</div>';
+
+    shown.forEach(function (c) {
+      html += '<div class="card cmp-card">';
+      html += '<div class="cmp-head"><div class="cmp-title">' + self.esc(c.title) + '</div><div class="cmp-sec">' + self.esc(c.section) + '</div></div>';
+      if (c.tagline) html += '<div class="cmp-tag">' + self.esc(c.tagline) + '</div>';
+      html += '<div class="cmp-scroll"><table class="cmp-table"><thead><tr><th class="cmp-rl"></th>';
+      c.cols.forEach(function (col) { html += '<th>' + self.esc(col) + '</th>'; });
+      html += '</tr></thead><tbody>';
+      c.rows.forEach(function (row) {
+        html += '<tr><td class="cmp-rl" data-label="">' + self.esc(row[0]) + '</td>';
+        for (var i = 1; i < row.length; i++) {
+          html += '<td data-label="' + self.esc(c.cols[i - 1]) + '">' + self.esc(row[i]) + '</td>';
+        }
+        html += '</tr>';
+      });
+      html += '</tbody></table></div></div>';
+    });
+
+    this.root.innerHTML = html;
+    Array.prototype.forEach.call(document.querySelectorAll(".cmp-chip"), function (btn) {
+      btn.onclick = function () { App.UI.compareFilter = btn.getAttribute("data-s"); App.UI.renderComparisons(); };
+    });
   },
 
   /* ==================================================================
@@ -386,8 +476,11 @@ App.UI = {
       '<div class="q-domain">' + this.esc(this.domainName(q.domain)) + '</div>' +
       '<div class="q-stem">' + this.esc(q.stem) + '</div>' +
       '<div id="opts">';
-    q.options.forEach(function (opt, i) {
-      html += '<button class="opt" data-i="' + i + '">' + App.UI.esc(opt) + '</button>';
+    // randomize option order each presentation (like the real exam) so the
+    // correct answer's position is never predictable. data-i keeps the ORIGINAL
+    // index, so scoring/highlighting against q.correctIndex stays correct.
+    this._shuffleIndices(q.options.length).forEach(function (oi) {
+      html += '<button class="opt" data-i="' + oi + '">' + App.UI.esc(q.options[oi]) + '</button>';
     });
     html += '</div><div id="afterQ"></div></div>';
 
@@ -460,6 +553,7 @@ App.UI = {
     var prog = App.Game.levelProgress(st.profile.xp);
 
     var html = '<div class="card summary-hero">' +
+      this.mascot(72, "mascot-lg") +
       '<div style="color:var(--text-dim);font-size:13px;letter-spacing:1px;text-transform:uppercase">Session complete</div>' +
       '<div class="score">' + (a.results.total ? pct + "%" : "✓") + '</div>' +
       '<div style="color:var(--text-dim)">' + a.results.correct + " / " + a.results.total + " questions · " + a.results.flashcardsDone + ' flashcards reviewed</div>' +
@@ -493,6 +587,9 @@ App.UI = {
 
     this.active = null; // session over
     this.root.innerHTML = html;
+    // celebrate! bigger burst for perfect sessions, new badges, or streak milestones
+    var big = perfect || newBadges.length > 0 || [3, 7, 14, 30].indexOf(st.profile.streak) !== -1;
+    this.confetti(big ? 80 : 40);
     document.getElementById("anotherFull").onclick = function () { App.UI.startSession("full"); };
     document.getElementById("toHome").onclick = function () { App.UI.route("dashboard"); };
   }

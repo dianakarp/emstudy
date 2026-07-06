@@ -7,11 +7,11 @@
 
   <!-- PWA / installable + offline -->
   <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#0e1220" />
+  <meta name="theme-color" content="#F4F1E9" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="BCEMP" />
 
   <link rel="stylesheet" href="css/styles.css" />
@@ -20,7 +20,7 @@
   <div class="wrap">
     <div class="topbar">
       <div class="brand">
-        <div class="logo">Rx</div>
+        <div class="logo"><svg viewBox="0 0 48 48" width="32" height="32" aria-hidden="true"><rect x="8" y="16" width="32" height="16" rx="8" fill="#F3EFE6" stroke="#4F8A72" stroke-width="2.2"/><path d="M16 16h8v16h-8a8 8 0 0 1-8-8 8 8 0 0 1 8-8z" fill="#E0895B" opacity="0.22"/><path d="M24 17.2V30.8" stroke="#4F8A72" stroke-width="2.2"/><circle cx="18.4" cy="24" r="1.7" fill="#3A382F"/><circle cx="29.6" cy="24" r="1.7" fill="#3A382F"/><circle cx="14.8" cy="26.4" r="1.5" fill="#EE9BB6" opacity="0.75"/><circle cx="33.2" cy="26.4" r="1.5" fill="#EE9BB6" opacity="0.75"/><path d="M21.6 27q2.4 2.1 4.8 0" stroke="#3A382F" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg></div>
         <div>
           <h1>BCEMP Trainer</h1>
           <small>EMERGENCY MEDICINE PHARMACIST PREP</small>
@@ -28,6 +28,7 @@
       </div>
       <nav class="nav" id="nav">
         <button data-view="dashboard" class="active">Home</button>
+        <button data-view="compare">Compare</button>
         <button data-view="progress">Progress</button>
         <button data-view="settings">Settings</button>
       </nav>
@@ -45,7 +46,10 @@
   <!-- data (assign to window.*) -->
   <script src="data/domains.js"></script>
   <script src="data/questions.js"></script>
+  <script src="data/questions2.js"></script>
   <script src="data/flashcards.js"></script>
+  <script src="data/quiz-flashcards.js"></script>
+  <script src="data/comparisons.js"></script>
   <!-- logic -->
   <script src="js/state.js"></script>
   <script src="js/srs.js"></script>
