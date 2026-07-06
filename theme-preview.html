@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BCEMP Trainer — Theme Options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Lora:wght@500;600&family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #ece9f2; font-family: 'Nunito', sans-serif; padding: 24px 16px 60px; color: #333; }
+  .page { max-width: 1080px; margin: 0 auto; }
+  .page > h1 { font-family: 'Quicksand', sans-serif; text-align: center; font-size: 26px; margin-bottom: 4px; color: #4a4458; }
+  .page > p { text-align: center; color: #7a7488; margin-bottom: 26px; font-size: 14px; }
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+
+  /* phone frame */
+  .phone { border-radius: 26px; padding: 18px; overflow: hidden; position: relative; min-height: 460px; box-shadow: 0 14px 40px rgba(80,60,110,.18); }
+  .label { position: absolute; top: 12px; right: 14px; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; letter-spacing: .3px; }
+  .bar { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .logo { width: 40px; height: 40px; border-radius: 13px; display: grid; place-items: center; font-weight: 800; font-size: 16px; }
+  .brand-t { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 17px; line-height: 1.1; }
+  .brand-s { font-size: 10px; opacity: .7; font-weight: 600; }
+  .tiles { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px; margin-bottom: 15px; }
+  .tile { border-radius: 16px; padding: 11px 6px; text-align: center; }
+  .tile .n { font-size: 20px; font-weight: 800; }
+  .tile .l { font-size: 10px; font-weight: 600; opacity: .75; margin-top: 2px; }
+  .qcard { border-radius: 18px; padding: 15px; margin-bottom: 13px; }
+  .qdom { font-size: 10px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; margin-bottom: 7px; }
+  .qstem { font-size: 13.5px; font-weight: 600; margin-bottom: 12px; line-height: 1.4; }
+  .opt { border-radius: 13px; padding: 10px 13px; font-size: 12.5px; font-weight: 600; margin-bottom: 8px; }
+  .opt.correct { font-weight: 700; }
+  .cta { display: block; width: 100%; text-align: center; border: none; border-radius: 15px; padding: 13px; font-size: 14px; font-weight: 800; font-family: inherit; cursor: pointer; }
+  .mascot { font-size: 15px; }
+
+  /* ============ A · Strawberry Milk (light kawaii) ============ */
+  .t-a { background: #FFF1F6; font-family: 'Quicksand', sans-serif; }
+  .t-a .label { background: #FFD9E7; color: #B24B75; }
+  .t-a .logo { background: linear-gradient(135deg,#FF9EC4,#C89BF0); color: #fff; }
+  .t-a .brand-t { color: #6b4a5c; } .t-a .brand-s { color: #b98aa2; }
+  .t-a .tile { background: #fff; border: 1.5px solid #FFE0EC; }
+  .t-a .tile .n { color: #E86B9E; } .t-a .tile .l { color: #9a7688; }
+  .t-a .qcard { background: #fff; border: 1.5px solid #FFE0EC; }
+  .t-a .qdom { color: #C89BF0; }
+  .t-a .qstem { color: #5c4a54; }
+  .t-a .opt { background: #FFF4F8; border: 1.5px solid #FFDCEA; color: #6b5560; }
+  .t-a .opt.correct { background: #E8FBF2; border-color: #9FE7C7; color: #2e9e73; }
+  .t-a .cta { background: linear-gradient(135deg,#FF9EC4,#C89BF0); color: #fff; }
+
+  /* ============ B · Cotton Candy Dark (night kawaii) ============ */
+  .t-b { background: #241B33; font-family: 'Quicksand', sans-serif; }
+  .t-b .label { background: #3d2f56; color: #E7B6FF; }
+  .t-b .logo { background: linear-gradient(135deg,#FF9ECF,#B79CFF); color: #2a1b3d; }
+  .t-b .brand-t { color: #F3EAFB; } .t-b .brand-s { color: #a894c4; }
+  .t-b .tile { background: #322745; }
+  .t-b .tile .n { color: #FF9ECF; } .t-b .tile .l { color: #b3a4cc; }
+  .t-b .qcard { background: #322745; }
+  .t-b .qdom { color: #8DE6C0; }
+  .t-b .qstem { color: #EDE7F5; }
+  .t-b .opt { background: #3b2f52; color: #d9cfe9; }
+  .t-b .opt.correct { background: #234a3d; color: #8DE6C0; }
+  .t-b .cta { background: linear-gradient(135deg,#FF9ECF,#B79CFF); color: #2a1b3d; }
+
+  /* ============ C · Sanrio Pop (bright & bubbly) ============ */
+  .t-c { background: #FFFDF6; font-family: 'M PLUS Rounded 1c', sans-serif; }
+  .t-c .label { background: #FFE066; color: #8a6a00; }
+  .t-c .logo { background: #FF7EB6; color: #fff; }
+  .t-c .brand-t { color: #ff5fa2; } .t-c .brand-s { color: #78bff0; }
+  .t-c .tile { background: #EAF7FF; border: 2px solid #CDEBFF; }
+  .t-c .tile .n { color: #3aa0e8; } .t-c .tile .l { color: #7a8aa0; }
+  .t-c .qcard { background: #fff; border: 2px solid #FFD6E9; }
+  .t-c .qdom { color: #FF7EB6; }
+  .t-c .qstem { color: #4a4560; }
+  .t-c .opt { background: #F4FBFF; border: 2px solid #D6EEFF; color: #556; }
+  .t-c .opt.correct { background: #FFF6C9; border-color: #FFE066; color: #8a6a00; }
+  .t-c .cta { background: #FF7EB6; color: #fff; }
+
+  /* ============ D · Matcha Latte (cozy academic) ============ */
+  .t-d { background: #F7F5F0; font-family: 'Nunito', sans-serif; }
+  .t-d .label { background: #E3EDEB; color: #1F4D4A; }
+  .t-d .logo { background: #4F8A72; color: #fff; border-radius: 12px; }
+  .t-d .brand-t { font-family: 'Lora', serif; color: #2a3a35; } .t-d .brand-s { color: #8a9a92; }
+  .t-d .tile { background: #fff; border: 1px solid #E5E2D9; }
+  .t-d .tile .n { color: #4F8A72; } .t-d .tile .l { color: #8a9088; }
+  .t-d .qcard { background: #fff; border: 1px solid #E5E2D9; }
+  .t-d .qdom { color: #D98E6A; }
+  .t-d .qstem { color: #3a3a34; }
+  .t-d .opt { background: #FAF9F5; border: 1px solid #E5E2D9; color: #55554e; }
+  .t-d .opt.correct { background: #E6EDE0; border-color: #A9C89B; color: #3b6d2f; }
+  .t-d .cta { background: #4F8A72; color: #fff; border-radius: 12px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>BCEMP Trainer — pick a vibe ♡</h1>
+  <p>Four directions for the redesign. Same app, different skin. Open on your phone too to see how each feels.</p>
+  <div class="grid">
+
+    <div class="phone t-a">
+      <div class="label">A · Strawberry Milk</div>
+      <div class="bar"><div class="logo">Rx</div><div><div class="brand-t">BCEMP Trainer</div><div class="brand-s">EMERGENCY MED PHARMACY</div></div></div>
+      <div class="tiles"><div class="tile"><div class="n">12🔥</div><div class="l">streak</div></div><div class="tile"><div class="n">30</div><div class="l">days left</div></div><div class="tile"><div class="n">68%</div><div class="l">ready</div></div></div>
+      <div class="qcard"><div class="qdom">Toxicology</div><div class="qstem">Antidote for a calcium-channel-blocker overdose refractory to calcium?</div><div class="opt">Glucagon only</div><div class="opt correct">High-dose insulin ✓</div><div class="opt">Naloxone</div></div>
+      <button class="cta">Start today's session ♡</button>
+    </div>
+
+    <div class="phone t-b">
+      <div class="label">B · Cotton Candy Dark</div>
+      <div class="bar"><div class="logo">Rx</div><div><div class="brand-t">BCEMP Trainer</div><div class="brand-s">EMERGENCY MED PHARMACY</div></div></div>
+      <div class="tiles"><div class="tile"><div class="n">12🔥</div><div class="l">streak</div></div><div class="tile"><div class="n">30</div><div class="l">days left</div></div><div class="tile"><div class="n">68%</div><div class="l">ready</div></div></div>
+      <div class="qcard"><div class="qdom">Toxicology</div><div class="qstem">Antidote for a calcium-channel-blocker overdose refractory to calcium?</div><div class="opt">Glucagon only</div><div class="opt correct">High-dose insulin ✓</div><div class="opt">Naloxone</div></div>
+      <button class="cta">Start today's session ✨</button>
+    </div>
+
+    <div class="phone t-c">
+      <div class="label">C · Sanrio Pop</div>
+      <div class="bar"><div class="logo">Rx</div><div><div class="brand-t">BCEMP Trainer</div><div class="brand-s">EMERGENCY MED PHARMACY</div></div></div>
+      <div class="tiles"><div class="tile"><div class="n">12🔥</div><div class="l">streak</div></div><div class="tile"><div class="n">30</div><div class="l">days left</div></div><div class="tile"><div class="n">68%</div><div class="l">ready</div></div></div>
+      <div class="qcard"><div class="qdom">Toxicology</div><div class="qstem">Antidote for a calcium-channel-blocker overdose refractory to calcium?</div><div class="opt">Glucagon only</div><div class="opt correct">High-dose insulin ✓</div><div class="opt">Naloxone</div></div>
+      <button class="cta">Start today's session ⭐</button>
+    </div>
+
+    <div class="phone t-d">
+      <div class="label">D · Matcha Latte</div>
+      <div class="bar"><div class="logo">Rx</div><div><div class="brand-t">BCEMP Trainer</div><div class="brand-s">EMERGENCY MED PHARMACY</div></div></div>
+      <div class="tiles"><div class="tile"><div class="n">12</div><div class="l">streak</div></div><div class="tile"><div class="n">30</div><div class="l">days left</div></div><div class="tile"><div class="n">68%</div><div class="l">ready</div></div></div>
+      <div class="qcard"><div class="qdom">Toxicology</div><div class="qstem">Antidote for a calcium-channel-blocker overdose refractory to calcium?</div><div class="opt">Glucagon only</div><div class="opt correct">High-dose insulin ✓</div><div class="opt">Naloxone</div></div>
+      <button class="cta">Start today's session</button>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

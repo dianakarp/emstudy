@@ -13,9 +13,14 @@ window.BCEMP_DOMAINS = [
   { id: "pain",      name: "Analgesia & Sedation",              weight: 6,  blurb: "Procedural sedation, opioids, non-opioid analgesia" },
   { id: "endo",      name: "Endocrine & Metabolic",             weight: 6,  blurb: "DKA/HHS, hyperkalemia, electrolyte emergencies" },
   { id: "env",       name: "Environmental Emergencies",         weight: 3,  blurb: "Hyperthermia, hypothermia, envenomation" },
-  { id: "special",   name: "Special Populations",               weight: 5,  blurb: "Peds, pregnancy, renal/hepatic, geriatric dosing" },
+  { id: "special",   name: "Special Populations",               weight: 5,  blurb: "Peds, pregnancy, obstetric, geriatric dosing" },
   { id: "safety",    name: "Medication & Patient Safety",       weight: 5,  blurb: "Systems, high-alert meds, error prevention" },
-  { id: "pmr",       name: "Practice Management & Research",     weight: 3,  blurb: "Evidence appraisal, guidelines, EM pharmacist role" }
+  { id: "pmr",       name: "Practice Management & Research",     weight: 4,  blurb: "Biostatistics, evidence appraisal, guidelines, EM pharmacist role" },
+  { id: "renal",     name: "Renal & Acid-Base",                 weight: 5,  blurb: "AKI, electrolyte & acid-base emergencies, dosing in renal failure" },
+  { id: "gi",        name: "GI & Hepatic Emergencies",          weight: 4,  blurb: "GI bleed, liver failure, pancreatitis" },
+  { id: "psych",     name: "Psychiatric & Behavioral",          weight: 3,  blurb: "Agitation, withdrawal, toxidrome overlap" },
+  { id: "onc",       name: "Oncologic Emergencies",             weight: 3,  blurb: "Tumor lysis, febrile neutropenia, hypercalcemia" },
+  { id: "derm",      name: "Dermatologic Emergencies",          weight: 2,  blurb: "SJS/TEN, DRESS, severe drug reactions" }
 ];
 
 window.BCEMP_DOMAIN_MAP = window.BCEMP_DOMAINS.reduce(function (m, d) { m[d.id] = d; return m; }, {});
