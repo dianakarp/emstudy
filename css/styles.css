@@ -174,6 +174,28 @@ body {
 .cmp-table td.cmp-rl, .cmp-table th.cmp-rl { color: var(--text-faint); font-weight: 600; font-size: 12px; min-width: 120px; background: var(--bg-elev); }
 .cmp-table tbody tr:hover td { background: rgba(79,138,114,.06); }
 
+/* ---------- stats cheat sheet ---------- */
+.fx-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+.fx { background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); padding: 13px 15px; box-shadow: var(--shadow); }
+.fx-n { font-size: 13px; font-weight: 700; margin-bottom: 7px; }
+.fx-eq { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; background: var(--bg-elev2); border-left: 3px solid var(--accent); padding: 8px 11px; border-radius: 0 8px 8px 0; margin-bottom: 8px; color: var(--accent); font-weight: 600; overflow-x: auto; }
+.fx-d { font-size: 12.5px; color: var(--text-dim); line-height: 1.5; }
+.fx-ex { font-size: 11.5px; color: var(--text-faint); margin-top: 6px; font-style: italic; }
+.fx-note { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; color: var(--accent); background: var(--bg-elev2); border-radius: 8px; padding: 9px 12px; margin-top: 10px; overflow-x: auto; }
+
+.stat-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.stat-table th, .stat-table td { padding: 10px 12px; text-align: left; border: 1px solid var(--border); vertical-align: top; }
+.stat-table th { background: var(--bg-elev2); color: var(--accent); font-weight: 700; font-size: 12px; }
+.stat-table td.cmp-rl, .stat-table th.cmp-rl { background: var(--bg-elev2); color: var(--text-dim); font-weight: 700; font-size: 12px; }
+
+.term { padding: 10px 0; border-top: 1px solid var(--border); }
+.term.first { border-top: none; padding-top: 2px; }
+.term-t { font-size: 13.5px; font-weight: 700; color: var(--accent); margin-bottom: 3px; }
+.term-d { font-size: 13px; color: var(--text-dim); line-height: 1.55; }
+
+.pearl { font-size: 13px; color: var(--text-dim); line-height: 1.55; padding: 8px 0 8px 20px; position: relative; }
+.pearl::before { content: "🌸"; position: absolute; left: 0; top: 7px; font-size: 12px; }
+
 /* ---------- cozy-kawaii extras ---------- */
 .hero .meta h2, .empty h2 { font-family: var(--font-head); font-weight: 600; }
 .summary-hero .score { font-family: var(--font-head); }

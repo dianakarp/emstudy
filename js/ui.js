@@ -94,6 +94,7 @@ App.UI = {
     if (this.active) return; // session screens render themselves
     if (this.view === "dashboard") this.renderDashboard();
     else if (this.view === "compare") this.renderComparisons();
+    else if (this.view === "stats") this.renderStats();
     else if (this.view === "progress") this.renderProgress();
     else if (this.view === "settings") this.renderSettings();
   },
@@ -271,6 +272,66 @@ App.UI = {
     Array.prototype.forEach.call(document.querySelectorAll(".cmp-chip"), function (btn) {
       btn.onclick = function () { App.UI.compareFilter = btn.getAttribute("data-s"); App.UI.renderComparisons(); };
     });
+  },
+
+  /* ==================================================================
+   * STATS (biostatistics cheat sheet)
+   * ================================================================== */
+  renderStats: function () {
+    var self = this;
+    var B = window.BCEMP_BIOSTATS || { formulas: [], tables: [], terms: [], pearls: [] };
+    var html = "";
+
+    html += '<div class="section-title" style="margin-top:6px">Biostatistics cheat sheet</div>';
+    html += '<div style="color:var(--text-dim);font-size:13px;margin:0 4px 14px">Equations, the 2×2 tables, and the hypothesis-testing vocabulary — the reference sheet, not a quiz.</div>';
+
+    /* --- formulas --- */
+    html += '<div class="section-title">Core equations</div><div class="fx-grid">';
+    (B.formulas || []).forEach(function (f) {
+      html += '<div class="fx">' +
+        '<div class="fx-n">' + self.esc(f.n) + '</div>' +
+        '<div class="fx-eq">' + self.esc(f.eq) + '</div>' +
+        '<div class="fx-d">' + self.esc(f.d) + '</div>' +
+        (f.ex && f.ex !== "—" ? '<div class="fx-ex">e.g. ' + self.esc(f.ex) + '</div>' : '') +
+        '</div>';
+    });
+    html += '</div>';
+
+    /* --- 2x2 tables --- */
+    html += '<div class="section-title">The 2×2 tables</div>';
+    (B.tables || []).forEach(function (t) {
+      html += '<div class="card cmp-card"><div class="cmp-title">' + self.esc(t.title) + '</div>';
+      html += '<div class="cmp-scroll" style="margin-top:10px"><table class="stat-table"><thead><tr>';
+      (t.head || []).forEach(function (h, i) {
+        html += '<th' + (i === 0 ? ' class="cmp-rl"' : '') + '>' + self.esc(h) + '</th>';
+      });
+      html += '</tr></thead><tbody>';
+      (t.rows || []).forEach(function (r) {
+        html += '<tr><td class="cmp-rl">' + self.esc(r[0]) + '</td>';
+        for (var i = 1; i < r.length; i++) html += '<td>' + self.esc(r[i]) + '</td>';
+        html += '</tr>';
+      });
+      html += '</tbody></table></div>';
+      if (t.note) html += '<div class="fx-note">' + self.esc(t.note) + '</div>';
+      html += '</div>';
+    });
+
+    /* --- terms --- */
+    html += '<div class="section-title">Definitions</div><div class="card">';
+    (B.terms || []).forEach(function (x, i) {
+      html += '<div class="term' + (i === 0 ? " first" : "") + '"><div class="term-t">' + self.esc(x.t) + '</div>' +
+        '<div class="term-d">' + self.esc(x.d) + '</div></div>';
+    });
+    html += '</div>';
+
+    /* --- pearls --- */
+    html += '<div class="section-title">Interpretation pearls</div><div class="card">';
+    (B.pearls || []).forEach(function (p) {
+      html += '<div class="pearl">' + self.esc(p) + '</div>';
+    });
+    html += '</div>';
+
+    this.root.innerHTML = html;
   },
 
   /* ==================================================================
