@@ -1,7 +1,7 @@
 /* sw.js — offline service worker for BCEMP Trainer.
  * Caches the full app shell so it loads with no signal (e.g. on the subway).
  * All URLs are relative so it works under a GitHub Pages project subpath. */
-var CACHE = "bcemp-v5";
+var CACHE = "bcemp-v6";
 var ASSETS = [
   "./",
   "./index.html",
@@ -12,6 +12,8 @@ var ASSETS = [
   "./data/flashcards.js",
   "./data/quiz-flashcards.js",
   "./data/comparisons.js",
+  "./data/comparisons-bp.js",
+  "./data/biostats.js",
   "./js/state.js",
   "./js/srs.js",
   "./js/content.js",

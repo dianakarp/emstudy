@@ -185,6 +185,28 @@ body {
 .cmp-table td.cmp-rl, .cmp-table th.cmp-rl { color: var(--text-faint); font-weight: 600; font-size: 12px; min-width: 120px; background: var(--bg-elev); }
 .cmp-table tbody tr:hover td { background: rgba(79,138,114,.06); }
 
+/* ---------- stats cheat sheet ---------- */
+.fx-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+.fx { background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); padding: 13px 15px; box-shadow: var(--shadow); }
+.fx-n { font-size: 13px; font-weight: 700; margin-bottom: 7px; }
+.fx-eq { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; background: var(--bg-elev2); border-left: 3px solid var(--accent); padding: 8px 11px; border-radius: 0 8px 8px 0; margin-bottom: 8px; color: var(--accent); font-weight: 600; overflow-x: auto; }
+.fx-d { font-size: 12.5px; color: var(--text-dim); line-height: 1.5; }
+.fx-ex { font-size: 11.5px; color: var(--text-faint); margin-top: 6px; font-style: italic; }
+.fx-note { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; color: var(--accent); background: var(--bg-elev2); border-radius: 8px; padding: 9px 12px; margin-top: 10px; overflow-x: auto; }
+
+.stat-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.stat-table th, .stat-table td { padding: 10px 12px; text-align: left; border: 1px solid var(--border); vertical-align: top; }
+.stat-table th { background: var(--bg-elev2); color: var(--accent); font-weight: 700; font-size: 12px; }
+.stat-table td.cmp-rl, .stat-table th.cmp-rl { background: var(--bg-elev2); color: var(--text-dim); font-weight: 700; font-size: 12px; }
+
+.term { padding: 10px 0; border-top: 1px solid var(--border); }
+.term.first { border-top: none; padding-top: 2px; }
+.term-t { font-size: 13.5px; font-weight: 700; color: var(--accent); margin-bottom: 3px; }
+.term-d { font-size: 13px; color: var(--text-dim); line-height: 1.55; }
+
+.pearl { font-size: 13px; color: var(--text-dim); line-height: 1.55; padding: 8px 0 8px 20px; position: relative; }
+.pearl::before { content: "🌸"; position: absolute; left: 0; top: 7px; font-size: 12px; }
+
 /* ---------- cozy-kawaii extras ---------- */
 .hero .meta h2, .empty h2 { font-family: var(--font-head); font-weight: 600; }
 .summary-hero .score { font-family: var(--font-head); }
@@ -227,6 +249,7 @@ body {
       <nav class="nav" id="nav">
         <button data-view="dashboard" class="active">Home</button>
         <button data-view="compare">Compare</button>
+        <button data-view="stats">Stats</button>
         <button data-view="progress">Progress</button>
         <button data-view="settings">Settings</button>
       </nav>
@@ -1300,6 +1323,189 @@ window.BCEMP_COMPARISONS = [{"title": "NMS vs Serotonin Syndrome", "section": "P
 
 </script>
 <script>
+/* comparisons-bp.js - blood-pressure targets by indication, appended to the
+ * Compare tab under the "BP Targets" section chip.
+ * Study aid only; verify against current guidelines and institutional protocols. */
+window.BCEMP_COMPARISONS = (window.BCEMP_COMPARISONS || []).concat([
+{
+  "title": "BP Targets — Neurologic Emergencies",
+  "section": "BP Targets",
+  "tagline": "The number changes with the diagnosis — and with whether a thrombolytic was given",
+  "cols": ["BP target", "Preferred agents", "Key caveat / pitfall"],
+  "rows": [
+    ["Ischemic stroke — NO thrombolytic",
+     "Permissive hypertension: treat only if > 220/120. Then lower ~15% over the first 24 h",
+     "Labetalol, nicardipine, clevidipine",
+     "Aggressive lowering can extend the ischemic penumbra. Exceptions that force earlier treatment: concurrent ACS, aortic dissection, acute HF, or preeclampsia."],
+    ["Ischemic stroke — BEFORE IV thrombolytic",
+     "< 185/110 required before the bolus",
+     "Labetalol 10-20 mg IV push; nicardipine 5 mg/hr titrated",
+     "If BP cannot be brought under 185/110, the patient is not eligible. Never give the thrombolytic first and chase the pressure afterward."],
+    ["Ischemic stroke — first 24 h AFTER thrombolytic",
+     "< 180/105",
+     "Nicardipine or clevidipine infusion (titratable) preferred",
+     "Monitor q15 min for the first 2 h. A pressure spike in this window raises symptomatic intracranial hemorrhage risk."],
+    ["After mechanical thrombectomy (EVT)",
+     "< 180/105; individualize lower (roughly 140-160 systolic) after SUCCESSFUL reperfusion",
+     "Nicardipine, clevidipine",
+     "After FAILED reperfusion, avoid aggressive lowering — collateral flow is pressure-dependent."],
+    ["Spontaneous intracerebral hemorrhage (ICH)",
+     "Target SBP 140 (range 130-150) when presenting SBP is 150-220",
+     "Nicardipine, clevidipine, labetalol",
+     "Avoid dropping SBP more than ~90 mmHg from baseline, and avoid going below 130 — both associated with harm. Smooth sustained control beats rapid swings."],
+    ["Aneurysmal SAH — aneurysm UNSECURED",
+     "SBP < 160 (some centers use < 140) until the aneurysm is secured",
+     "Nicardipine, clevidipine, labetalol",
+     "Balances rebleeding risk against cerebral perfusion. Once secured, permissive hypertension is allowed; avoid hypotension if vasospasm develops."],
+    ["Traumatic brain injury (TBI)",
+     "Opposite problem: keep SBP at least 110 (at least 100 if age 50-69); CPP 60-70 mmHg",
+     "Fluids and vasopressors — NOT antihypertensives",
+     "Even a single hypotensive episode markedly worsens TBI outcome. Do not treat a high pressure that is maintaining cerebral perfusion."],
+    ["Hypertensive encephalopathy",
+     "Lower MAP by roughly 20-25% within the first hour",
+     "Nicardipine, clevidipine, labetalol",
+     "Too-rapid correction causes watershed ischemia. Symptoms should improve as BP falls; if they worsen, you have dropped it too far."]
+  ]
+},
+{
+  "title": "BP Targets — Cardiovascular, Obstetric & Other",
+  "section": "BP Targets",
+  "tagline": "Where the target is a hard number, and where how FAST you lower it matters more than how low",
+  "cols": ["BP target", "Preferred agents", "Key caveat / pitfall"],
+  "rows": [
+    ["Acute aortic dissection",
+     "SBP 100-120 AND HR < 60, achieved within ~20 minutes",
+     "Esmolol or labetalol FIRST, then add nicardipine or nitroprusside",
+     "Rate control must precede vasodilation. A vasodilator alone causes reflex tachycardia and raises aortic wall shear stress (dP/dt), which can extend the dissection."],
+    ["Hypertensive EMERGENCY (end-organ damage present)",
+     "Lower MAP by no more than 25% in the first hour, then to ~160/100-110 over 2-6 h, then to normal over 24-48 h",
+     "Nicardipine, clevidipine, labetalol, esmolol",
+     "The classic trap is normalizing BP immediately. Autoregulation is right-shifted in chronic hypertension, so rapid drops cause stroke, MI, or blindness."],
+    ["Hypertensive URGENCY (no end-organ damage)",
+     "No IV therapy; lower gradually over days with oral agents",
+     "Restart or adjust the oral regimen; arrange close follow-up",
+     "A frightening number alone is not an emergency. Treating it with IV agents in the ED causes harm without benefit."],
+    ["Acute pulmonary edema / acute decompensated HF",
+     "Rapid preload and afterload reduction; roughly 25% SBP reduction",
+     "High-dose IV nitroglycerin; clevidipine is an alternative",
+     "Avoid beta-blockers acutely in decompensated HF. Nitroglycerin acts fastest for hypertensive flash pulmonary edema."],
+    ["ACS / ongoing myocardial ischemia",
+     "No fixed target — treat the ischemia while keeping SBP above ~90-100",
+     "Nitroglycerin; beta-blocker if no cardiogenic shock",
+     "Avoid nitrates in right ventricular infarction, or within 24-48 h of a PDE5 inhibitor — either causes profound hypotension."],
+    ["Preeclampsia with severe features / eclampsia",
+     "Treat if SBP at least 160 or DBP at least 110; target roughly 140-150 / 90-100",
+     "IV labetalol, IV hydralazine, or immediate-release oral nifedipine",
+     "Magnesium is for seizure prophylaxis, NOT blood pressure control. Delivery is the definitive treatment."],
+    ["Sympathetic crisis (cocaine, amphetamine, MAOI, pheochromocytoma)",
+     "No fixed number; titrate to symptoms and end-organ effects",
+     "Benzodiazepines FIRST, then phentolamine, nicardipine, or nitroglycerin",
+     "Avoid nonselective beta-blockade because of the unopposed alpha-stimulation concern."],
+    ["Post-cardiac-arrest care",
+     "Again the opposite problem: MAP at least 65 (many target at least 80 for cerebral perfusion)",
+     "Fluids and norepinephrine",
+     "Hypotension worsens neurologic outcome after ROSC. Avoid hypoxia and hypotension above all."]
+  ]
+}
+]);
+
+</script>
+<script>
+/* biostats.js - cheat sheet for the Stats tab.
+ * Study aid only; verify definitions against your primary references. */
+window.BCEMP_BIOSTATS = {
+
+  formulas: [
+    { n: "Control event rate (CER)", eq: "CER = events in control / total in control",
+      d: "Baseline risk in the untreated group.", ex: "20 events / 200 patients = 10%" },
+    { n: "Experimental event rate (EER)", eq: "EER = events in treatment / total in treatment",
+      d: "Risk in the treated group.", ex: "12 events / 200 patients = 6%" },
+    { n: "Absolute risk reduction (ARR)", eq: "ARR = CER − EER",
+      d: "The real-world size of the benefit. This is the number that matters clinically.", ex: "10% − 6% = 4%" },
+    { n: "Relative risk (RR)", eq: "RR = EER / CER",
+      d: "Ratio of risks. RR < 1 = benefit, 1 = no effect, > 1 = harm. Used in RCTs and cohorts.", ex: "6% / 10% = 0.60" },
+    { n: "Relative risk reduction (RRR)", eq: "RRR = ARR / CER = 1 − RR",
+      d: "Always looks bigger than ARR. This is the number marketing quotes.", ex: "4% / 10% = 40%" },
+    { n: "Number needed to treat (NNT)", eq: "NNT = 1 / ARR   (round UP)",
+      d: "Patients treated to prevent one additional bad outcome. Lower = better.", ex: "1 / 0.04 = 25" },
+    { n: "Absolute risk increase (ARI)", eq: "ARI = EER − CER",
+      d: "Used when the treatment causes harm rather than benefit.", ex: "8% − 5% = 3%" },
+    { n: "Number needed to harm (NNH)", eq: "NNH = 1 / ARI",
+      d: "Patients treated to cause one additional harm. Higher = safer. Pair with NNT for net benefit.", ex: "1 / 0.03 = 34" },
+    { n: "Odds ratio (OR)", eq: "OR = (a × d) / (b × c)",
+      d: "Effect measure for case-control studies. Approximates RR ONLY when the outcome is rare (< ~10%).", ex: "cross-multiply the 2x2" },
+    { n: "Sensitivity (Sn)", eq: "Sn = TP / (TP + FN)",
+      d: "Detects disease when present. SnNOUT: a highly Sensitive test, when Negative, rules OUT.", ex: "Property of the test; prevalence-independent" },
+    { n: "Specificity (Sp)", eq: "Sp = TN / (TN + FP)",
+      d: "Correctly clears the well. SpPIN: a highly Specific test, when Positive, rules IN.", ex: "Property of the test; prevalence-independent" },
+    { n: "Positive predictive value (PPV)", eq: "PPV = TP / (TP + FP)",
+      d: "Given a positive test, probability disease is real. Rises with prevalence.", ex: "Depends on your population" },
+    { n: "Negative predictive value (NPV)", eq: "NPV = TN / (TN + FN)",
+      d: "Given a negative test, probability the patient is truly well. Falls with prevalence.", ex: "Depends on your population" },
+    { n: "Likelihood ratio positive (LR+)", eq: "LR+ = Sn / (1 − Sp)",
+      d: "How much a positive result raises the odds of disease. > 10 = strong rule-in.", ex: "0.95 / (1 − 0.80) = 4.75" },
+    { n: "Likelihood ratio negative (LR−)", eq: "LR− = (1 − Sn) / Sp",
+      d: "How much a negative result lowers the odds. < 0.1 = strong rule-out.", ex: "(1 − 0.95) / 0.80 = 0.06" },
+    { n: "Power", eq: "Power = 1 − β",
+      d: "Probability of detecting a true difference. Convention is 80-90%.", ex: "β = 0.20 gives 80% power" },
+    { n: "Accuracy", eq: "Accuracy = (TP + TN) / total",
+      d: "Overall proportion correct. Misleading when disease is rare.", ex: "—" },
+    { n: "Bonferroni correction", eq: "adjusted α = α / number of comparisons",
+      d: "Controls family-wise type I error when testing many hypotheses.", ex: "0.05 / 5 = 0.01" }
+  ],
+
+  tables: [
+    { title: "Therapeutic 2×2 (treatment vs outcome)",
+      note: "EER = a/(a+b) · CER = c/(c+d) · RR = EER/CER · ARR = CER − EER · NNT = 1/ARR",
+      head: ["", "Outcome YES", "Outcome NO"],
+      rows: [["Treatment", "a", "b"], ["Control", "c", "d"]] },
+
+    { title: "Diagnostic 2×2 (test vs disease)",
+      note: "Sn = a/(a+c) · Sp = d/(b+d) · PPV = a/(a+b) · NPV = d/(c+d)",
+      head: ["", "Disease PRESENT", "Disease ABSENT"],
+      rows: [["Test POSITIVE", "a = TP (true positive)", "b = FP (false positive)"],
+             ["Test NEGATIVE", "c = FN (false negative)", "d = TN (true negative)"]] },
+
+    { title: "Hypothesis testing 2×2 (the truth vs your decision)",
+      note: "You never PROVE the null — you either reject it or fail to reject it.",
+      head: ["", "H₀ is TRUE (no real difference)", "H₀ is FALSE (real difference)"],
+      rows: [["You REJECT H₀", "TYPE I ERROR (α) — false positive", "Correct — this is POWER (1 − β)"],
+             ["You FAIL to reject H₀", "Correct", "TYPE II ERROR (β) — false negative"]] }
+  ],
+
+  terms: [
+    { t: "Null hypothesis (H₀)", d: "The assumption of NO difference or no association. Every test starts by assuming it is true. You never accept or prove H₀ — you only reject it or fail to reject it." },
+    { t: "Alternative hypothesis (H₁ / Hₐ)", d: "The claim that a real difference or association exists. Two-tailed tests look for a difference in either direction; one-tailed only in one." },
+    { t: "Alpha (α)", d: "The pre-specified threshold for a type I error, conventionally 0.05. It is the probability of rejecting a TRUE null. Set BEFORE the study, not after." },
+    { t: "Type I error", d: "False positive — concluding a difference exists when it does not. Its probability is α. Mnemonic: Type 1 = One word, positive." },
+    { t: "Beta (β)", d: "The probability of a type II error, conventionally 0.10-0.20." },
+    { t: "Type II error", d: "False negative — missing a real difference. Usually caused by too small a sample size. Mnemonic: Type 2 = Two words, false negative." },
+    { t: "Power (1 − β)", d: "Probability of detecting a true difference. Target 80-90%. Increased by a larger sample, a larger effect size, less variability, or a higher α." },
+    { t: "p-value", d: "Probability of observing a result at least this extreme IF H₀ were true. p < α means reject H₀. It is NOT the probability that H₀ is true, and NOT the probability the finding is due to chance." },
+    { t: "Confidence interval (95% CI)", d: "The range of values compatible with the data. For RATIOS (RR, OR, HR) it is non-significant if it crosses 1. For DIFFERENCES (ARR, mean difference) it is non-significant if it crosses 0. Narrower = more precise." },
+    { t: "Eta-squared (η²)", d: "Effect size for ANOVA — the proportion of total variance explained by a factor. Roughly 0.01 small, 0.06 medium, 0.14 large." },
+    { t: "Cohen's d", d: "Effect size for the difference between two means. Roughly 0.2 small, 0.5 medium, 0.8 large. Effect size answers HOW BIG, while the p-value only answers whether it is detectable." },
+    { t: "Hazard ratio (HR)", d: "Relative rate of an event over time, from survival / Cox analysis. Interpreted like RR; CI crossing 1 is non-significant." },
+    { t: "I² (heterogeneity)", d: "In meta-analysis, the proportion of variability due to real differences between studies rather than chance. Under 25% low, ~50% moderate, over 75% considerable — pooling may not be appropriate." },
+    { t: "Intention-to-treat (ITT)", d: "Analyze every patient in the group they were randomized to, regardless of adherence. Preserves randomization and estimates real-world EFFECTIVENESS. Preferred in superiority trials." },
+    { t: "Per-protocol (PP)", d: "Analyze only adherent completers. Estimates biological EFFICACY but reintroduces selection bias. Required alongside ITT in noninferiority trials." },
+    { t: "Noninferiority margin (delta)", d: "The largest difference that would still be considered clinically acceptable. Chosen in advance; noninferiority is claimed only if the CI stays within it." }
+  ],
+
+  pearls: [
+    "Statistical significance is not clinical significance. A huge trial can make a trivial ARR statistically significant. Always look at ARR and NNT, not just the p-value.",
+    "RRR always sounds bigger than ARR. Dropping risk from 2% to 1% is a 50% RRR but only a 1% ARR — an NNT of 100. Advertising quotes RRR; you should read ARR.",
+    "OR overestimates RR when the outcome is common (over ~10%). They only converge for rare outcomes.",
+    "A confidence interval tells you significance AND precision; a p-value only tells you significance. Prefer the CI.",
+    "Sensitivity and specificity are properties of the TEST. PPV and NPV depend on the PREVALENCE in your population — the same test performs differently in a screening clinic than in the ED.",
+    "Composite endpoints are often driven by the softest component (e.g. revascularization rather than death). Always check the individual components.",
+    "Surrogate endpoints (LDL, HbA1c, blood pressure) are not patient-oriented outcomes (death, MI, stroke). A drug can improve one and worsen the other.",
+    "Failing to reject H₀ does not prove there is no difference — the study may simply have been underpowered. Absence of evidence is not evidence of absence."
+  ]
+};
+
+</script>
+<script>
 /* state.js — localStorage persistence, schema, date helpers, export/import.
  * Everything hangs off the global `App` namespace (no modules, works on file://). */
 window.App = window.App || {};
@@ -2063,6 +2269,7 @@ App.UI = {
     if (this.active) return; // session screens render themselves
     if (this.view === "dashboard") this.renderDashboard();
     else if (this.view === "compare") this.renderComparisons();
+    else if (this.view === "stats") this.renderStats();
     else if (this.view === "progress") this.renderProgress();
     else if (this.view === "settings") this.renderSettings();
   },
@@ -2240,6 +2447,66 @@ App.UI = {
     Array.prototype.forEach.call(document.querySelectorAll(".cmp-chip"), function (btn) {
       btn.onclick = function () { App.UI.compareFilter = btn.getAttribute("data-s"); App.UI.renderComparisons(); };
     });
+  },
+
+  /* ==================================================================
+   * STATS (biostatistics cheat sheet)
+   * ================================================================== */
+  renderStats: function () {
+    var self = this;
+    var B = window.BCEMP_BIOSTATS || { formulas: [], tables: [], terms: [], pearls: [] };
+    var html = "";
+
+    html += '<div class="section-title" style="margin-top:6px">Biostatistics cheat sheet</div>';
+    html += '<div style="color:var(--text-dim);font-size:13px;margin:0 4px 14px">Equations, the 2×2 tables, and the hypothesis-testing vocabulary — the reference sheet, not a quiz.</div>';
+
+    /* --- formulas --- */
+    html += '<div class="section-title">Core equations</div><div class="fx-grid">';
+    (B.formulas || []).forEach(function (f) {
+      html += '<div class="fx">' +
+        '<div class="fx-n">' + self.esc(f.n) + '</div>' +
+        '<div class="fx-eq">' + self.esc(f.eq) + '</div>' +
+        '<div class="fx-d">' + self.esc(f.d) + '</div>' +
+        (f.ex && f.ex !== "—" ? '<div class="fx-ex">e.g. ' + self.esc(f.ex) + '</div>' : '') +
+        '</div>';
+    });
+    html += '</div>';
+
+    /* --- 2x2 tables --- */
+    html += '<div class="section-title">The 2×2 tables</div>';
+    (B.tables || []).forEach(function (t) {
+      html += '<div class="card cmp-card"><div class="cmp-title">' + self.esc(t.title) + '</div>';
+      html += '<div class="cmp-scroll" style="margin-top:10px"><table class="stat-table"><thead><tr>';
+      (t.head || []).forEach(function (h, i) {
+        html += '<th' + (i === 0 ? ' class="cmp-rl"' : '') + '>' + self.esc(h) + '</th>';
+      });
+      html += '</tr></thead><tbody>';
+      (t.rows || []).forEach(function (r) {
+        html += '<tr><td class="cmp-rl">' + self.esc(r[0]) + '</td>';
+        for (var i = 1; i < r.length; i++) html += '<td>' + self.esc(r[i]) + '</td>';
+        html += '</tr>';
+      });
+      html += '</tbody></table></div>';
+      if (t.note) html += '<div class="fx-note">' + self.esc(t.note) + '</div>';
+      html += '</div>';
+    });
+
+    /* --- terms --- */
+    html += '<div class="section-title">Definitions</div><div class="card">';
+    (B.terms || []).forEach(function (x, i) {
+      html += '<div class="term' + (i === 0 ? " first" : "") + '"><div class="term-t">' + self.esc(x.t) + '</div>' +
+        '<div class="term-d">' + self.esc(x.d) + '</div></div>';
+    });
+    html += '</div>';
+
+    /* --- pearls --- */
+    html += '<div class="section-title">Interpretation pearls</div><div class="card">';
+    (B.pearls || []).forEach(function (p) {
+      html += '<div class="pearl">' + self.esc(p) + '</div>';
+    });
+    html += '</div>';
+
+    this.root.innerHTML = html;
   },
 
   /* ==================================================================
