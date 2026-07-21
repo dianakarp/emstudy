@@ -296,7 +296,31 @@ App.UI = {
     var B = window.BCEMP_BIOSTATS || { formulas: [], tables: [], terms: [], pearls: [] };
     var html = "";
 
-    html += '<div class="section-title" style="margin-top:6px">Biostatistics cheat sheet</div>';
+    /* --- drill --- */
+    var st = App.Store.get();
+    var bsPool = window.BCEMP_BIOSTATS_QUESTIONS || [];
+    var bsCleared = 0, bsReview = 0;
+    bsPool.forEach(function (q) {
+      var c = st.srs.questions[q.id];
+      if (!c) return;
+      if (App.SRS.isDue(c)) bsReview++; else bsCleared++;
+    });
+    var bsLeft = bsPool.length - bsCleared;
+
+    html += '<div class="section-title" style="margin-top:6px">Biostatistics drill</div>';
+    html += '<div class="card">' +
+      '<div style="font-size:14px;margin-bottom:4px">Question-only practice — calculations, test selection, and study appraisal, in exam format.</div>' +
+      '<div style="color:var(--text-dim);font-size:12.5px;margin-bottom:8px">A separate bank that lives only here. These never enter your daily session or the home-page burn-down.</div>' +
+      '<div style="color:var(--text-faint);font-size:12.5px;margin-bottom:12px"><b>' + bsCleared + '</b> / ' + bsPool.length + ' cleared · ' +
+        bsReview + ' to review · ' + (bsPool.length - bsCleared - bsReview) + ' not yet seen</div>' +
+      '<div class="btn-row">' +
+        '<button class="btn btn-primary" id="drill15">Drill 15 questions</button>' +
+        '<button class="btn btn-ghost" id="drill30">Drill 30</button>' +
+      '</div>' +
+      (bsLeft === 0 ? '<div style="color:var(--text-faint);font-size:12px;margin-top:10px">Bank fully cleared — drills now recycle questions you\'ve already answered.</div>' : '') +
+    '</div>';
+
+    html += '<div class="section-title">Biostatistics cheat sheet</div>';
     html += '<div style="color:var(--text-dim);font-size:13px;margin:0 4px 14px">Equations, the 2×2 tables, and the hypothesis-testing vocabulary — the reference sheet, not a quiz.</div>';
 
     /* --- formulas --- */
@@ -368,6 +392,8 @@ App.UI = {
     html += '</div>';
 
     this.root.innerHTML = html;
+    document.getElementById("drill15").onclick = function () { App.UI.startDrill(15); };
+    document.getElementById("drill30").onclick = function () { App.UI.startDrill(30); };
   },
 
   /* ==================================================================
@@ -486,6 +512,38 @@ App.UI = {
     this.active = {
       data: data,
       phase: data.flashcards.length ? "flashcards" : "questions",
+      fIndex: 0, qIndex: 0,
+      results: { correct: 0, total: 0, xp: 0, overdueCleared: 0, flashcardsDone: 0 }
+    };
+    this.renderSession();
+  },
+
+  /* Focused biostats drill, deliberately a SEPARATE bank: it reads
+   * BCEMP_BIOSTATS_QUESTIONS directly rather than App.Content.questions(), so
+   * these items never enter the daily session pool, the home-page burn-down, or
+   * the due counts. Questions already cleared are appended last, so the drill
+   * keeps going once the unseen pool runs dry — a miss still sends an item back
+   * to review, which is the point. */
+  startDrill: function (count) {
+    var st = App.Store.get();
+    var pool = window.BCEMP_BIOSTATS_QUESTIONS || [];
+    if (!pool.length) { this.toast("No biostats questions found."); return; }
+
+    var due = [], unseen = [], cleared = [];
+    pool.forEach(function (q) {
+      var c = st.srs.questions[q.id];
+      if (!c) unseen.push(q);
+      else if (App.SRS.isDue(c)) due.push(q);
+      else cleared.push(q);
+    });
+    var ordered = App.Session._shuffle(due)
+      .concat(App.Session._shuffle(unseen))
+      .concat(App.Session._shuffle(cleared));
+
+    this.active = {
+      data: { flashcards: [], questions: ordered.slice(0, count) },
+      phase: "questions",
+      drill: true,
       fIndex: 0, qIndex: 0,
       results: { correct: 0, total: 0, xp: 0, overdueCleared: 0, flashcardsDone: 0 }
     };
@@ -678,8 +736,9 @@ App.UI = {
         '<div style="font-size:14px">Your weakest area right now is <b>' + this.esc(weak.name) + '</b> (' + Math.round(App.Analytics.mastery(weak.id) * 100) + '% mastery). The next session will lean into it.</div></div>';
     }
 
+    var wasDrill = a.drill;
     html += '<div class="btn-row mt center" style="justify-content:center">' +
-      '<button class="btn btn-primary" id="anotherFull">Another session</button>' +
+      '<button class="btn btn-primary" id="anotherFull">' + (wasDrill ? "Another drill" : "Another session") + '</button>' +
       '<button class="btn btn-ghost" id="toHome">Back to home</button></div>';
 
     this.active = null; // session over
@@ -687,7 +746,9 @@ App.UI = {
     // celebrate! bigger burst for perfect sessions, new badges, or streak milestones
     var big = perfect || newBadges.length > 0 || [3, 7, 14, 30].indexOf(st.profile.streak) !== -1;
     this.confetti(big ? 80 : 40);
-    document.getElementById("anotherFull").onclick = function () { App.UI.startSession("full"); };
+    document.getElementById("anotherFull").onclick = function () {
+      if (wasDrill) App.UI.startDrill(15); else App.UI.startSession("full");
+    };
     document.getElementById("toHome").onclick = function () { App.UI.route("dashboard"); };
   }
 };
