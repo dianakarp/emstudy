@@ -199,6 +199,9 @@ body {
 .stat-table th { background: var(--bg-elev2); color: var(--accent); font-weight: 700; font-size: 12px; }
 .stat-table td.cmp-rl, .stat-table th.cmp-rl { background: var(--bg-elev2); color: var(--text-dim); font-weight: 700; font-size: 12px; }
 
+.tg { font-family: var(--font-head); font-size: 15px; font-weight: 600; color: var(--accent); }
+.stat-table td.tg-test { font-weight: 700; color: var(--text); }
+
 .term { padding: 10px 0; border-top: 1px solid var(--border); }
 .term.first { border-top: none; padding-top: 2px; }
 .term-t { font-size: 13.5px; font-weight: 700; color: var(--accent); margin-bottom: 3px; }
@@ -1473,6 +1476,54 @@ window.BCEMP_BIOSTATS = {
              ["You FAIL to reject H₀", "Correct", "TYPE II ERROR (β) — false negative"]] }
   ],
 
+  tests: [
+    { group: "Continuous outcome, normally distributed — PARAMETRIC",
+      head: ["What you are comparing", "Test", "Notes / assumptions"],
+      rows: [
+        ["2 independent groups", "Independent (unpaired) Student t-test", "Assumes normality and roughly equal variances. Example: mean SBP on drug vs placebo."],
+        ["2 paired or related measurements", "Paired t-test", "Same patients before vs after, or matched pairs. Analyzes the within-person differences."],
+        ["3 or more independent groups", "One-way ANOVA", "Tells you only THAT a difference exists — you still need a post-hoc test to find where."],
+        ["3+ repeated measures in the same subjects", "Repeated-measures ANOVA", "Same patients measured at several timepoints."],
+        ["2 or more independent variables (factors)", "Two-way ANOVA", "Can also test for interaction between the two factors."],
+        ["Comparing means while adjusting for a covariate", "ANCOVA", "Adjusts for a continuous confounder such as the baseline value."],
+        ["Post-hoc, after a significant ANOVA", "Tukey HSD, Bonferroni, Scheffé", "Controls the inflated type I error created by multiple pairwise comparisons."]
+      ] },
+
+    { group: "Continuous or ordinal, NOT normally distributed — NONPARAMETRIC",
+      head: ["What you are comparing", "Test", "Parametric equivalent"],
+      rows: [
+        ["2 independent groups", "Mann-Whitney U (Wilcoxon rank-sum)", "Unpaired t-test"],
+        ["2 paired or related measurements", "Wilcoxon signed-rank", "Paired t-test"],
+        ["3 or more independent groups", "Kruskal-Wallis", "One-way ANOVA"],
+        ["3+ related groups / repeated measures", "Friedman test", "Repeated-measures ANOVA"],
+        ["When to choose nonparametric at all", "Ordinal data, skewed distribution, or small sample", "Pain scores, Likert scales, NYHA class, length of stay"]
+      ] },
+
+    { group: "Categorical (nominal) outcome",
+      head: ["What you are comparing", "Test", "Notes / assumptions"],
+      rows: [
+        ["Proportions across 2+ independent groups", "Chi-square (χ²) test", "Needs expected count of at least 5 in every cell, and independent observations."],
+        ["Same question but sparse table / expected count < 5", "Fisher exact test", "Use instead of chi-square when the sample is small."],
+        ["Paired before-and-after categorical data", "McNemar test", "Same subject measured twice, e.g. positive before vs after treatment."],
+        ["Predicting a binary outcome from several variables", "Logistic regression", "Reports odds ratios and adjusts for confounders."]
+      ] },
+
+    { group: "Time-to-event (survival) data",
+      head: ["What you are comparing", "Test", "Notes / assumptions"],
+      rows: [
+        ["Survival between groups", "Log-rank test", "Compares Kaplan-Meier curves and handles censored patients."],
+        ["Survival adjusted for multiple covariates", "Cox proportional hazards regression", "Reports hazard ratios; assumes hazards stay proportional over time."]
+      ] },
+
+    { group: "Association and prediction",
+      head: ["What you are measuring", "Test", "Notes / assumptions"],
+      rows: [
+        ["Association between 2 normally distributed continuous variables", "Pearson correlation (r)", "r runs from −1 to +1. Correlation is not causation."],
+        ["Association with ordinal or non-normal data", "Spearman rank correlation (rho)", "Rank-based, so robust to outliers and skew."],
+        ["Predicting a continuous outcome", "Linear regression", "Multiple linear regression adjusts for several predictors at once."]
+      ] }
+  ],
+
   terms: [
     { t: "Null hypothesis (H₀)", d: "The assumption of NO difference or no association. Every test starts by assuming it is true. You never accept or prove H₀ — you only reject it or fail to reject it." },
     { t: "Alternative hypothesis (H₁ / Hₐ)", d: "The claim that a real difference or association exists. Two-tailed tests look for a difference in either direction; one-tailed only in one." },
@@ -1489,7 +1540,11 @@ window.BCEMP_BIOSTATS = {
     { t: "I² (heterogeneity)", d: "In meta-analysis, the proportion of variability due to real differences between studies rather than chance. Under 25% low, ~50% moderate, over 75% considerable — pooling may not be appropriate." },
     { t: "Intention-to-treat (ITT)", d: "Analyze every patient in the group they were randomized to, regardless of adherence. Preserves randomization and estimates real-world EFFECTIVENESS. Preferred in superiority trials." },
     { t: "Per-protocol (PP)", d: "Analyze only adherent completers. Estimates biological EFFICACY but reintroduces selection bias. Required alongside ITT in noninferiority trials." },
-    { t: "Noninferiority margin (delta)", d: "The largest difference that would still be considered clinically acceptable. Chosen in advance; noninferiority is claimed only if the CI stays within it." }
+    { t: "Noninferiority margin (delta)", d: "The largest difference that would still be considered clinically acceptable. Chosen in advance; noninferiority is claimed only if the CI stays within it." },
+    { t: "Nominal data", d: "Named categories with no inherent order — sex, blood type, drug allergy yes/no. Summarize as counts and proportions; analyze with chi-square or Fisher exact." },
+    { t: "Ordinal data", d: "Ordered categories with unequal spacing between them — pain 0-10, NYHA class, Likert scales. Summarize with median and IQR; use nonparametric tests." },
+    { t: "Interval data", d: "Ordered with equal intervals but no true zero — degrees Celsius. Ratios are meaningless (20°C is not twice as warm as 10°C)." },
+    { t: "Ratio data", d: "Equal intervals WITH a true zero — weight, blood pressure, time to event. The most informative type; use mean and SD if normally distributed." }
   ],
 
   pearls: [
@@ -1500,7 +1555,10 @@ window.BCEMP_BIOSTATS = {
     "Sensitivity and specificity are properties of the TEST. PPV and NPV depend on the PREVALENCE in your population — the same test performs differently in a screening clinic than in the ED.",
     "Composite endpoints are often driven by the softest component (e.g. revascularization rather than death). Always check the individual components.",
     "Surrogate endpoints (LDL, HbA1c, blood pressure) are not patient-oriented outcomes (death, MI, stroke). A drug can improve one and worsen the other.",
-    "Failing to reject H₀ does not prove there is no difference — the study may simply have been underpowered. Absence of evidence is not evidence of absence."
+    "Failing to reject H₀ does not prove there is no difference — the study may simply have been underpowered. Absence of evidence is not evidence of absence.",
+    "Running several t-tests instead of one ANOVA inflates the type I error. Three groups means three comparisons, and at α = 0.05 each the family-wise error rate climbs to roughly 14%. Use ANOVA, then a post-hoc test.",
+    "Parametric tests assume continuous, roughly normally distributed data with similar variances and independent observations. Violate those and you switch to the nonparametric twin — the question being asked stays the same.",
+    "Match the test to the DATA TYPE first, then the number of groups, then whether the groups are paired. Those three questions identify the right test almost every time."
   ]
 };
 
@@ -2490,6 +2548,28 @@ App.UI = {
       if (t.note) html += '<div class="fx-note">' + self.esc(t.note) + '</div>';
       html += '</div>';
     });
+
+    /* --- choosing a statistical test --- */
+    if (B.tests && B.tests.length) {
+      html += '<div class="section-title">Choosing a statistical test</div>';
+      html += '<div style="color:var(--text-faint);font-size:12px;margin:-4px 4px 12px">Ask in this order: what DATA TYPE is the outcome → how many groups → are they paired?</div>';
+      B.tests.forEach(function (g) {
+        html += '<div class="card cmp-card"><div class="tg">' + self.esc(g.group) + '</div>';
+        html += '<div class="cmp-scroll" style="margin-top:10px"><table class="stat-table"><thead><tr>';
+        g.head.forEach(function (h, i) {
+          html += '<th' + (i === 0 ? ' class="cmp-rl"' : '') + '>' + self.esc(h) + '</th>';
+        });
+        html += '</tr></thead><tbody>';
+        g.rows.forEach(function (r) {
+          html += '<tr><td class="cmp-rl">' + self.esc(r[0]) + '</td>';
+          for (var i = 1; i < r.length; i++) {
+            html += '<td' + (i === 1 ? ' class="tg-test"' : '') + '>' + self.esc(r[i]) + '</td>';
+          }
+          html += '</tr>';
+        });
+        html += '</tbody></table></div></div>';
+      });
+    }
 
     /* --- terms --- */
     html += '<div class="section-title">Definitions</div><div class="card">';

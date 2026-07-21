@@ -188,6 +188,9 @@ body {
 .stat-table th { background: var(--bg-elev2); color: var(--accent); font-weight: 700; font-size: 12px; }
 .stat-table td.cmp-rl, .stat-table th.cmp-rl { background: var(--bg-elev2); color: var(--text-dim); font-weight: 700; font-size: 12px; }
 
+.tg { font-family: var(--font-head); font-size: 15px; font-weight: 600; color: var(--accent); }
+.stat-table td.tg-test { font-weight: 700; color: var(--text); }
+
 .term { padding: 10px 0; border-top: 1px solid var(--border); }
 .term.first { border-top: none; padding-top: 2px; }
 .term-t { font-size: 13.5px; font-weight: 700; color: var(--accent); margin-bottom: 3px; }
