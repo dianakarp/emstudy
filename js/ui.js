@@ -316,6 +316,28 @@ App.UI = {
       html += '</div>';
     });
 
+    /* --- choosing a statistical test --- */
+    if (B.tests && B.tests.length) {
+      html += '<div class="section-title">Choosing a statistical test</div>';
+      html += '<div style="color:var(--text-faint);font-size:12px;margin:-4px 4px 12px">Ask in this order: what DATA TYPE is the outcome → how many groups → are they paired?</div>';
+      B.tests.forEach(function (g) {
+        html += '<div class="card cmp-card"><div class="tg">' + self.esc(g.group) + '</div>';
+        html += '<div class="cmp-scroll" style="margin-top:10px"><table class="stat-table"><thead><tr>';
+        g.head.forEach(function (h, i) {
+          html += '<th' + (i === 0 ? ' class="cmp-rl"' : '') + '>' + self.esc(h) + '</th>';
+        });
+        html += '</tr></thead><tbody>';
+        g.rows.forEach(function (r) {
+          html += '<tr><td class="cmp-rl">' + self.esc(r[0]) + '</td>';
+          for (var i = 1; i < r.length; i++) {
+            html += '<td' + (i === 1 ? ' class="tg-test"' : '') + '>' + self.esc(r[i]) + '</td>';
+          }
+          html += '</tr>';
+        });
+        html += '</tbody></table></div></div>';
+      });
+    }
+
     /* --- terms --- */
     html += '<div class="section-title">Definitions</div><div class="card">';
     (B.terms || []).forEach(function (x, i) {
