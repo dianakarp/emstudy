@@ -3,7 +3,7 @@
 window.App = window.App || {};
 
 App.STORAGE_KEY = "bcemp_state_v1";
-App.DEFAULT_EXAM_DATE = "2026-08-05"; // ~1 month out; editable in Settings
+App.DEFAULT_EXAM_DATE = "2026-07-24"; // exam day (Friday); editable in Settings
 
 /* ---------- date helpers (local time, YYYY-MM-DD) ---------- */
 App.date = {

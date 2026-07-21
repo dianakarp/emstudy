@@ -78,6 +78,30 @@ App.Analytics = {
       if (c && App.SRS.isDue(c)) fDue++;
     });
     return { questions: qDue, flashcards: fDue };
+  },
+
+  /* burn-down for cram mode: how much of each bank is cleared vs still owed
+   * vs never seen. This is the "am I making a dent" number. */
+  coverage: function () {
+    var st = App.Store.get();
+    function tally(items, map) {
+      var cleared = 0, review = 0, unseen = 0;
+      items.forEach(function (it) {
+        var c = map[it.id];
+        if (!c) unseen++;
+        else if (App.SRS.isDue(c)) review++;   // missed or flagged hard
+        else cleared++;                        // retired
+      });
+      var total = items.length;
+      return {
+        total: total, cleared: cleared, review: review, unseen: unseen,
+        pct: total ? Math.round((cleared / total) * 100) : 0
+      };
+    }
+    return {
+      questions: tally(App.Content.questions(), st.srs.questions),
+      flashcards: tally(App.Content.flashcards(), st.srs.flashcards)
+    };
   }
 };
 

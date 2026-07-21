@@ -4,8 +4,8 @@ window.App = window.App || {};
 
 App.Session = {
   MODES: {
-    quick: { flashcards: 3, questions: 6, label: "Quick (~15 min)" },
-    full:  { flashcards: 5, questions: 12, label: "Full (~25–30 min)" }
+    quick: { flashcards: 8,  questions: 8,  label: "Quick (~10 min)" },
+    full:  { flashcards: 25, questions: 20, label: "Full cram (~25 min)" }
   },
 
   _shuffle: function (arr) {
@@ -37,12 +37,11 @@ App.Session = {
 
     /* ---------- questions: due review + weak-topic + new ---------- */
     var allQ = App.Content.questions();
-    var dueQ = [], newQ = [], seenQ = [];
+    var dueQ = [], newQ = [];   // retired questions are deliberately dropped
     allQ.forEach(function (q) {
       var c = st.srs.questions[q.id];
       if (!c) newQ.push(q);
       else if (App.SRS.isDue(c)) dueQ.push(q);
-      else seenQ.push(q);
     });
     dueQ.sort(function (a, b) {
       return App.SRS.overdueDays(st.srs.questions[b.id]) - App.SRS.overdueDays(st.srs.questions[a.id]);
@@ -56,22 +55,20 @@ App.Session = {
       }
     }
 
-    // ~40% due reviews (spaced repetition priority)
-    add(dueQ, Math.ceil(cfg.questions * 0.4));
+    // 1. everything you missed or flagged hard comes back first
+    add(dueQ, cfg.questions);
 
-    // ~30% weighted toward the two weakest domains
+    // 2. then unseen questions, weighted toward your two weakest domains
     var weak = App.Analytics.weakestDomains(2).map(function (d) { return d.id; });
     if (weak.length) {
-      var weakPool = this._shuffle(newQ.concat(seenQ).filter(function (q) { return weak.indexOf(q.domain) !== -1; }));
+      var weakPool = this._shuffle(newQ.filter(function (q) { return weak.indexOf(q.domain) !== -1; }));
       add(weakPool, Math.ceil(cfg.questions * 0.3));
     }
 
-    // fill remainder with new questions, proportional to domain exam weight
-    var weightedNew = this._weightByDomain(this._shuffle(newQ));
-    add(weightedNew, cfg.questions - picked.length);
-
-    // last resort: any not-yet-used seen questions
-    add(this._shuffle(seenQ), cfg.questions - picked.length);
+    // 3. fill the rest with unseen questions, proportional to exam weight.
+    //    Nothing already cleared is ever added back - the session just gets
+    //    shorter as you burn down the bank.
+    add(this._weightByDomain(this._shuffle(newQ)), cfg.questions - picked.length);
 
     return {
       mode: mode,

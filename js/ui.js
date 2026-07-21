@@ -108,7 +108,7 @@ App.UI = {
     var prog = App.Game.levelProgress(p.xp);
     var days = App.date.daysUntil(st.settings.examDate);
     var readiness = App.Analytics.readiness();
-    var due = App.Analytics.dueCounts();
+    var cov = App.Analytics.coverage();
     var today = App.todayActivity();
     var goal = st.settings.dailyGoalQuestions || 10;
     var todayPct = Math.min(100, Math.round((today.questions / goal) * 100));
@@ -139,10 +139,9 @@ App.UI = {
       '<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">' +
         this.ring(todayPct, today.questions + "/" + goal, "goal") +
         '<div style="flex:1;min-width:220px">' +
-          '<div style="font-size:15px;margin-bottom:6px">' +
-            '<b>' + due.flashcards + '</b> flashcards &amp; <b>' + due.questions + '</b> questions due for review' +
-          '</div>' +
-          '<div style="color:var(--text-dim);font-size:13px;margin-bottom:14px">A daily session mixes spaced-repetition reviews, weak-topic drilling, and new material. Keep the streak alive!</div>' +
+          this._burndown("Questions", cov.questions) +
+          this._burndown("Flashcards", cov.flashcards) +
+          '<div style="color:var(--text-dim);font-size:12.5px;margin:10px 0 14px">Cram mode: you see each item once. Get it right and it\'s cleared for good — only misses and <b>Hard</b> come back.</div>' +
           '<div class="btn-row">' +
             '<button class="btn btn-primary" id="startFull">Start Full Session</button>' +
             '<button class="btn btn-ghost" id="startQuick">Quick Session</button>' +
@@ -178,6 +177,21 @@ App.UI = {
     this.root.innerHTML = html;
     document.getElementById("startFull").onclick = function () { App.UI.startSession("full"); };
     document.getElementById("startQuick").onclick = function () { App.UI.startSession("quick"); };
+  },
+
+  /* cram burn-down bar: cleared | to review | not yet seen */
+  _burndown: function (label, c) {
+    var pctC = c.total ? (c.cleared / c.total) * 100 : 0;
+    var pctR = c.total ? (c.review / c.total) * 100 : 0;
+    return '<div class="bd">' +
+      '<div class="bd-top"><span class="bd-l">' + label + '</span>' +
+      '<span class="bd-n"><b>' + c.cleared + '</b> / ' + c.total + ' cleared</span></div>' +
+      '<div class="bd-track">' +
+        '<span class="bd-c" style="width:' + pctC + '%"></span>' +
+        '<span class="bd-r" style="width:' + pctR + '%"></span>' +
+      '</div>' +
+      '<div class="bd-key">' + c.review + ' to review · ' + c.unseen + ' not yet seen</div>' +
+    '</div>';
   },
 
   _domRow: function (d, mastery) {
