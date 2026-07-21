@@ -27,12 +27,12 @@ App.UI = {
   mascot: function (px, cls) {
     px = px || 32;
     return '<svg class="' + (cls || "") + '" viewBox="0 0 48 48" width="' + px + '" height="' + px + '" aria-hidden="true">' +
-      '<rect x="8" y="16" width="32" height="16" rx="8" fill="#F3EFE6" stroke="#4F8A72" stroke-width="2.2"/>' +
-      '<path d="M16 16h8v16h-8a8 8 0 0 1-8-8 8 8 0 0 1 8-8z" fill="#E0895B" opacity="0.22"/>' +
-      '<path d="M24 17.2V30.8" stroke="#4F8A72" stroke-width="2.2"/>' +
-      '<circle cx="18.4" cy="24" r="1.7" fill="#3A382F"/><circle cx="29.6" cy="24" r="1.7" fill="#3A382F"/>' +
-      '<circle cx="14.8" cy="26.4" r="1.5" fill="#EE9BB6" opacity="0.75"/><circle cx="33.2" cy="26.4" r="1.5" fill="#EE9BB6" opacity="0.75"/>' +
-      '<path d="M21.6 27q2.4 2.1 4.8 0" stroke="#3A382F" stroke-width="1.4" fill="none" stroke-linecap="round"/>' +
+      '<rect x="8" y="16" width="32" height="16" rx="8" fill="#FFF6FA" stroke="#D14E86" stroke-width="2.2"/>' +
+      '<path d="M16 16h8v16h-8a8 8 0 0 1-8-8 8 8 0 0 1 8-8z" fill="#C89BF0" opacity="0.35"/>' +
+      '<path d="M24 17.2V30.8" stroke="#D14E86" stroke-width="2.2"/>' +
+      '<circle cx="18.4" cy="24" r="1.7" fill="#55374A"/><circle cx="29.6" cy="24" r="1.7" fill="#55374A"/>' +
+      '<circle cx="14.8" cy="26.4" r="1.5" fill="#FF9EC4" opacity="0.85"/><circle cx="33.2" cy="26.4" r="1.5" fill="#FF9EC4" opacity="0.85"/>' +
+      '<path d="M21.6 27q2.4 2.1 4.8 0" stroke="#55374A" stroke-width="1.4" fill="none" stroke-linecap="round"/>' +
       '</svg>';
   },
 
@@ -74,7 +74,7 @@ App.UI = {
       '<circle cx="60" cy="60" r="52" fill="none" stroke="url(#ringg)" stroke-width="10" stroke-linecap="round" ' +
       'stroke-dasharray="' + c + '" stroke-dashoffset="' + off + '" transform="rotate(-90 60 60)"/>' +
       '<defs><linearGradient id="ringg" x1="0" y1="0" x2="1" y2="1">' +
-      '<stop offset="0" stop-color="#5B9E82"/><stop offset="1" stop-color="#86C0A2"/></linearGradient></defs>' +
+      '<stop offset="0" stop-color="#FF8FB8"/><stop offset="1" stop-color="#C89BF0"/></linearGradient></defs>' +
       '</svg><div class="center"><div class="lv">' + centerTop + '</div><div class="lvl">' + centerBottom + '</div></div></div>';
   },
 
