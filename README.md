@@ -1,51 +1,73 @@
-# BCEMP Trainer 🚑💊
+# EM Study
 
-A gamified, spaced-repetition study tool for the **Board Certified Emergency Medicine Pharmacist (BCEMP)** exam. Built for a focused ~20–30 minute daily session over your final month of prep. Runs entirely in your browser — no install, no account, works offline, and your progress is saved on your own machine.
+Free board-style questions, flashcards and side-by-side comparison tables for **emergency medicine pharmacotherapy**. Use it to prepare for the **BCEMP** (Board Certified Emergency Medicine Pharmacist) exam, or to keep your knowledge sharp afterward.
 
-## How to open it
-**Just double-click `index.html`** — it opens in your default browser and runs locally. Nothing else to install.
+**Open it: https://dianakarp.github.io/emstudy/**
 
-> Tip: pin the tab or bookmark it. To make daily use effortless, do the session first thing each day to protect your streak.
+It runs in any modern browser, can be installed to your home screen, and works offline. There's no account: your progress stays in your own browser.
 
-## What a daily session looks like
-1. **Warm-up flashcards** — a few due cards to prime recall (rate each Again / Hard / Good / Easy).
-2. **Practice questions** — board-style vignettes with immediate rationales. The mix is ~40% spaced-repetition reviews, ~30% weighted toward your weakest domains, and the rest new material.
-3. **Summary** — XP earned, streak, any new badges, and tomorrow's focus area.
+## What's inside
+- **185 original practice questions** with explanations, written by Diana Karp
+- **376 flashcards**
+- **21 comparison tables** for high-yield distinctions (for example, NMS vs serotonin syndrome)
+- **A biostatistics drill** (65 questions) plus a reference sheet: equations, 2×2 tables, choosing a test, definitions
 
-Choose **Quick (~15 min)** on busy days or **Full (~25–30 min)** when you have time. Either one keeps your streak alive.
+The content spans 18 topics, from cardiovascular, resuscitation and toxicology through renal, GI, psychiatric, oncologic and dermatologic emergencies.
 
-## Why it works (the study science)
-- **Active recall** — you retrieve answers, not just reread them.
-- **Spaced repetition (SM-2)** — missed questions and hard flashcards resurface sooner; mastered ones stretch out, so you spend time where it counts.
-- **Weak-topic targeting** — the app tracks per-domain accuracy and automatically drills your lowest domains.
-- **Habit mechanics** — streaks (with one built-in grace day), XP, levels, a daily goal ring, badges, and an exam countdown keep you coming back daily.
+## How it works
+- **Two study modes** (change any time in Settings):
+  - **Refresh**: long-term spaced review. Answer correctly and an item comes back after 1, 3, 7, 21, 60, then 120 days. A miss starts that item over.
+  - **Cram**: for an exam in the next few weeks. You see each item once; only misses (and flashcards rated Hard) come back.
+- **Sessions** start with flashcards, then questions: reviews you owe first, then new questions weighted toward your weakest topics. Choose a quick or full session, and optionally limit it to the topics you pick on Home.
+- **Library**: search everything, filter by topic, bookmarks or what you missed, and start a focused review.
+- **Progress**: mastery by topic (each with a Study button), 30 days of activity, and badges.
+- **Keyboard shortcuts**: A–D or 1–4 to answer, Enter for the next question, Space to flip a flashcard, 1–4 to rate it.
+- **Light and dark themes** follow your device; you can override that in Settings.
 
-## Progress, backups & settings (Settings tab)
-- **Exam date / name / daily goal** — set your countdown and pacing.
-- **⬇ Export progress** — download a JSON backup. Do this occasionally: your data lives in the browser's local storage, so clearing site data would erase it. **⬆ Restore progress** loads a backup back.
-- **Reset all data** — wipe everything and start fresh.
+## Found an error?
+Every answer has a **Report a problem** link that opens a pre-filled GitHub issue for that exact item (you need a free GitHub account). A guideline or reference for the fix helps a lot. You can also [open an issue](https://github.com/dianakarp/emstudy/issues) directly.
 
-## Adding your own content
-The app ships with a seed bank across all exam domains, and you can grow it via **Settings → Import**:
+## Your data
+Progress is stored only in your browser's local storage. **Settings → Export progress** downloads a backup and **Restore from backup** loads it back. Clearing your browser's site data erases progress, so export now and then.
 
-- **JSON** — match the structure in [`data/schema-example.json`](data/schema-example.json).
-- **CSV** —
+Progress saved by the earlier *BCEMP Trainer* version carries over automatically. It stays in Cram mode; switch to Refresh in Settings when you're past the exam.
+
+## Add your own content
+**Settings → Your content** imports questions and flashcards:
+
+- **JSON**: match the structure in [`data/schema-example.json`](data/schema-example.json).
+- **CSV**:
   - Questions: `domain,difficulty,stem,optionA,optionB,optionC,optionD,correct,rationale,tags`
-    (`correct` may be `1–4` or `A–D`; `tags` separated by `;` or `|`)
+    (`correct` may be `1–4` or `A–D`; separate `tags` with `;` or `|`)
   - Flashcards: `domain,front,back,tags`
   - A ready-to-edit example is in [`data/sample-import.csv`](data/sample-import.csv).
 
-Valid `domain` ids: `cv, resus, tox, neuro, id, trauma, resp, pain, endo, env, special, safety, pmr` (see [`data/domains.js`](data/domains.js)).
+Valid `domain` ids: `cv, resus, tox, neuro, id, trauma, resp, pain, endo, env, special, safety, pmr, renal, gi, psych, onc, derm` (see [`data/domains.js`](data/domains.js)).
 
-Imported items merge into your library, are de-duplicated by stem/front, and persist locally.
+Imported items join your sessions and the Library, are de-duplicated by stem or front, and stay in your browser.
+
+## Running it locally
+Double-click `index.html`, or `EM-Study.html` for the all-in-one version (every file inlined, so it works on its own, even emailed to yourself). Offline caching and installing only apply on the hosted site.
+
+## Maintaining it
+- After changing `index.html`, `css/`, `fonts/`, `data/` or `js/`, rebuild the single file:
+  `powershell -ExecutionPolicy Bypass -File build-single.ps1`
+- `sw.js` caches the site for offline use and refreshes files in the background, so edits to existing files reach returning visitors on their next visit. When you **add, rename or remove** a file the site loads, update the `ASSETS` list in `sw.js` and bump `CACHE` (for example `emstudy-v12`); visitors then see a "new version" banner.
+- Progress is keyed by item `id`, so never renumber existing questions or cards.
 
 ## Project layout
 ```
-index.html        app shell (loads everything)
-css/styles.css    theme + gamification visuals
-js/               state, srs, content, analytics, gamification, session, import, ui, app
-data/             domains, seed questions, seed flashcards, import templates
+index.html        app shell
+EM-Study.html     single-file build (generated by build-single.ps1)
+css/styles.css    "ink & highlighter" theme, light and dark
+fonts/            self-hosted fonts and their licenses
+js/               state, srs, content, analytics, gamification, session, import, ui, library, app
+data/             topics, questions, flashcards, comparison tables, biostats, import templates
+sw.js             offline cache
 ```
 
-## ⚠️ Disclaimer
-This is a **study aid**. Content is authored for exam prep and may contain simplifications or errors. Always verify dosing and management against current guidelines, primary literature, and your institution's protocols before applying to patient care. **Not medical advice.**
+## Credits
+Fonts: Atkinson Hyperlegible Next and Atkinson Hyperlegible Mono (Braille Institute) and Source Serif 4 (Adobe), self-hosted under the SIL Open Font License ([`fonts/`](fonts/)).
+
+## Disclaimer
+This is a **study aid**. Content is authored for exam preparation and review and may contain simplifications or errors. Always verify dosing and management against current guidelines, primary literature, and your institution's protocols before applying it to patient care. **Not medical advice.**
