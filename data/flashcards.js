@@ -71,7 +71,7 @@ window.BCEMP_FLASHCARDS = [
   { id: "fc-pain-04", domain: "pain", front: "Etomidate: benefit and caution?", back: "Hemodynamically neutral induction (0.3 mg/kg); causes transient adrenal suppression—caution in sepsis.", tags: ["etomidate"] },
 
   /* ENDOCRINE & METABOLIC */
-  { id: "fc-endo-01", domain: "endo", front: "DKA: when to hold insulin for potassium?", back: "Hold insulin if K+ <3.3 mEq/L and replete first. K+ 3.3–5.3: insulin + add K+ to fluids. K+ >5.3: insulin, monitor.", tags: ["DKA","potassium"] },
+  { id: "fc-endo-01", domain: "endo", front: "DKA: when to hold insulin for potassium?", back: "2024 consensus: K+ < 3.5 mEq/L: hold insulin and replace K+ first. K+ 3.5–5.0: start insulin and add K+ to fluids. K+ > 5.0: start insulin, hold K+, recheck in 2 h. (The 2009 statement used 3.3 and 5.2–5.3.)", tags: ["DKA","potassium"], source: "Umpierrez GE, et al. Hyperglycemic crises in adults with diabetes: consensus report. Diabetes Care 2024", updated: "2026-11" },
   { id: "fc-endo-02", domain: "endo", front: "Hyperkalemia with ECG changes: first drug?", back: "IV calcium (gluconate or chloride) to stabilize myocardium (does not lower K+).", tags: ["hyperkalemia","calcium"] },
   { id: "fc-endo-03", domain: "endo", front: "Hyperkalemia: agents that SHIFT K+ intracellularly?", back: "Insulin + dextrose, beta-2 agonist (albuterol high-dose), sodium bicarbonate (if acidotic).", tags: ["hyperkalemia"] },
   { id: "fc-endo-04", domain: "endo", front: "Hyperkalemia: agents that REMOVE K+?", back: "Loop diuretics (if making urine), GI cation binders (patiromer, SZC, SPS), dialysis.", tags: ["hyperkalemia"] },
