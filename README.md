@@ -8,11 +8,13 @@ It runs in any modern browser, can be installed to your home screen, and works o
 
 ## What's inside
 - **185 original practice questions** with explanations, written by Diana Karp
-- **376 flashcards**
+- **380 flashcards**
 - **21 comparison tables** for high-yield distinctions (for example, NMS vs serotonin syndrome)
 - **A biostatistics drill** (65 questions) plus a reference sheet: equations, 2×2 tables, choosing a test, definitions
 
 The content spans 18 topics, from cardiovascular, resuscitation and toxicology through renal, GI, psychiatric, oncologic and dermatologic emergencies.
+
+The content is being checked against current guidelines, topic by topic. Every corrected or added item shows its source and the month it was updated, next to a "Report a problem" link.
 
 ## How it works
 - **Two study modes** (change any time in Settings):

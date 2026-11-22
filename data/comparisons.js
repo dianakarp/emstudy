@@ -1,13 +1,13 @@
 /* comparisons.js - side-by-side high-yield distinctions for the Compare review tab.
  * One table per block and one row per line, so edits show up as small diffs. */
 window.BCEMP_COMPARISONS = [
-  {"title": "NMS vs Serotonin Syndrome", "section": "Psychiatry / Tox", "tagline": "Both = hyperthermia + AMS + autonomic chaos. The reflexes tell you which", "cols": ["NMS (Neuroleptic Malignant Syndrome)","Serotonin Syndrome"], "rows": [
+  {"title": "NMS vs Serotonin Syndrome", "section": "Psychiatry / Tox", "tagline": "Both = hyperthermia + AMS + autonomic chaos. The reflexes tell you which", "cols": ["NMS (Neuroleptic Malignant Syndrome)","Serotonin Syndrome"], "source": "Boyer EW, Shannon M. NEJM 2005; Gurrera RJ, et al. NMS consensus criteria, J Clin Psychiatry 2011", "updated": "2026-11", "rows": [
     ["Cause","Dopamine antagonist (typical/atypical antipsychotic, metoclopramide) OR abrupt dopamine agonist withdrawal","Serotonergic agent (SSRI, SNRI, MAOI, TCA, tramadol, fentanyl, ondansetron, linezolid, dextromethorphan, St. John's wort)"],
     ["Onset","Days to weeks (slow)","Hours (rapid)"],
-    ["Rigidity","LEAD-PIPE (sustained, uniform)","Cogwheel / no rigidity"],
+    ["Rigidity","LEAD-PIPE (sustained, uniform), with bradykinesia","Increased tone, worse in the LEGS; truncal rigidity in severe cases (can mask clonus)"],
     ["Reflexes","HYPO-reflexia or normal","HYPER-reflexia + CLONUS (especially ankle)"],
     ["Pupils","Normal","Dilated (mydriasis)"],
-    ["CK","Markedly elevated (>10,000 common)","Mildly elevated"],
+    ["CK","Elevated, often markedly (at least 4x normal in the consensus criteria)","Normal or mildly elevated; rises with severe rigidity"],
     ["GI symptoms","Minimal","Diarrhea, hyperactive bowel sounds"],
     ["Skin","Diaphoresis, pale","Diaphoresis, flushed"],
     ["Treatment","STOP antipsychotic + supportive (cooling, IVF, benzos). Severe: DANTROLENE 2.5 mg/kg q6h + BROMOCRIPTINE 2.5 mg TID","STOP serotonergic agents + supportive + benzos. Severe: CYPROHEPTADINE 12 mg load → 2 mg q2h"],
@@ -32,15 +32,15 @@ window.BCEMP_COMPARISONS = [
     ["Target temp","38.3-38.8°C (101-102°F)","Same — stop to avoid overshoot"],
     ["AVOID","Antipyretics (NSAIDs, APAP) — wrong mechanism; dantrolene (NOT MH/NMS)","Same — plus aggressive cardiac stress"]
   ]},
-  {"title": "BB Overdose vs CCB Overdose", "section": "Toxicology", "tagline": "Mechanistically opposite glucose effects — classic board pearl", "cols": ["Beta-Blocker Overdose","Calcium Channel Blocker Overdose"], "rows": [
-    ["Glucose","HYPOGLYCEMIA (β2 blocks glycogenolysis)","HYPERGLYCEMIA (L-type Ca channel blocks insulin release)"],
+  {"title": "BB Overdose vs CCB Overdose", "section": "Toxicology", "tagline": "Mechanistically opposite glucose effects — classic board pearl", "cols": ["Beta-Blocker Overdose","Calcium Channel Blocker Overdose"], "source": "2023 AHA Focused Update on Cardiac Arrest or Life-Threatening Toxicity Due to Poisoning", "updated": "2026-11", "rows": [
+    ["Glucose","HYPOGLYCEMIA, mainly in children (β2 blockade impairs glycogenolysis)","HYPERGLYCEMIA (L-type Ca channel blocks insulin release)"],
     ["Heart rate","Bradycardia","Bradycardia (verapamil/diltiazem); reflex tachy then brady (DHCCB)"],
     ["BP","Hypotension","Hypotension"],
-    ["Mental status","AMS, seizures","AMS, seizures"],
+    ["Mental status","AMS, seizures (especially propranolol)","Often PRESERVED despite profound hypotension (a classic clue)"],
     ["Propranolol specifics","Lipophilic + Na channel blockade → wide QRS → NaHCO3 helps","—"],
     ["Sotalol specifics","K channel block → prolonged QT → torsades → MgSO4 + overdrive pacing","—"],
-    ["First-line","Atropine (often fails) → IV fluids → glucagon 5-10 mg → HIE → ILE if lipophilic","Atropine (often fails) → IV fluids → CaCl/Ca gluconate → HIE → ILE → methylene blue refractory"],
-    ["HIE dosing","Both: 1 u/kg bolus + 1 u/kg/hr → titrate UP to 10+ u/kg/hr. Don't fear the dose","Same"],
+    ["Treatment (2023 AHA)","Vasopressors + EARLY high-dose insulin (both class 1); glucagon bolus + infusion (2a); atropine or pacing for bradycardia (2b); VA-ECMO if refractory (2a); hemodialysis may help for atenolol or sotalol (2b). Lipid emulsion is not likely to help","Vasopressors + EARLY high-dose insulin (both class 1); calcium (2a); atropine (2a); VA-ECMO if refractory (2a); pacing, glucagon, and methylene blue of uncertain benefit (2b). Routine lipid emulsion is NOT recommended"],
+    ["HIE dosing","Both: regular insulin 1 unit/kg bolus, then 1 unit/kg/h titrated up to 10 units/kg/h, with dextrose and K+ monitoring. Don't fear the dose","Same"],
     ["Memory hook","BB OD = β-blocked Blood sugar (LOW)","CCB OD = Can't Cut insulin → HIGH blood sugar"]
   ]},
   {"title": "CroFab vs ANAVIP (Pit Viper Antivenoms)", "section": "Environmental Tox", "tagline": "Key difference: maintenance dosing — driven by molecular fragment size", "cols": ["CroFab (Ovine Fab)","ANAVIP (Equine F(ab')2)"], "rows": [
@@ -52,24 +52,24 @@ window.BCEMP_COMPARISONS = [
     ["Delayed coagulopathy","More common","Less common"],
     ["Memory hook","CroFab needs more 'CRO' (continued dosing)","ANAVIP is 'A One-time And done' approach"]
   ]},
-  {"title": "Salicylate vs TCA Overdose", "section": "Toxicology", "tagline": "Both treated with NaHCO3 but for completely different reasons", "cols": ["Salicylate Overdose","TCA Overdose"], "rows": [
+  {"title": "Salicylate vs TCA Overdose", "section": "Toxicology", "tagline": "Both treated with NaHCO3 but for completely different reasons", "cols": ["Salicylate Overdose","TCA Overdose"], "source": "Juurlink DN, et al. EXTRIP salicylates, Ann Emerg Med 2015; Yates C, et al. EXTRIP tricyclic antidepressants, Semin Dial 2014", "updated": "2026-11", "rows": [
     ["Toxidrome","Mixed respiratory alkalosis + AGMA, tinnitus, fever, sweating","Anticholinergic + Na channel blockade + α1 block"],
     ["Classic ABG","Mixed (resp alk + met acid). Pure metabolic = severe","Metabolic acidosis + wide QRS"],
     ["ECG","Variable","QRS > 100 ms → seizure risk; > 160 → arrhythmia risk; R wave aVR > 3 mm"],
     ["Why NaHCO3","Urine alkalinization (target pH > 7.5) — traps ionized salicylate → eliminates","Serum alkalinization (target pH 7.45-7.55) — overcomes Na channel blockade"],
-    ["HD indications","Level > 100 (or > 90 + renal), severe acidosis pH < 7.2, AMS, pulm edema","Refractory arrhythmia or shock"],
+    ["HD indications","EXTRIP recommends: level > 100 mg/dL (> 90 with impaired kidney function), altered mental status, new hypoxemia needing O2, or failing standard therapy. Suggests: level > 90 (> 80 with kidney impairment) or pH ≤ 7.20","None: not dialyzable (protein-bound, huge volume of distribution); EXTRIP recommends AGAINST it"],
     ["Intubation pitfall","DON'T — can't match patient's MV → acidosis worsens → CNS shift → death","May be necessary; manage with bicarb + supportive"],
     ["AVOID","Acetazolamide, sedation","Phenytoin (worsens Na block), physostigmine (asystole risk), flumazenil"]
   ]},
-  {"title": "Methanol vs Ethylene Glycol Poisoning", "section": "Toxicology", "tagline": "Both blocked by fomepizole — end-organ damage differs", "cols": ["Methanol","Ethylene Glycol"], "rows": [
+  {"title": "Methanol vs Ethylene Glycol Poisoning", "section": "Toxicology", "tagline": "Both blocked by fomepizole — end-organ damage differs", "cols": ["Methanol","Ethylene Glycol"], "source": "AACT practice guidelines (1999, 2002); Roberts DM, et al. EXTRIP methanol, Crit Care Med 2015; Ghannoum M, et al. EXTRIP ethylene glycol, Crit Care 2023", "updated": "2026-11", "rows": [
     ["Toxic metabolite","FORMIC ACID (formaldehyde → formate)","Glycolic acid → OXALIC ACID"],
     ["End-organ injury","OPTIC NEUROPATHY (\"snowfield blindness\"), basal ganglia (parkinsonism)","RENAL FAILURE from calcium oxalate crystals, hypocalcemia"],
     ["Classic finding","Visual changes, normal renal","Calcium oxalate crystals (envelope shape) in urine, hypoCa from oxalate binding"],
-    ["Wood's lamp","—","Fluorescent urine (antifreeze contains fluorescein)"],
-    ["Toxic level","> 25 mg/dL","> 20 mg/dL"],
+    ["Wood's lamp","—","Urine may fluoresce (fluorescein in antifreeze), but the test is unreliable; don't use it to rule in or out"],
+    ["Start fomepizole if","Level > 20 mg/dL, or suspected ingestion with an osmolal gap > 10 or unexplained anion-gap acidosis (don't wait for the level)","Same"],
     ["Fomepizole","Yes — 15 mg/kg load → 10 mg/kg q12h × 4 → 15 mg/kg q12h","Same dosing"],
     ["Adjunct vitamins","FOLATE 50 mg q4-6h (shunts to CO2 + water)","PYRIDOXINE 50-100 mg + THIAMINE 100 mg (shunts to less-toxic metabolites)"],
-    ["HD threshold","Level > 50, severe acidosis, vision change","Level > 50, severe acidosis, renal failure"]
+    ["HD threshold (EXTRIP)","Coma, seizures, new vision deficits, pH ≤ 7.15, anion gap > 24, or methanol > 70 mg/dL on fomepizole (> 60 on ethanol, > 50 with no ADH blocker); suggested with impaired kidney function","Coma, seizures, or AKI; anion gap > 27 (suggested at 23–27); or EG > 310 mg/dL (50 mmol/L) or osmolal gap > 50 (recommended on ethanol, suggested on fomepizole)"]
   ]},
   {"title": "Type I vs Type II Statistical Errors", "section": "Biostats", "tagline": "The 2×2 table everyone confuses", "cols": ["Type I Error (α)","Type II Error (β)"], "rows": [
     ["What happened","Rejected H0 when actually TRUE","Failed to reject H0 when actually FALSE"],
@@ -142,19 +142,19 @@ window.BCEMP_COMPARISONS = [
     ["Volume deficit","~6 L (5-8)","~9 L (8-12) — much greater"],
     ["Treatment focus","Insulin + correcting acidosis + K","VOLUME first (slowly), then insulin"]
   ]},
-  {"title": "Acetaminophen Toxicity Phases", "section": "Toxicology", "tagline": "Recognize where the patient is in the timeline to treat appropriately", "cols": ["Phase 1 (0-24h)","Phase 2 (24-72h)","Phase 3 (72-96h)","Phase 4 (recovery)"], "rows": [
+  {"title": "Acetaminophen Toxicity Phases", "section": "Toxicology", "tagline": "Recognize where the patient is in the timeline to treat appropriately", "cols": ["Phase 1 (0-24h)","Phase 2 (24-72h)","Phase 3 (72-96h)","Phase 4 (recovery)"], "source": "Dart RC, et al. Acetaminophen poisoning consensus statement, JAMA Netw Open 2023", "updated": "2026-11", "rows": [
     ["Symptoms","Mild (N/V/anorexia) — or nothing","RUQ pain emerges","Lactic acidosis, hepatic failure, renal failure, jaundice, hypoglycemia, coagulopathy","Resolution if survived phase 3"],
     ["AST/ALT","Normal","Rising","PEAK (often > 10,000)","Normalizing"],
     ["INR","Normal","Rising","Peak (> 6 = severe)","Normalizing"],
     ["Bilirubin","Normal","Rising","Peak","Normalizing"],
-    ["Action","Get level at 4 hr → nomogram. NAC if above line. AC if < 1 hr","Start NAC if not started. King's College criteria assessed","NAC + supportive + ICU. King's College criteria for transplant","Continue NAC until LFTs improving"],
-    ["King's College criteria","—","—","pH < 7.3 OR (INR > 6.5 + Cr > 3.4 + grade III/IV encephalopathy)","—"]
+    ["Action","Level at 4 hr or later → nomogram (treat at or above the 150 line); start NAC first if the level won't be back by 8 hr. Consider AC for a potentially hepatotoxic dose (even beyond 4 hr if high-risk or extended-release)","Start NAC if not started. King's College criteria assessed","NAC + supportive + ICU. King's College criteria for transplant","Stop NAC only when APAP < 10 mcg/mL, INR < 2.0, ALT/AST normal or down 25–50% from peak, and clinically well"],
+    ["King's College criteria","—","—","pH < 7.30 after fluid resuscitation, OR all three of INR > 6.5 + Cr > 3.4 + grade III/IV encephalopathy","—"]
   ]},
-  {"title": "Body Packer vs Body Stuffer", "section": "Toxicology", "tagline": "Different stories, different management", "cols": ["Body Packer","Body Stuffer"], "rows": [
+  {"title": "Body Packer vs Body Stuffer", "section": "Toxicology", "tagline": "Different stories, different management", "cols": ["Body Packer","Body Stuffer"], "updated": "2026-11", "rows": [
     ["Context","International drug trafficker, INTENTIONAL","Panicked swallow during arrest, IMPROVISED"],
     ["Packaging","Well-wrapped (latex, condoms, machine sealed)","Poorly wrapped (cellophane, baggie)"],
     ["Quantity","Large amount, multiple packets","Smaller amount, often single packet"],
-    ["Presentation","ASYMPTOMATIC usually (intact wrap)","SYMPTOMATIC (rapid absorption from broken packet)"],
+    ["Presentation","ASYMPTOMATIC usually (intact wrap)","Often asymptomatic at first, but poorly wrapped packets can leak fast; observe for delayed toxicity"],
     ["Risk","Massive overdose if packet RUPTURES, bowel obstruction","Rapid absorption from leaky packet"],
     ["Management","WBI + observation. SURGERY if obstruction, rupture, or symptomatic","AC + supportive care. WBI sometimes"],
     ["Imaging","Multiple packets visible on KUB/CT","Often radiolucent (not visible)"]
