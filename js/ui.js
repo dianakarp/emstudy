@@ -419,7 +419,7 @@ App.UI = {
         html += '</tr>';
       });
       html += '</tbody></table></div>' +
-        '<div class="meta-row"><span>Updated Jul 2026</span><a href="' + self.esc(App.Content.reportUrl(c, "table")) + '" target="_blank" rel="noopener">Report a problem</a></div>' +
+        '<div class="meta-row">' + (c.source ? '<span>Source: ' + self.esc(c.source) + '</span>' : '') + '<span>Updated ' + self.esc(App.date.monthYear(c.updated || "2026-07")) + '</span><a href="' + self.esc(App.Content.reportUrl(c, "table")) + '" target="_blank" rel="noopener">Report a problem</a></div>' +
         '</div></details>';
     });
 
@@ -585,7 +585,7 @@ App.UI = {
     '</div>';
 
     html += '<h2 class="section-title">About</h2><div class="card small">' +
-      '<p>EM Study is a free study aid for emergency medicine pharmacotherapy, including the BCEMP exam. Questions, flashcards and tables were last updated in July 2026.</p>' +
+      '<p>EM Study is a free study aid for emergency medicine pharmacotherapy, including the BCEMP exam. Content was first published in July 2026 and is being checked against current guidelines; every corrected item shows its source and the month it was updated.</p>' +
       '<p style="margin:0">Spotted an error? Every answer has a <b>Report a problem</b> link, or you can <a href="' + App.Content.REPO + '/issues" target="_blank" rel="noopener">open an issue on GitHub</a>.</p>' +
     '</div>';
 
