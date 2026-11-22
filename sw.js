@@ -6,7 +6,7 @@
  * their next visit even without a version bump. Bump CACHE when the list of files
  * changes; the page then offers a "Reload" toast.
  * All URLs are relative so it works under a GitHub Pages project subpath. */
-var CACHE = "emstudy-v11";
+var CACHE = "emstudy-v12";
 var ASSETS = [
   "./",
   "./index.html",
@@ -20,6 +20,7 @@ var ASSETS = [
   "./fonts/source-serif-4-latin-600-italic.woff2",
   "./data/domains.js",
   "./data/empc24-questions.js",
+  "./data/added-questions.js",
   "./data/biostats-questions.js",
   "./data/flashcards.js",
   "./data/quiz-flashcards.js",
