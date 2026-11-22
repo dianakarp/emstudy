@@ -7,8 +7,8 @@ Free board-style questions, flashcards and side-by-side comparison tables for **
 It runs in any modern browser, can be installed to your home screen, and works offline. There's no account: your progress stays in your own browser.
 
 ## What's inside
-- **185 original practice questions** with explanations, written by Diana Karp
-- **368 flashcards**
+- **210 practice questions** with explanations: 185 originals written by Diana Karp, plus 25 added in November 2026 for the topics that had the fewest, each with its source
+- **376 flashcards**
 - **21 comparison tables** for high-yield distinctions (for example, NMS vs serotonin syndrome)
 - **A biostatistics drill** (65 questions) plus a reference sheet: equations, 2×2 tables, choosing a test, definitions
 

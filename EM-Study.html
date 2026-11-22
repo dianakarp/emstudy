@@ -1675,6 +1675,154 @@ window.BCEMP_EMPC24_QUESTIONS = [
 
   </script>
   <script>
+/* added-questions.js - 25 board-style questions added in the November 2026
+ * content review for the topics that had the fewest questions (dermatologic,
+ * renal, GI, respiratory and environmental). Each item names the guideline or
+ * label it rests on; those citations credit their authors and do not imply any
+ * organization endorsed, reviewed, or produced these questions.
+ *
+ * Convention matches data/empc24-questions.js: the correct answer is authored
+ * at index 0 and options are shuffled at display time.
+ * Study aid only; verify against current guidelines and institutional protocols. */
+window.BCEMP_ADDED_QUESTIONS = [
+  /* ---------- dermatologic ---------- */
+  { id: "ad26-001", domain: "derm", difficulty: 2, tags: ["SJS/TEN", "Drug Reactions"],
+    stem: "A 34-year-old woman started lamotrigine 3 weeks ago. She now has fever, painful dusky macules with blisters and skin detachment over about 20% of her body surface area, and erosions of the lips and conjunctivae. Which is the most appropriate next step?",
+    options: ["Stop lamotrigine and admit to a burn center or ICU", "Continue lamotrigine at a lower dose and start oral prednisone 1 mg/kg daily", "Stop lamotrigine and start prophylactic IV antibiotics to prevent skin infection", "Stop lamotrigine and discharge with topical corticosteroids and dermatology follow-up"], correctIndex: 0,
+    rationale: "Detachment of 10-30% of the body surface is SJS/TEN overlap. Withdrawing the culprit drug immediately improves the prognosis, and the UK guideline says patients with more than 10% skin loss should be admitted without delay to a burn center or ICU with SJS/TEN experience. Continuing the drug at any dose is dangerous. Prophylactic antibiotics are not indicated; treat infection when it appears. Discharge is unsafe because fluid loss, infection and eye involvement need inpatient care. Calculate SCORTEN within the first 24 hours.",
+    source: "Creamer D, et al. UK guidelines for the management of Stevens-Johnson syndrome/toxic epidermal necrolysis in adults 2016. Br J Dermatol 2016", updated: "2026-11" },
+  { id: "ad26-002", domain: "derm", difficulty: 2, tags: ["Gout", "Allopurinol", "Pharmacogenomics"],
+    stem: "Allopurinol is planned for four patients with recurrent gout flares. According to the 2020 ACR gout guideline, which patient should be tested for HLA-B*5801 before the first dose?",
+    options: ["A 48-year-old man of Korean descent", "A 48-year-old man of Northern European descent with CKD stage 3", "A 48-year-old woman of any ancestry with a sulfonamide allergy", "Every patient, regardless of ancestry"], correctIndex: 0,
+    rationale: "HLA-B*5801 strongly predicts allopurinol hypersensitivity, including SJS/TEN and DRESS. ACR 2020 conditionally recommends testing before allopurinol in patients of Southeast Asian descent (such as Han Chinese, Korean or Thai) and in African American patients, groups in which the allele is more common, and recommends against testing everyone else. CKD raises the risk of a hypersensitivity reaction but is not a testing criterion, and a sulfonamide allergy is unrelated. If the test is positive, choose another urate-lowering drug.",
+    source: "FitzGerald JD, et al. 2020 American College of Rheumatology Guideline for the Management of Gout. Arthritis Care Res 2020", updated: "2026-11" },
+  { id: "ad26-003", domain: "derm", difficulty: 3, tags: ["Gout", "Colchicine", "Drug Interactions"],
+    stem: "A 66-year-old man on day 3 of clarithromycin for community-acquired pneumonia develops an acute gout flare in his right knee. His creatinine and liver tests are normal, and he has no history of diabetes or GI bleeding. Which treatment is most appropriate?",
+    options: ["Oral prednisone 30-40 mg daily for 5 days", "Colchicine 1.2 mg, then 0.6 mg one hour later", "Colchicine 0.6 mg twice daily for 7 days", "Allopurinol 300 mg daily, started now to end the flare"], correctIndex: 0,
+    rationale: "Clarithromycin strongly inhibits CYP3A4 and P-glycoprotein, and fatal colchicine toxicity has been reported with the combination. The colchicine label cuts the flare dose to 0.6 mg, then 0.3 mg an hour later, repeated no sooner than 3 days, and forbids the combination in renal or hepatic impairment, so the standard regimen and a scheduled twice-daily course are both unsafe here. ACR 2020 rates glucocorticoids, NSAIDs and colchicine as equally appropriate first-line flare treatments, so a short prednisone course is the simplest safe choice. Allopurinol lowers urate over time; it does not treat a flare.",
+    source: "Colcrys (colchicine) prescribing information; FitzGerald JD, et al. ACR gout guideline. Arthritis Care Res 2020", updated: "2026-11" },
+  { id: "ad26-004", domain: "derm", difficulty: 2, tags: ["Gout", "Urate-Lowering Therapy", "CKD"],
+    stem: "A 70-year-old woman with CKD stage 3b (eGFR 38 mL/min/1.73 m²) has had three gout flares this year and presents with a fourth. Her rheumatologist asks the ED to start urate-lowering therapy before discharge. Which plan follows the 2020 ACR guideline?",
+    options: ["Start low-dose allopurinol now with prophylaxis; titrate to urate < 6 mg/dL", "Wait until the flare resolves, then start allopurinol 300 mg daily", "Avoid allopurinol because of her CKD and start febuxostat 80 mg daily", "Start probenecid 500 mg twice daily"], correctIndex: 0,
+    rationale: "ACR 2020 makes allopurinol the first-line agent for all patients, including those with CKD. It starts low (100 mg daily or less, and lower in CKD stage 3 or worse) and is titrated every few weeks to a serum urate below 6 mg/dL rather than given at a fixed dose. Starting during a flare is acceptable as long as anti-inflammatory treatment is given, and flare prophylaxis (colchicine, an NSAID or prednisone) continues for 3-6 months. Febuxostat is second-line and also starts low (40 mg or less), and allopurinol or febuxostat is preferred over probenecid in moderate-to-severe CKD.",
+    source: "FitzGerald JD, et al. ACR gout guideline. Arthritis Care Res 2020", updated: "2026-11" },
+  { id: "ad26-005", domain: "derm", difficulty: 2, tags: ["Burns", "Fluid Resuscitation"],
+    stem: "A 70-kg man arrives shortly after a house fire with 40% total body surface area partial- and full-thickness flame burns and no inhalation injury. Using the American Burn Association's recommended starting volume, what is the initial lactated Ringer's rate?",
+    options: ["350 mL/h, titrated hourly to urine output", "700 mL/h, titrated hourly to urine output", "233 mL/h, the 24-hour volume spread evenly over 24 hours", "A 2-L crystalloid bolus, then maintenance fluids"], correctIndex: 0,
+    rationale: "The 2024 ABA guideline recommends starting at 2 mL/kg per %TBSA, not the Parkland 4 mL/kg, to limit over-resuscitation. That gives 2 × 70 × 40 = 5,600 mL for the first 24 hours. Half is planned for the first 8 hours from the time of injury, so the starting rate is 5,600 ÷ 16 = 350 mL/h, adjusted every hour to urine output (about 0.5 mL/kg/h, or 30-50 mL/h in adults); albumin can be added for larger burns. 700 mL/h is the Parkland start, an even 24-hour split under-resuscitates early, and boluses are avoided in burn resuscitation.",
+    source: "Cartotto R, et al. American Burn Association Clinical Practice Guidelines on Burn Shock Resuscitation. J Burn Care Res 2024", updated: "2026-11" },
+
+  /* ---------- renal ---------- */
+  { id: "ad26-006", domain: "renal", difficulty: 2, tags: ["Contrast", "AKI", "Metformin"],
+    stem: "A 64-year-old man with stable CKD (eGFR 38 mL/min/1.73 m²) and type 2 diabetes on metformin needs a contrast-enhanced CT for suspected pulmonary embolism. He has no acute kidney injury. Which approach follows the 2020 ACR-NKF consensus?",
+    options: ["Proceed and continue metformin; no routine prophylaxis is needed", "Give oral N-acetylcysteine 1,200 mg twice daily before and after the scan", "Give IV sodium bicarbonate instead of saline for prophylaxis", "Hold the CT and anticoagulate empirically, because contrast is contraindicated below an eGFR of 45"], correctIndex: 0,
+    rationale: "The ACR-NKF consensus reserves prophylactic IV normal saline for patients with an eGFR below 30 who are not on dialysis, or with AKI; at 30-44 it is decided case by case. Contrast that is needed for diagnosis should not be withheld. In PRESERVE, neither N-acetylcysteine nor bicarbonate improved outcomes over saline. Metformin is held for 48 hours only when the eGFR is below 30 or the patient has AKI.",
+    source: "Davenport MS, et al. ACR-NKF consensus statements on IV iodinated contrast in kidney disease. Radiology 2020; Weisbord SD, et al. PRESERVE. NEJM 2018; ACR Manual on Contrast Media", updated: "2026-11" },
+  { id: "ad26-007", domain: "renal", difficulty: 2, tags: ["Hyponatremia", "SIADH", "Tolvaptan"],
+    stem: "A 58-year-old woman with SIADH from small cell lung cancer has a sodium of 121 mEq/L with mild symptoms despite fluid restriction. Her liver tests are normal. Her oncologist wants to start tolvaptan 15 mg daily. Which plan is appropriate?",
+    options: ["Start it in the hospital, without fluid restriction for the first 24 hours", "Start it at home and check the sodium in 1 week", "Start it together with 3% saline for a faster rise", "Start it and tighten her fluid restriction to 800 mL/day"], correctIndex: 0,
+    rationale: "Tolvaptan's boxed warning requires starting (and restarting) it in a hospital where sodium can be monitored closely, because a rise of more than 12 mEq/L in 24 hours can cause osmotic demyelination. The label says to avoid fluid restriction in the first 24 hours (patients drink to thirst), to avoid combining it with hypertonic saline, and to limit use to 30 days because of liver injury. Strong CYP3A inhibitors are contraindicated.",
+    source: "Samsca (tolvaptan) prescribing information", updated: "2026-11" },
+  { id: "ad26-008", domain: "renal", difficulty: 3, tags: ["Hyponatremia", "Overcorrection", "Desmopressin"],
+    stem: "A 55-year-old woman with alcohol use disorder and hypokalemia was admitted with a sodium of 112 mEq/L and confusion. After 3% saline and potassium replacement, her urine output has risen to 400 mL/h, and 10 hours into treatment her sodium is 122 mEq/L. What is the most appropriate action?",
+    options: ["Desmopressin 2 mcg IV plus D5W", "Continue the current plan, since her confusion has improved", "Switch to 0.9% sodium chloride at 150 mL/h", "Start tolvaptan 15 mg to maintain the diuresis"], correctIndex: 0,
+    rationale: "She is at high risk of osmotic demyelination (alcohol use, hypokalemia), so her limit is 8 mEq/L in any 24 hours, and she has already risen 10 in 10 hours with a water diuresis that will push her sodium higher. Re-lowering with desmopressin (2-4 mcg IV or SC every 6-8 hours) plus D5W is the recommended rescue and was effective and safe in published series. Normal saline still raises the sodium during a water diuresis, and tolvaptan would worsen the overcorrection.",
+    source: "Verbalis JG, et al. Hyponatremia treatment guidelines: expert panel recommendations. Am J Med 2013; Perianayagam A, et al. DDAVP for overcorrection of hyponatremia. Clin J Am Soc Nephrol 2008", updated: "2026-11" },
+  { id: "ad26-009", domain: "renal", difficulty: 2, tags: ["Hyperkalemia", "Potassium Binders"],
+    stem: "A 68-year-old man on hemodialysis has a potassium of 6.8 mEq/L with peaked T waves. He has received IV calcium, insulin with dextrose, and nebulized albuterol, and his dialysis session is 6 hours away. Which oral potassium binder has the fastest onset?",
+    options: ["Sodium zirconium cyclosilicate (Lokelma)", "Patiromer (Veltassa)", "Sodium polystyrene sulfonate (Kayexalate) in sorbitol", "Sevelamer (Renvela)"], correctIndex: 0,
+    rationale: "Sodium zirconium cyclosilicate begins lowering potassium within about an hour; patiromer takes roughly 4-7 hours. Neither replaces emergency treatment: both labels warn against using them for life-threatening hyperkalemia because of their delayed onset, so the shift therapies and dialysis remain the plan. Sodium polystyrene sulfonate has an unpredictable onset and a warning for intestinal necrosis. Sevelamer binds phosphate, not potassium.",
+    source: "Lokelma (sodium zirconium cyclosilicate) and Veltassa (patiromer) prescribing information", updated: "2026-11" },
+  { id: "ad26-010", domain: "renal", difficulty: 2, tags: ["Pyelonephritis", "UTI", "Antibiotic Duration"],
+    stem: "A 30-year-old woman who is not pregnant has acute pyelonephritis without sepsis and is going home on oral ciprofloxacin; local fluoroquinolone resistance is below 10%. At follow-up she is improving. What total treatment duration does the IDSA 2025 complicated UTI guideline support?",
+    options: ["5-7 days", "10-14 days", "3 days", "21 days"], correctIndex: 0,
+    rationale: "IDSA 2025 now classes pyelonephritis as a complicated UTI and recommends shorter courses for patients who are improving: 5-7 days of a fluoroquinolone, or 7 days of other agents, including when the patient was bacteremic. Fourteen days was the old default for many agents, 3 days is a cystitis course, and nothing supports 21 days.",
+    source: "IDSA 2025 Guideline on Management and Treatment of Complicated Urinary Tract Infections. Clin Infect Dis 2025", updated: "2026-11" },
+
+  /* ---------- GI and hepatic ---------- */
+  { id: "ad26-011", domain: "gi", difficulty: 2, tags: ["Variceal Bleeding", "Cirrhosis"],
+    stem: "A 52-year-old man with cirrhosis presents with hematemesis. HR is 118, BP 92/58 and hemoglobin 6.4 g/dL. Endoscopy is being arranged. Which initial management is most appropriate?",
+    options: ["Octreotide, ceftriaxone, and transfusion to a hemoglobin of about 7-8 g/dL", "Octreotide infusion, and red cells to a hemoglobin above 10 g/dL", "IV propranolol and a pantoprazole infusion", "Vasopressin infusion alone, holding antibiotics until an infection is confirmed by culture"], correctIndex: 0,
+    rationale: "For suspected variceal bleeding, start a vasoactive drug before endoscopy (in the US, octreotide 50 mcg IV bolus, then 50 mcg/h), and give prophylactic antibiotics (ceftriaxone 1 g/day for up to 7 days), which reduce infection, rebleeding and death. Transfuse conservatively to a hemoglobin of about 7-8 g/dL: in a randomized trial, a liberal threshold (transfusing below 9 g/dL) raised portal pressure and increased rebleeding and death compared with a threshold of 7. A beta-blocker lowers blood pressure in a bleeding patient and is not given acutely, and antibiotics should not wait for proof of infection.",
+    source: "de Franchis R, et al. Baveno VII consensus. J Hepatol 2022; Villanueva C, et al. Transfusion strategies for acute upper GI bleeding. NEJM 2013", updated: "2026-11" },
+  { id: "ad26-012", domain: "gi", difficulty: 3, tags: ["C. difficile", "Fulminant Colitis"],
+    stem: "A 74-year-old woman with Clostridioides difficile infection develops hypotension requiring norepinephrine, abdominal distension and ileus, with a lactate of 4.1 mmol/L. Which regimen is recommended?",
+    options: ["Enteral vancomycin 500 mg four times daily plus IV metronidazole", "Fidaxomicin 200 mg twice daily alone", "IV vancomycin 15 mg/kg every 12 hours", "Metronidazole 500 mg by mouth three times daily alone"], correctIndex: 0,
+    rationale: "Hypotension or shock, ileus or megacolon define fulminant CDI. IDSA/SHEA recommends high-dose vancomycin by mouth or NG tube (500 mg four times daily) plus IV metronidazole 500 mg every 8 hours, adding rectal vancomycin when ileus limits delivery, and early surgical consultation. IV vancomycin does not reach the colon lumen. Fidaxomicin is preferred for non-fulminant episodes, but fulminant disease was outside its trials, and oral metronidazole alone is inadequate.",
+    source: "McDonald LC, et al. IDSA/SHEA Clostridium difficile guideline. Clin Infect Dis 2018; Johnson S, et al. 2021 focused update. Clin Infect Dis 2021", updated: "2026-11" },
+  { id: "ad26-013", domain: "gi", difficulty: 2, tags: ["Acute Pancreatitis", "Fluid Resuscitation"],
+    stem: "A 46-year-old woman has acute pancreatitis (lipase 2,400 U/L) without organ failure. She is mildly tachycardic but normotensive. Which IV fluid strategy is best supported by current evidence?",
+    options: ["Lactated Ringer's at about 1.5 mL/kg/h, with a 10 mL/kg bolus only if hypovolemic", "Lactated Ringer's 20 mL/kg bolus, then 3 mL/kg/h for 72 hours regardless of response", "Normal saline 500 mL/h until the lipase normalizes", "Maintenance fluids only, to avoid pancreatic edema"], correctIndex: 0,
+    rationale: "In WATERFALL, aggressive resuscitation (20 mL/kg bolus, then 3 mL/kg/h) caused more fluid overload without better outcomes than moderate resuscitation, and the trial stopped early over safety concerns. ACG 2024 recommends this moderate approach (1.5 mL/kg/h, with 10 mL/kg boluses for hypovolemia) and favors lactated Ringer's over saline. Lipase levels don't guide fluid therapy, and maintenance fluids alone under-resuscitate.",
+    source: "de-Madaria E, et al. Aggressive or moderate fluid resuscitation in acute pancreatitis (WATERFALL). NEJM 2022; Tenner S, et al. ACG Guideline: Management of Acute Pancreatitis. Am J Gastroenterol 2024", updated: "2026-11" },
+  { id: "ad26-014", domain: "gi", difficulty: 3, tags: ["Hepatorenal Syndrome", "Terlipressin"],
+    stem: "A 61-year-old man with cirrhosis has hepatorenal syndrome-AKI (creatinine 3.1 mg/dL) that has not improved after albumin, and he now has new bibasilar crackles. Before starting terlipressin, which finding should stop you from giving the first dose?",
+    options: ["SpO2 of 88% on room air", "Serum creatinine of 3.1 mg/dL", "Mean arterial pressure of 72 mm Hg", "Serum sodium of 129 mEq/L"], correctIndex: 0,
+    rationale: "Terlipressin's boxed warning is serious or fatal respiratory failure, with the highest risk in volume overload or ACLF grade 3. Don't start it while SpO2 is below 90%, monitor with continuous pulse oximetry, and stop it if SpO2 falls below 90%; cut back albumin and fluids if he is overloaded. A creatinine of 3.1 is within the treatable range (patients above 5 mg/dL are unlikely to benefit), and neither a MAP of 72 nor mild hyponatremia is a contraindication.",
+    source: "Terlivaz (terlipressin) prescribing information", updated: "2026-11" },
+  { id: "ad26-015", domain: "gi", difficulty: 2, tags: ["Hepatic Encephalopathy", "Cirrhosis"],
+    stem: "A 58-year-old woman with cirrhosis is admitted with her second episode of overt hepatic encephalopathy in 4 months, despite taking lactulose titrated to 2-3 soft stools a day. Which addition is recommended to prevent another recurrence?",
+    options: ["Rifaximin 550 mg twice daily", "Neomycin 1 g twice daily long term", "Flumazenil 0.5 mg IV daily", "A low-protein diet of under 0.5 g/kg/day"], correctIndex: 0,
+    rationale: "AASLD/EASL recommend lactulose to prevent recurrence after a first episode and adding rifaximin after a second. Neomycin's ototoxicity and nephrotoxicity make it a poor long-term choice, flumazenil has only a brief effect and no preventive role, and protein restriction worsens sarcopenia; the guideline advises 1.2-1.5 g/kg/day of protein.",
+    source: "Vilstrup H, et al. Hepatic encephalopathy in chronic liver disease: AASLD/EASL practice guideline. Hepatology 2014", updated: "2026-11" },
+
+  /* ---------- respiratory and anaphylaxis ---------- */
+  { id: "ad26-016", domain: "resp", difficulty: 3, tags: ["Anaphylaxis", "Beta-Blockers", "Glucagon"],
+    stem: "A 67-year-old man taking metoprolol develops anaphylaxis after IV contrast. He remains hypotensive after two doses of IM epinephrine, 2 L of crystalloid and the start of an epinephrine infusion. Which additional drug is most appropriate?",
+    options: ["Glucagon 1-5 mg IV over 5 minutes, followed by an infusion", "Diphenhydramine 50 mg IV for his hypotension", "Methylprednisolone 125 mg IV to reverse the hypotension", "Atropine 1 mg IV"], correctIndex: 0,
+    rationale: "Beta-blockade can blunt the response to epinephrine. Glucagon raises cAMP through its own receptor, bypassing the beta-receptor, and is suggested for refractory anaphylaxis in patients on beta-blockers: 1-5 mg IV over 5 minutes, then an infusion of 5-15 mcg/min. It often causes vomiting, so protect the airway. Antihistamines and corticosteroids are adjuncts that do not treat hypotension, and atropine treats bradycardia, not anaphylactic shock.",
+    source: "Lieberman P, et al. Anaphylaxis: a practice parameter update 2015. Ann Allergy Asthma Immunol 2015; Shaker MS, et al. Anaphylaxis: a 2020 practice parameter update. J Allergy Clin Immunol 2020", updated: "2026-11" },
+  { id: "ad26-017", domain: "resp", difficulty: 2, tags: ["Asthma Exacerbation", "Magnesium"],
+    stem: "A 28-year-old woman with a severe asthma exacerbation (speaking in words, SpO2 91%) has had three rounds of albuterol with ipratropium and IV methylprednisolone 40 minutes ago. Her peak flow is still below 40% of predicted. Which medication should be added next?",
+    options: ["Magnesium sulfate 2 g IV over 20 minutes", "An IV aminophylline load", "Repeat methylprednisolone 125 mg IV", "Azithromycin 500 mg IV"], correctIndex: 0,
+    rationale: "A single 2 g IV dose of magnesium is recommended for severe exacerbations that respond poorly to initial bronchodilators and corticosteroids, and it reduces hospital admissions. GINA advises against aminophylline because of poor efficacy and toxicity. Corticosteroids take hours to act, so a second dose at 40 minutes adds nothing, and antibiotics are not indicated without strong evidence of infection.",
+    source: "Global Initiative for Asthma (GINA) 2025 report; Kew KM, et al. IV magnesium sulfate for acute asthma in adults. Cochrane 2014", updated: "2026-11" },
+  { id: "ad26-018", domain: "resp", difficulty: 1, tags: ["COPD Exacerbation", "Corticosteroids"],
+    stem: "A 69-year-old man with COPD presents with 3 days of worsening dyspnea, more sputum and purulent sputum, and is admitted to the ward. He can swallow normally. Which systemic corticosteroid regimen is recommended?",
+    options: ["Prednisone 40 mg by mouth daily for 5 days", "Methylprednisolone 125 mg IV every 6 hours for 3 days, then a 2-week taper", "Prednisone 40 mg daily for 14 days", "No systemic steroid; inhaled budesonide alone"], correctIndex: 0,
+    rationale: "GOLD recommends prednisone 40 mg (or equivalent) daily for 5 days. In REDUCE, 5 days was noninferior to 14 days for re-exacerbation with less steroid exposure, and oral dosing works as well as IV in patients who can swallow. With increased dyspnea, sputum volume and purulence he also meets criteria for antibiotics.",
+    source: "GOLD 2025 report; Leuppi JD, et al. Short-term vs conventional glucocorticoid therapy in acute COPD exacerbations (REDUCE). JAMA 2013", updated: "2026-11" },
+  { id: "ad26-019", domain: "resp", difficulty: 2, tags: ["Hereditary Angioedema", "Bradykinin"],
+    stem: "A 24-year-old woman with known hereditary angioedema (C1 inhibitor deficiency) has progressive tongue swelling and a change in her voice. She did not bring her own medication. Which treatment is most appropriate?",
+    options: ["Icatibant 30 mg SC or IV C1 inhibitor concentrate", "IM epinephrine, IV diphenhydramine and IV methylprednisolone", "Tranexamic acid 1 g IV", "Danazol 200 mg by mouth"], correctIndex: 0,
+    rationale: "HAE attacks are bradykinin-mediated, so epinephrine, antihistamines and corticosteroids do not work. A laryngeal attack needs an on-demand drug right away, such as C1 inhibitor concentrate or icatibant (30 mg SC, repeatable every 6 hours, no more than 3 doses in 24 hours), and preparation for a difficult airway. Tranexamic acid and androgens such as danazol are prophylactic options with little effect on an acute attack. Fresh frozen plasma is a fallback only when specific therapy is unavailable.",
+    source: "Maurer M, et al. The international WAO/EAACI guideline for the management of hereditary angioedema: 2021 revision. Allergy 2022; Firazyr (icatibant) prescribing information", updated: "2026-11" },
+  { id: "ad26-020", domain: "resp", difficulty: 2, tags: ["ACE Inhibitor Angioedema", "Bradykinin"],
+    stem: "A 62-year-old man taking lisinopril has marked lip and tongue swelling without urticaria or itching. He is speaking normally and has no stridor. Which statement about his treatment is most accurate?",
+    options: ["Stop the ACE inhibitor and monitor the airway closely", "Icatibant 30 mg SC is the evidence-based first-line treatment", "Antihistamines and corticosteroids reliably shorten the episode", "He can switch to a different ACE inhibitor once the swelling resolves"], correctIndex: 0,
+    rationale: "ACE-inhibitor angioedema is bradykinin-mediated. In the largest randomized trial (121 patients), icatibant was no more effective than placebo, and antihistamines and corticosteroids target histamine-mediated swelling. Management is close airway observation, with a plan for awake fiberoptic intubation if the swelling progresses, and permanent avoidance of the whole ACE-inhibitor class.",
+    source: "Sinert R, et al. Randomized trial of icatibant for ACE inhibitor-induced upper airway angioedema. J Allergy Clin Immunol Pract 2017", updated: "2026-11" },
+
+  /* ---------- environmental ---------- */
+  { id: "ad26-021", domain: "env", difficulty: 1, tags: ["Exertional Heatstroke", "Cooling"],
+    stem: "A 19-year-old football player collapses at an August practice. He is confused, with a rectal temperature of 42.1°C (107.8°F), HR 140 and BP 98/56. An ice-water tub is on the sideline and the ambulance is 10 minutes away. What is the best next step?",
+    options: ["Cold water immersion on site, then transport", "Transport immediately and start cooling in the emergency department", "Acetaminophen 1 g and cooling blankets", "Dantrolene 2.5 mg/kg IV"], correctIndex: 0,
+    rationale: "Survival in exertional heatstroke depends on how fast the core temperature comes down, and WMS 2024 rates cold water immersion as the optimal cooling method: cool first, transport second. Stop at about 39°C to avoid overshooting into hypothermia. Antipyretics don't work because the hypothalamic set point is normal, and dantrolene has no proven role outside malignant hyperthermia.",
+    source: "Wilderness Medical Society Clinical Practice Guidelines for the Prevention and Treatment of Heat Illness: 2024 Update", updated: "2026-11" },
+  { id: "ad26-022", domain: "env", difficulty: 3, tags: ["Hypothermia", "Cardiac Arrest"],
+    stem: "A 40-year-old man is pulled from an icy river in cardiac arrest. His core temperature is 26°C and the rhythm is ventricular fibrillation. One shock has failed and CPR continues. According to the 2025 AHA guidelines, what should happen next?",
+    options: ["CPR and rewarming, deferring further shocks and epinephrine until 30°C", "Epinephrine 1 mg every 3-5 minutes and a shock every 2 minutes, as for a normothermic arrest", "Amiodarone 300 mg IV, then repeated shocks", "Stop resuscitation, because cardiac arrest at 26°C is not survivable"], correctIndex: 0,
+    rationale: "AHA 2025 says it may be reasonable to give one shock and then defer further attempts, and to defer epinephrine, until the core temperature is at least 30°C, while CPR and rewarming continue; ECLS rewarming is reasonable where available. The cold myocardium responds poorly and drugs accumulate. ERC 2021 is similar (up to 3 shocks, no adrenaline below 30°C). Hypothermia protects the brain, so temperature alone is not a reason to stop; the HOPE score helps decide on ECLS.",
+    source: "2025 AHA Guidelines for CPR and ECC, Part 10: special circumstances (hypothermia); ERC Guidelines 2021: cardiac arrest in special circumstances", updated: "2026-11" },
+  { id: "ad26-023", domain: "env", difficulty: 2, tags: ["Snakebite", "Antivenom", "Pediatrics"],
+    stem: "A 5-year-old (18 kg) is bitten on the leg by a rattlesnake. Within an hour the swelling has spread above the knee and his fibrinogen is falling. What initial CroFab dose is appropriate?",
+    options: ["4-6 vials, the same dose as an adult", "1 vial per 10 kg (2 vials)", "1 vial, then reassess in 6 hours", "No antivenom, because children develop fewer systemic effects"], correctIndex: 0,
+    rationale: "Antivenom neutralizes venom, and a small child receives the same venom load as an adult, so the dose is not weight-based: give 4-6 vials (some clinicians use 8-12 for severe envenomation), repeat 4-6 vials until initial control, then 2 vials every 6 hours for 3 doses. Small children may need a smaller dilution volume, not a smaller dose. Children are at higher risk of severe envenomation because of their size.",
+    source: "CroFab (crotalidae polyvalent immune Fab) prescribing information; Lavonas EJ, et al. Unified treatment algorithm for crotaline snakebite. BMC Emerg Med 2011", updated: "2026-11" },
+  { id: "ad26-024", domain: "env", difficulty: 2, tags: ["High Altitude", "HACE"],
+    stem: "At 4,500 m, a climber develops ataxia, confusion and a severe headache after 2 days of worsening altitude illness. Weather prevents descent until morning, and supplemental oxygen is available. Which medication should be given now?",
+    options: ["Dexamethasone 8 mg, then 4 mg every 6 hours", "Acetazolamide 125 mg twice daily alone", "Nifedipine ER 30 mg every 12 hours", "Ibuprofen 600 mg every 8 hours"], correctIndex: 0,
+    rationale: "Ataxia and confusion mean high-altitude cerebral edema. Treatment is descent as soon as possible, oxygen (or a portable hyperbaric chamber) while waiting, and dexamethasone 8 mg once, then 4 mg every 6 hours (WMS 2024). Acetazolamide 125 mg is a prevention dose and is not enough alone, nifedipine treats HAPE rather than HACE, and ibuprofen is for headache and AMS prevention.",
+    source: "Luks AM, et al. Wilderness Medical Society Clinical Practice Guidelines for the Prevention, Diagnosis, and Treatment of Acute Altitude Illness: 2024 Update. Wilderness Environ Med 2024", updated: "2026-11" },
+  { id: "ad26-025", domain: "env", difficulty: 2, tags: ["Scorpion Envenomation", "Antivenom", "Pediatrics"],
+    stem: "A 3-year-old in Arizona is brought in after a bark scorpion sting. She has roving eye movements, drooling and uncontrolled thrashing of her limbs. Which treatment is most appropriate?",
+    options: ["Anascorp 3 vials IV over 10 minutes", "CroFab 4-6 vials IV", "Physostigmine 0.02 mg/kg IV", "Observation only, because these signs resolve within an hour"], correctIndex: 0,
+    rationale: "Roving eye movements, hypersalivation and motor agitation mark severe (grade III-IV) Centruroides envenomation, which is most dangerous in small children. Anascorp, 3 vials IV over 10 minutes with single additional vials if needed, resolved the syndrome within 4 hours in a randomized trial and reduced the need for sedation. CroFab treats pit viper bites, physostigmine treats anticholinergic toxicity, and severe signs do not settle quickly on their own.",
+    source: "Anascorp prescribing information; Boyer LV, et al. Antivenom for critically ill children with neurotoxicity from scorpion stings. NEJM 2009", updated: "2026-11" }
+];
+
+  </script>
+  <script>
 /* biostats-questions.js - scored MCQ bank focused on biostatistics and literature
  * evaluation for the BCEMP. Written to drill the calculation-heavy items the
  * cheat sheet in data/biostats.js only summarizes.
@@ -2096,6 +2244,10 @@ window.BCEMP_FLASHCARDS = [
   { id: "fc-pain-02", domain: "pain", front: "Dissociative sedation ketamine dose?", back: "~1–2 mg/kg IV (or 4–5 mg/kg IM).", tags: ["ketamine"] },
   { id: "fc-pain-03", domain: "pain", front: "Preferred opioid in renal failure?", back: "Fentanyl (no active/renally-cleared metabolites). Avoid morphine (M6G) and meperidine (normeperidine).", tags: ["opioid","renal"] },
   { id: "fc-pain-04", domain: "pain", front: "Etomidate: benefit and caution?", back: "Hemodynamically neutral induction (0.3 mg/kg); causes transient adrenal suppression—caution in sepsis.", tags: ["etomidate"] },
+  { id: "fc-pain-05", domain: "pain", front: "Ketorolac IV: analgesic ceiling dose?", back: "10 mg. In an ED randomized trial, 10, 15 and 30 mg IV gave the same pain relief, so higher doses add risk without more analgesia.", tags: ["ketorolac", "NSAID"], source: "Motov S, et al. Comparison of IV ketorolac at three single-dose regimens for acute pain in the ED. Ann Emerg Med 2017", updated: "2026-11" },
+  { id: "fc-pain-06", domain: "pain", front: "Lidocaine maximum dose for local infiltration?", back: "Plain: 4.5 mg/kg, no more than 300 mg. With epinephrine: 7 mg/kg, no more than 500 mg.", tags: ["local anesthetic", "lidocaine"], source: "Xylocaine (lidocaine HCl) prescribing information", updated: "2026-11" },
+  { id: "fc-pain-07", domain: "pain", front: "Bupivacaine maximum dose for infiltration?", back: "175 mg plain, or 225 mg with epinephrine (label maximums). It is the most cardiotoxic of the common local anesthetics; treat systemic toxicity with 20% lipid emulsion.", tags: ["local anesthetic", "bupivacaine", "LAST"], source: "Marcaine (bupivacaine HCl) prescribing information; ASRA checklist for local anesthetic systemic toxicity 2020", updated: "2026-11" },
+  { id: "fc-pain-08", domain: "pain", front: "Absolute contraindications to ketamine dissociative sedation?", back: "Age under 3 months, and known or suspected schizophrenia (even if stable on treatment). Other concerns are relative contraindications.", tags: ["ketamine", "procedural sedation"], source: "Green SM, et al. Clinical practice guideline for ED ketamine dissociative sedation: 2011 update. Ann Emerg Med 2011", updated: "2026-11" },
 
   /* ENDOCRINE & METABOLIC */
   { id: "fc-endo-01", domain: "endo", front: "DKA: when to hold insulin for potassium?", back: "2024 consensus: K+ < 3.5 mEq/L: hold insulin and replace K+ first. K+ 3.5–5.0: start insulin and add K+ to fluids. K+ > 5.0: start insulin, hold K+, recheck in 2 h. (The 2009 statement used 3.3 and 5.2–5.3.)", tags: ["DKA","potassium"], source: "Umpierrez GE, et al. Hyperglycemic crises in adults with diabetes: consensus report. Diabetes Care 2024", updated: "2026-11" },
@@ -2118,6 +2270,10 @@ window.BCEMP_FLASHCARDS = [
   { id: "fc-safety-01", domain: "safety", front: "Examples of ISMP high-alert medications in the ED?", back: "Insulin, anticoagulants/heparin, opioids, concentrated electrolytes (KCl, hypertonic saline), neuromuscular blockers, chemo, IV inotropes.", tags: ["high-alert"] },
   { id: "fc-safety-02", domain: "safety", front: "Most effective safeguards for high-alert infusions?", back: "Standardized concentrations + smart-pump DERS (guardrails) + independent double-checks + limiting available concentrations.", tags: ["smart pump"] },
   { id: "fc-safety-03", domain: "safety", front: "What is a LASA error? Mitigations?", back: "Look-Alike/Sound-Alike name confusion (e.g., hydromorphone/morphine). Mitigate with tall-man lettering, separation, barcode scanning, independent checks.", tags: ["LASA"] },
+  { id: "fc-safety-04", domain: "safety", front: "The Joint Commission's 'Do Not Use' abbreviations?", back: "U or u (write 'unit'); IU (write 'International Unit'); Q.D. and Q.O.D. (write 'daily', 'every other day'); a trailing zero (5 mg, not 5.0 mg) or a missing leading zero (0.5 mg, not .5 mg); MS, MSO4 and MgSO4 (write 'morphine sulfate' or 'magnesium sulfate').", tags: ["abbreviations", "prescribing"], source: "The Joint Commission Official 'Do Not Use' List", updated: "2026-11" },
+  { id: "fc-safety-05", domain: "safety", front: "How should neuromuscular blockers be stored to prevent mix-ups?", back: "Segregate, sequester and differentiate them: separate sealed bins or lidded pockets in automated cabinets, warning labels or caps stating that they cause respiratory arrest, and stock only where staff can manage the airway.", tags: ["neuromuscular blockers", "high-alert"], source: "ISMP Targeted Medication Safety Best Practices for Hospitals 2024-2025", updated: "2026-11" },
+  { id: "fc-safety-06", domain: "safety", front: "Why weigh ED patients and record weight in kilograms only?", back: "Estimated weights and pound-kilogram mix-ups cause dosing errors of up to 2.2-fold. ISMP asks hospitals to weigh every patient as soon as possible, including in the ED, and to measure and document weight in metric units only.", tags: ["weight-based dosing", "pediatrics"], source: "ISMP Targeted Medication Safety Best Practices for Hospitals 2024-2025 (Best Practice 3)", updated: "2026-11" },
+  { id: "fc-safety-07", domain: "safety", front: "How do you keep oral liquids from being given IV?", back: "Dispense and draw them up in oral syringes that cannot connect to IV lines (ENFit connectors for enteral tubes), and use dosing devices marked in mL only.", tags: ["wrong route", "oral syringes"], source: "ISMP Targeted Medication Safety Best Practices for Hospitals (oral liquid Best Practices)", updated: "2026-11" },
 
   /* PRACTICE MANAGEMENT & RESEARCH */
   { id: "fc-pmr-01", domain: "pmr", front: "NNT formula and meaning?", back: "NNT = 1 / absolute risk reduction. Number of patients treated to prevent one additional bad outcome. Lower = more effective.", tags: ["evidence","NNT"] },
@@ -3175,6 +3331,7 @@ App.Content = {
   /* where each item comes from, keyed by id prefix */
   BANKS: [
     { prefix: "pe24-", name: "Practice questions", credit: "written by Diana Karp", updated: "2026-07" },
+    { prefix: "ad26-", name: "Added questions", updated: "2026-11" },
     { prefix: "bs-",   name: "Biostatistics drill", updated: "2026-07" },
     { prefix: "fc-",   name: "Core flashcards", updated: "2026-07" },
     { prefix: "qc-",   name: "Study-notes flashcards", updated: "2026-07" },
@@ -3182,11 +3339,11 @@ App.Content = {
     { prefix: "cf-",   name: "Imported by you", mine: true }
   ],
 
-  /* Session bank = the original practice questions + anything imported.
-   * The biostats drill bank stays separate (Biostats tab only). */
+  /* Session bank = the original practice questions + the 2026 additions + anything
+   * imported. The biostats drill bank stays separate (Biostats tab only). */
   questions: function () {
     var custom = App.Store.get().customContent.questions || [];
-    return (window.BCEMP_EMPC24_QUESTIONS || []).concat(custom);
+    return (window.BCEMP_EMPC24_QUESTIONS || []).concat(window.BCEMP_ADDED_QUESTIONS || [], custom);
   },
   drillQuestions: function () { return window.BCEMP_BIOSTATS_QUESTIONS || []; },
   allQuestions: function () { return this.questions().concat(this.drillQuestions()); },

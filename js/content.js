@@ -8,6 +8,7 @@ App.Content = {
   /* where each item comes from, keyed by id prefix */
   BANKS: [
     { prefix: "pe24-", name: "Practice questions", credit: "written by Diana Karp", updated: "2026-07" },
+    { prefix: "ad26-", name: "Added questions", updated: "2026-11" },
     { prefix: "bs-",   name: "Biostatistics drill", updated: "2026-07" },
     { prefix: "fc-",   name: "Core flashcards", updated: "2026-07" },
     { prefix: "qc-",   name: "Study-notes flashcards", updated: "2026-07" },
@@ -15,11 +16,11 @@ App.Content = {
     { prefix: "cf-",   name: "Imported by you", mine: true }
   ],
 
-  /* Session bank = the original practice questions + anything imported.
-   * The biostats drill bank stays separate (Biostats tab only). */
+  /* Session bank = the original practice questions + the 2026 additions + anything
+   * imported. The biostats drill bank stays separate (Biostats tab only). */
   questions: function () {
     var custom = App.Store.get().customContent.questions || [];
-    return (window.BCEMP_EMPC24_QUESTIONS || []).concat(custom);
+    return (window.BCEMP_EMPC24_QUESTIONS || []).concat(window.BCEMP_ADDED_QUESTIONS || [], custom);
   },
   drillQuestions: function () { return window.BCEMP_BIOSTATS_QUESTIONS || []; },
   allQuestions: function () { return this.questions().concat(this.drillQuestions()); },
