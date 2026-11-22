@@ -162,6 +162,14 @@ App.UI = {
     }
   },
 
+  /* Out-of-date notice: appears once the content is more than a year past its
+   * last guideline check (App.Content.REVIEWED / STALE_AFTER). */
+  _staleNote: function () {
+    if (!App.Content.isStale()) return "";
+    return '<div class="stale-note" role="note"><b>Last checked against guidelines in ' + this.esc(App.date.monthYear(App.Content.REVIEWED)) + '.</b> ' +
+      'Guidelines and treatments change, so some answers here may now be out of date. Confirm doses and management with current guidelines.</div>';
+  },
+
   /* ==================================================================
    * HOME
    * ================================================================== */
@@ -176,6 +184,7 @@ App.UI = {
         '<div class="greet-meta"><span>Level ' + prog.level + '</span><span>' + p.xp + ' XP</span><span>' + p.badges.length + ' of ' + App.Game.BADGES.length + ' badges</span></div></div>';
     }
 
+    html += this._staleNote();
     html += this._todayCard();
 
     // tiles
@@ -395,7 +404,8 @@ App.UI = {
     if (filter !== "all" && !counts[filter]) filter = this.compareFilter = "all";
 
     var html = '<h1 class="page-title">Compare</h1>' +
-      '<p class="lede">High-yield side-by-side distinctions, ' + list.length + ' tables. Open one to study it, or filter by topic.</p>';
+      '<p class="lede">High-yield side-by-side distinctions, ' + list.length + ' tables. Open one to study it, or filter by topic.</p>' +
+      this._staleNote();
     html += '<div class="cmp-filters" role="group" aria-label="Filter tables by topic">' +
       '<button type="button" class="chip" data-s="all" aria-pressed="' + (filter === "all") + '">All <span class="count">' + list.length + '</span></button>';
     sections.forEach(function (s) {
@@ -614,7 +624,7 @@ App.UI = {
     '</div>';
 
     html += '<h2 class="section-title">About</h2><div class="card small">' +
-      '<p>EM Study is a free study aid for emergency medicine pharmacotherapy, including the BCEMP exam. Content was first published in July 2026 and is being checked against current guidelines; every corrected item shows its source and the month it was updated.</p>' +
+      '<p>EM Study is a free study aid for emergency medicine pharmacotherapy, including the BCEMP exam. Content was first published in July 2026 and checked against current guidelines in ' + this.esc(App.date.monthYear(App.Content.REVIEWED)) + '; every corrected or added item shows its source and the month it was updated.</p>' +
       '<p style="margin:0">Spotted an error? Every answer has a <b>Report a problem</b> link, or you can <a href="' + App.Content.REPO + '/issues" target="_blank" rel="noopener">open an issue on GitHub</a>.</p>' +
     '</div>';
 
@@ -834,6 +844,7 @@ App.UI = {
     var letters = "ABCDEFGH";
 
     var html = this._sessionHeader("Question " + (a.qIndex + 1) + " of " + a.data.questions.length, pct);
+    if (a.qIndex === 0 && !/^bs-/.test(q.id)) html += this._staleNote();
     html += '<div class="card">' +
       '<div class="q-top"><span class="q-domain">' + this.esc(this.domainName(q.domain)) + '</span>' + this.bookmarkBtn(q.id) + '</div>' +
       '<p class="q-stem">' + this.esc(q.stem) + '</p>' +

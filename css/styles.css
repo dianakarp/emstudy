@@ -547,6 +547,10 @@ details[open] > summary .chev { transform: rotate(90deg); }
 .tg { font-family: var(--font-head); font-size: 17px; font-weight: 600; }
 .stat-table td.tg-test { font-weight: 700; }
 
+/* ---------- out-of-date notice (shown 14 months after the last guideline check) ---------- */
+.stale-note { background: var(--surface-2); border: 1px solid var(--border); border-left: 4px solid var(--amber-fill); border-radius: var(--radius-sm); padding: 10px 14px; margin: 0 0 16px; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
+.stale-note b { color: var(--ink); }
+
 /* ---------- test-selection flowcharts (Stats) ----------
  * Ink connectors, the question in blue "pen", the answer highlighted.
  * Top-down tree on wide screens; an indented outline on phones. */
