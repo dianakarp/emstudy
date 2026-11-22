@@ -28,7 +28,7 @@ The content spans 18 topics, from cardiovascular, resuscitation and toxicology t
 Every answer has a **Report a problem** link that opens a pre-filled GitHub issue for that exact item (you need a free GitHub account). A guideline or reference for the fix helps a lot. You can also [open an issue](https://github.com/dianakarp/emstudy/issues) directly.
 
 ## Your data
-Progress is stored only in your browser's local storage. **Settings → Export progress** downloads a backup and **Restore from backup** loads it back. Clearing your browser's site data erases progress, so export now and then.
+Progress is stored only in your browser's local storage, never on a server. **Erasing your browsing history or clearing your cache and site data deletes all saved progress**, so export a backup now and then: **Settings → Export progress** downloads one and **Restore from backup** loads it back. Safari also deletes a site's saved data after 7 days of browsing without a visit; adding EM Study to your Home Screen avoids that.
 
 Progress saved by the earlier *BCEMP Trainer* version carries over automatically. It stays in Cram mode; switch to Refresh in Settings when you're past the exam.
 

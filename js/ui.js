@@ -222,7 +222,9 @@ App.UI = {
     return '<div class="card welcome mb">' +
       '<h1>Welcome to EM Study</h1>' +
       '<p>Board-style questions, flashcards and side-by-side comparison tables for emergency medicine pharmacotherapy. ' +
-      'It\'s free, works offline, and your progress stays in this browser.</p>' +
+      'It\'s free and works offline.</p>' +
+      '<p class="small"><b>Your progress is saved only in this browser.</b> Erasing your browsing history or clearing your cache and site data deletes all of it, ' +
+      'so export a backup from Settings now and then.</p>' +
       '<p class="choose-label">How are you using it?</p>' +
       '<div class="choice-row">' +
         '<button type="button" class="choice" id="goalExam" aria-pressed="false"><b>Preparing for an exam</b>' +
@@ -572,7 +574,8 @@ App.UI = {
     '</div>';
 
     html += '<h2 class="section-title">Backup and data</h2><div class="card">' +
-      '<p class="small">Your progress lives in this browser only. Export a backup now and then so clearing your browser data doesn\'t erase it.</p>' +
+      '<p class="small"><b>Your progress is saved only in this browser</b>, never on a server. Erasing your browsing history or clearing your cache and site data deletes all saved progress, so export a backup now and then. ' +
+      'Safari also deletes a site\'s saved data after 7 days of browsing without a visit; adding EM Study to your Home Screen avoids that.</p>' +
       '<div class="btn-row">' +
         '<button class="btn btn-ghost" id="exportBtn">Export progress</button>' +
         '<input id="restoreInput" type="file" accept=".json" class="sr-only file-proxy"/><label class="btn btn-ghost" for="restoreInput">Restore from backup</label>' +
