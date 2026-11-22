@@ -435,6 +435,8 @@ p { margin: 0 0 12px; }
 /* ---------- disclaimer + footer ---------- */
 .disclaimer { font-size: 13px; color: var(--ink-3); text-align: center; margin-top: 40px; line-height: 1.6; border-top: 1px solid var(--border); padding-top: 16px; }
 .disclaimer b { color: var(--ink-2); }
+.disclaimer p { margin: 0; }
+.disclaimer p + p { margin-top: 8px; }
 .site-footer { margin-top: 12px; text-align: center; font-family: var(--font-head); font-style: italic; font-weight: 600; font-size: 14px; color: var(--ink-2); }
 .site-footer a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--mark); text-decoration-thickness: 3px; text-underline-offset: 3px; }
 .site-footer a:hover { color: var(--pen); }

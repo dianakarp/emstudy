@@ -24,13 +24,13 @@ window.BCEMP_COMPARISONS = [
     ["Guideline note","SSC 2020 and 2025 PALS accept EITHER epinephrine or norepinephrine first (not dopamine); bedside warm-vs-cold assessment is imperfect, so reassess often","Same"],
     ["Memory hook","Warm = Wide pulse pressure = Want Norepi","Cold = Constricted = Crank up Epi"]
   ]},
-  {"title": "Exertional vs Classic Heatstroke", "section": "Environmental Tox", "tagline": "Same diagnosis, different cooling strategies. Wrong choice = harm in elderly", "cols": ["Exertional Heatstroke","Classic Heatstroke"], "rows": [
+  {"title": "Exertional vs Classic Heatstroke", "section": "Environmental Tox", "tagline": "Same diagnosis. Cold water immersion cools fastest in both; practicality differs", "cols": ["Exertional Heatstroke","Classic Heatstroke"], "source": "Wilderness Medical Society Clinical Practice Guidelines for Heat Illness: 2024 Update", "updated": "2026-11", "rows": [
     ["Population","Young, athletes, military, firefighters","Elderly, comorbid, anticholinergic meds, no AC in heat wave"],
     ["Onset","Rapid (minutes-hours)","Insidious (days)"],
     ["Sweating","Often PRESERVED","ANHIDROSIS classic"],
-    ["Best cooling method","ICE WATER IMMERSION (neck-deep)","EVAPORATIVE (cool mist + fans)"],
-    ["Why distinction matters","Cool first, transport second — outcomes worsen if delayed","Ice immersion not tolerated hemodynamically in elderly"],
-    ["Target temp","38.3-38.8°C (101-102°F)","Same — stop to avoid overshoot"],
+    ["Best cooling method","COLD WATER IMMERSION (neck-deep), the optimal method","Cold water immersion can be used too; evaporative cooling (mist + fans) is slower but easier in frail or monitored patients"],
+    ["Why distinction matters","Cool first, transport second — outcomes worsen if delayed","Frailty and monitoring needs make immersion harder, so evaporative cooling is often chosen; never let the method delay cooling"],
+    ["Target temp","Stop cooling at about 39°C (102.2°F) to avoid overshoot","Same"],
     ["AVOID","Antipyretics (NSAIDs, APAP) — wrong mechanism; dantrolene (NOT MH/NMS)","Same — plus aggressive cardiac stress"]
   ]},
   {"title": "BB Overdose vs CCB Overdose", "section": "Toxicology", "tagline": "Mechanistically opposite glucose effects — classic board pearl", "cols": ["Beta-Blocker Overdose","Calcium Channel Blocker Overdose"], "source": "2023 AHA Focused Update on Cardiac Arrest or Life-Threatening Toxicity Due to Poisoning", "updated": "2026-11", "rows": [
@@ -44,9 +44,9 @@ window.BCEMP_COMPARISONS = [
     ["HIE dosing","Both: regular insulin 1 unit/kg bolus, then 1 unit/kg/h titrated up to 10 units/kg/h, with dextrose and K+ monitoring. Don't fear the dose","Same"],
     ["Memory hook","BB OD = β-blocked Blood sugar (LOW)","CCB OD = Can't Cut insulin → HIGH blood sugar"]
   ]},
-  {"title": "CroFab vs ANAVIP (Pit Viper Antivenoms)", "section": "Environmental Tox", "tagline": "Key difference: maintenance dosing — driven by molecular fragment size", "cols": ["CroFab (Ovine Fab)","ANAVIP (Equine F(ab')2)"], "rows": [
+  {"title": "CroFab vs ANAVIP (Pit Viper Antivenoms)", "section": "Environmental Tox", "tagline": "Key difference: maintenance dosing — driven by molecular fragment size", "cols": ["CroFab (Ovine Fab)","ANAVIP (Equine F(ab')2)"], "source": "ANAVIP and CroFab prescribing information", "updated": "2026-11", "rows": [
     ["Source","Ovine (sheep) — Fab monomers","Equine (horse) — F(ab')2 dimers"],
-    ["Half-life","~12-23 hours (short)","~14-17 days (long)"],
+    ["Half-life","~12-23 hours (short)","~133 hours, about 5.5 days (long)"],
     ["Initial control dose","4-6 vials (8-12 in severe)","10 vials"],
     ["Maintenance","SCHEDULED: 2 vials q6h × 3 doses","NOT routine — monitor 18 hr, redose only if recrudescence"],
     ["Why the difference","Short Fab half-life → venom recrudescence common → scheduled redosing required","Longer F(ab')2 half-life → covers redistribution → no scheduled maintenance"],
@@ -72,12 +72,12 @@ window.BCEMP_COMPARISONS = [
     ["Adjunct vitamins","FOLATE 50 mg q4-6h (shunts to CO2 + water)","PYRIDOXINE 50-100 mg + THIAMINE 100 mg (shunts to less-toxic metabolites)"],
     ["HD threshold (EXTRIP)","Coma, seizures, new vision deficits, pH ≤ 7.15, anion gap > 24, or methanol > 70 mg/dL on fomepizole (> 60 on ethanol, > 50 with no ADH blocker); suggested with impaired kidney function","Coma, seizures, or AKI; anion gap > 27 (suggested at 23–27); or EG > 310 mg/dL (50 mmol/L) or osmolal gap > 50 (recommended on ethanol, suggested on fomepizole)"]
   ]},
-  {"title": "Type I vs Type II Statistical Errors", "section": "Biostats", "tagline": "The 2×2 table everyone confuses", "cols": ["Type I Error (α)","Type II Error (β)"], "rows": [
+  {"title": "Type I vs Type II Statistical Errors", "section": "Biostats", "tagline": "The 2×2 table everyone confuses", "cols": ["Type I Error (α)","Type II Error (β)"], "source": "Serdar CC, et al. Sample size, power and effect size revisited. Biochem Med 2021", "updated": "2026-11", "rows": [
     ["What happened","Rejected H0 when actually TRUE","Failed to reject H0 when actually FALSE"],
     ["Plain English","Concluded difference exists when it doesn't","Missed a real difference"],
     ["Other name","False POSITIVE","False NEGATIVE"],
     ["Typical threshold","α = 0.05 (5%)","β = 0.10-0.20 (10-20%)"],
-    ["Relationship to power","Independent","Power = 1 − β. Power usually 80-90%"],
+    ["Relationship to power","Lowering α (stricter) reduces power, all else equal","Power = 1 − β. Power usually 80-90%"],
     ["How to reduce","Lower α (e.g., 0.01), Bonferroni for multiple comparisons","Bigger sample size, larger effect size, less variability"],
     ["Mnemonic","Type 1 = One word: 'positive' (false positive)","Type 2 = Two words: 'false negative'"]
   ]},
