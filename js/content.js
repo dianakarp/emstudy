@@ -16,6 +16,15 @@ App.Content = {
     { prefix: "cf-",   name: "Imported by you", mine: true }
   ],
 
+  /* When the content was last checked against current guidelines. From
+   * STALE_AFTER months later (Nov 2026 + 14 = 1 Jan 2028) the app shows an
+   * "may be out of date" notice. After a new review, set REVIEWED to that month
+   * and the notice goes away until 14 months after it. */
+  REVIEWED: "2026-11",
+  STALE_AFTER: 14,
+  staleFrom: function () { var p = this.REVIEWED.split("-"); return new Date(+p[0], +p[1] - 1 + this.STALE_AFTER, 1); },
+  isStale: function () { return new Date() >= this.staleFrom(); },
+
   /* Session bank = the original practice questions + the 2026 additions + anything
    * imported. The biostats drill bank stays separate (Biostats tab only). */
   questions: function () {

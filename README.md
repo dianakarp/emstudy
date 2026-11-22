@@ -14,7 +14,7 @@ It runs in any modern browser, can be installed to your home screen, and works o
 
 The content spans 18 topics, from cardiovascular, resuscitation and toxicology through renal, GI, psychiatric, oncologic and dermatologic emergencies.
 
-The content is being checked against current guidelines, topic by topic. Every corrected or added item shows its source and the month it was updated, next to a "Report a problem" link.
+The content was checked against current guidelines in November 2026. Every corrected or added item shows its source and the month it was updated, next to a "Report a problem" link. From January 2028, 14 months after that check, the site shows a notice that some answers may be out of date. After a new review, set `REVIEWED` in `js/content.js` to that month and the notice goes away until 14 months later.
 
 ## How it works
 - **Two study modes** (change any time in Settings):

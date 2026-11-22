@@ -38,6 +38,7 @@ App.Library = {
 
     var html = '<h1 class="page-title">Library</h1>' +
       '<p class="lede">Search every question, flashcard and comparison table. Open an item to see the answer, the explanation and where it comes from.</p>' +
+      UI._staleNote() +
       '<div class="search">' + UI.ICONS.search +
         '<input type="search" id="libQ" placeholder="Search, e.g. naloxone, DKA, NNT" aria-label="Search the library" autocomplete="off" value="' + UI.esc(s.q) + '"></div>' +
       '<div class="lib-filters">' +

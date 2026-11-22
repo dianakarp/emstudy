@@ -581,6 +581,10 @@ details[open] > summary .chev { transform: rotate(90deg); }
 .tg { font-family: var(--font-head); font-size: 17px; font-weight: 600; }
 .stat-table td.tg-test { font-weight: 700; }
 
+/* ---------- out-of-date notice (shown 14 months after the last guideline check) ---------- */
+.stale-note { background: var(--surface-2); border: 1px solid var(--border); border-left: 4px solid var(--amber-fill); border-radius: var(--radius-sm); padding: 10px 14px; margin: 0 0 16px; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
+.stale-note b { color: var(--ink); }
+
 /* ---------- test-selection flowcharts (Stats) ----------
  * Ink connectors, the question in blue "pen", the answer highlighted.
  * Top-down tree on wide screens; an indented outline on phones. */
@@ -3404,6 +3408,15 @@ App.Content = {
     { prefix: "cf-",   name: "Imported by you", mine: true }
   ],
 
+  /* When the content was last checked against current guidelines. From
+   * STALE_AFTER months later (Nov 2026 + 14 = 1 Jan 2028) the app shows an
+   * "may be out of date" notice. After a new review, set REVIEWED to that month
+   * and the notice goes away until 14 months after it. */
+  REVIEWED: "2026-11",
+  STALE_AFTER: 14,
+  staleFrom: function () { var p = this.REVIEWED.split("-"); return new Date(+p[0], +p[1] - 1 + this.STALE_AFTER, 1); },
+  isStale: function () { return new Date() >= this.staleFrom(); },
+
   /* Session bank = the original practice questions + the 2026 additions + anything
    * imported. The biostats drill bank stays separate (Biostats tab only). */
   questions: function () {
@@ -4116,6 +4129,14 @@ App.UI = {
     }
   },
 
+  /* Out-of-date notice: appears once the content is more than a year past its
+   * last guideline check (App.Content.REVIEWED / STALE_AFTER). */
+  _staleNote: function () {
+    if (!App.Content.isStale()) return "";
+    return '<div class="stale-note" role="note"><b>Last checked against guidelines in ' + this.esc(App.date.monthYear(App.Content.REVIEWED)) + '.</b> ' +
+      'Guidelines and treatments change, so some answers here may now be out of date. Confirm doses and management with current guidelines.</div>';
+  },
+
   /* ==================================================================
    * HOME
    * ================================================================== */
@@ -4130,6 +4151,7 @@ App.UI = {
         '<div class="greet-meta"><span>Level ' + prog.level + '</span><span>' + p.xp + ' XP</span><span>' + p.badges.length + ' of ' + App.Game.BADGES.length + ' badges</span></div></div>';
     }
 
+    html += this._staleNote();
     html += this._todayCard();
 
     // tiles
@@ -4349,7 +4371,8 @@ App.UI = {
     if (filter !== "all" && !counts[filter]) filter = this.compareFilter = "all";
 
     var html = '<h1 class="page-title">Compare</h1>' +
-      '<p class="lede">High-yield side-by-side distinctions, ' + list.length + ' tables. Open one to study it, or filter by topic.</p>';
+      '<p class="lede">High-yield side-by-side distinctions, ' + list.length + ' tables. Open one to study it, or filter by topic.</p>' +
+      this._staleNote();
     html += '<div class="cmp-filters" role="group" aria-label="Filter tables by topic">' +
       '<button type="button" class="chip" data-s="all" aria-pressed="' + (filter === "all") + '">All <span class="count">' + list.length + '</span></button>';
     sections.forEach(function (s) {
@@ -4568,7 +4591,7 @@ App.UI = {
     '</div>';
 
     html += '<h2 class="section-title">About</h2><div class="card small">' +
-      '<p>EM Study is a free study aid for emergency medicine pharmacotherapy, including the BCEMP exam. Content was first published in July 2026 and is being checked against current guidelines; every corrected item shows its source and the month it was updated.</p>' +
+      '<p>EM Study is a free study aid for emergency medicine pharmacotherapy, including the BCEMP exam. Content was first published in July 2026 and checked against current guidelines in ' + this.esc(App.date.monthYear(App.Content.REVIEWED)) + '; every corrected or added item shows its source and the month it was updated.</p>' +
       '<p style="margin:0">Spotted an error? Every answer has a <b>Report a problem</b> link, or you can <a href="' + App.Content.REPO + '/issues" target="_blank" rel="noopener">open an issue on GitHub</a>.</p>' +
     '</div>';
 
@@ -4788,6 +4811,7 @@ App.UI = {
     var letters = "ABCDEFGH";
 
     var html = this._sessionHeader("Question " + (a.qIndex + 1) + " of " + a.data.questions.length, pct);
+    if (a.qIndex === 0 && !/^bs-/.test(q.id)) html += this._staleNote();
     html += '<div class="card">' +
       '<div class="q-top"><span class="q-domain">' + this.esc(this.domainName(q.domain)) + '</span>' + this.bookmarkBtn(q.id) + '</div>' +
       '<p class="q-stem">' + this.esc(q.stem) + '</p>' +
@@ -4999,6 +5023,7 @@ App.Library = {
 
     var html = '<h1 class="page-title">Library</h1>' +
       '<p class="lede">Search every question, flashcard and comparison table. Open an item to see the answer, the explanation and where it comes from.</p>' +
+      UI._staleNote() +
       '<div class="search">' + UI.ICONS.search +
         '<input type="search" id="libQ" placeholder="Search, e.g. naloxone, DKA, NNT" aria-label="Search the library" autocomplete="off" value="' + UI.esc(s.q) + '"></div>' +
       '<div class="lib-filters">' +
