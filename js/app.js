@@ -1,17 +1,19 @@
-/* app.js — bootstrap: load state, wire navigation, render the first screen. */
+/* app.js — bootstrap: load state, wire navigation + keyboard, render the first screen. */
 (function () {
   function boot() {
     App.Store.load();
-
-    // nav
-    Array.prototype.forEach.call(document.querySelectorAll("#nav button"), function (btn) {
-      btn.addEventListener("click", function () {
-        App.UI.route(btn.getAttribute("data-view"));
-      });
-    });
-
     App.UI.root = document.getElementById("app");
-    App.UI.route("dashboard");
+
+    // header nav + settings button
+    Array.prototype.forEach.call(document.querySelectorAll("[data-view]"), function (btn) {
+      btn.addEventListener("click", function () { App.UI.route(btn.getAttribute("data-view")); });
+    });
+    // shared controls inside <main> (bookmarks, study-a-topic, review buttons, topic chips)
+    App.UI.root.addEventListener("click", function (e) { App.UI._onRootClick(e); });
+    // session shortcuts
+    document.addEventListener("keydown", function (e) { App.UI.handleKey(e); });
+
+    App.UI.route("dashboard", { force: true });
 
     // dev helper: App.debugAdvanceDay(n) shifts stored dates back n days so
     // reviews/streaks can be tested without changing the system clock.
@@ -27,7 +29,7 @@
       shift(st.srs.questions); shift(st.srs.flashcards);
       if (st.profile.lastSessionDate) st.profile.lastSessionDate = App.date.addDays(st.profile.lastSessionDate, -n);
       App.Store.save();
-      App.UI.route("dashboard");
+      App.UI.route("dashboard", { force: true });
       console.log("Advanced " + n + " day(s): reviews should now be due.");
     };
   }

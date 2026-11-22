@@ -65,20 +65,20 @@ App.Game = {
     return App.date.diffDays(today, p.graceUsedDate) >= 7;
   },
 
-  /* ---------- badges ---------- */
+  /* ---------- badges (a short "seal" label instead of an emoji) ---------- */
   BADGES: [
-    { id: "first-session", icon: "🎯", name: "First Steps", desc: "Complete your first study session." },
-    { id: "streak-3",   icon: "🔥", name: "Warming Up", desc: "Reach a 3-day streak." },
-    { id: "streak-7",   icon: "🔥", name: "One Week Strong", desc: "Reach a 7-day streak." },
-    { id: "streak-14",  icon: "🔥", name: "Fortnight Focus", desc: "Reach a 14-day streak." },
-    { id: "streak-30",  icon: "🏆", name: "Exam-Month Discipline", desc: "Reach a 30-day streak." },
-    { id: "q-100",      icon: "💯", name: "Century", desc: "Answer 100 practice questions." },
-    { id: "q-500",      icon: "🚀", name: "Question Machine", desc: "Answer 500 practice questions." },
-    { id: "perfect",    icon: "⭐", name: "Flawless", desc: "Score 100% on a full session (≥8 questions)." },
-    { id: "mastery",    icon: "🧠", name: "Domain Master", desc: "≥85% accuracy over ≥15 questions in any domain." },
-    { id: "full-syllabus", icon: "🗺️", name: "Full Sweep", desc: "Answer a question in every content domain." },
-    { id: "comeback",   icon: "💪", name: "Comeback", desc: "Clear 10+ overdue reviews in one day." },
-    { id: "level-5",    icon: "📈", name: "Rising", desc: "Reach level 5." }
+    { id: "first-session", seal: "1st",  name: "First steps", desc: "Complete your first study session." },
+    { id: "streak-3",      seal: "3d",   name: "Warming up", desc: "Reach a 3-day streak." },
+    { id: "streak-7",      seal: "7d",   name: "One week strong", desc: "Reach a 7-day streak." },
+    { id: "streak-14",     seal: "14d",  name: "Fortnight focus", desc: "Reach a 14-day streak." },
+    { id: "streak-30",     seal: "30d",  name: "Month of discipline", desc: "Reach a 30-day streak." },
+    { id: "q-100",         seal: "100",  name: "Century", desc: "Answer 100 practice questions." },
+    { id: "q-500",         seal: "500",  name: "Question machine", desc: "Answer 500 practice questions." },
+    { id: "perfect",       seal: "100%", name: "Flawless", desc: "Score 100% on a session of 8 or more questions." },
+    { id: "mastery",       seal: "85%",  name: "Topic master", desc: "85% or better over 15+ questions in any topic." },
+    { id: "full-syllabus", seal: "All",  name: "Full sweep", desc: "Answer a question in every topic that has questions." },
+    { id: "comeback",      seal: "10+",  name: "Comeback", desc: "Clear 10+ overdue reviews in one session." },
+    { id: "level-5",       seal: "L5",   name: "Rising", desc: "Reach level 5." }
   ],
 
   /* evaluate all badges against current state; returns newly-earned badge objects */
@@ -109,14 +109,14 @@ App.Game = {
       if (sessionResult.overdueCleared >= 10) award("comeback");
     }
 
-    // domain mastery
     (window.BCEMP_DOMAINS || []).forEach(function (d) {
       var s = st.domainStats[d.id];
       if (s && s.answered >= 15 && (s.correct / s.answered) >= 0.85) award("mastery");
     });
 
-    // full syllabus coverage
-    var covered = (window.BCEMP_DOMAINS || []).every(function (d) {
+    // full sweep counts only topics that have questions to answer
+    var withQs = App.Content.domainsWithQuestions();
+    var covered = withQs.length > 0 && withQs.every(function (d) {
       var s = st.domainStats[d.id]; return s && s.answered > 0;
     });
     if (covered) award("full-syllabus");

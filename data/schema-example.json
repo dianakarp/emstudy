@@ -1,19 +1,24 @@
 {
-  "_comment": "Import template for your own BCEMP content. Import this file via Settings > Import Content in the app. You may include 'questions', 'flashcards', or both. 'domain' must be one of the domain ids below. Fields marked optional can be omitted. IDs are auto-generated if omitted.",
+  "_comment": "Import template for your own EM Study content. Import this file via Settings > Your content in the app. You may include 'questions', 'flashcards', or both. 'domain' must be one of the topic ids below. Fields marked optional can be omitted; ids are generated if omitted. 'source' is shown under the explanation.",
   "_valid_domains": [
-    "cv (Cardiovascular)",
+    "cv (Cardiovascular Emergencies)",
     "resus (Resuscitation & Shock)",
     "tox (Toxicology & Antidotes)",
-    "neuro (Neurologic)",
+    "neuro (Neurologic Emergencies)",
     "id (Infectious Disease)",
     "trauma (Trauma & Hemostasis)",
     "resp (Respiratory & Anaphylaxis)",
     "pain (Analgesia & Sedation)",
     "endo (Endocrine & Metabolic)",
-    "env (Environmental)",
+    "env (Environmental Emergencies)",
     "special (Special Populations)",
     "safety (Medication & Patient Safety)",
-    "pmr (Practice Management & Research)"
+    "pmr (Practice Management & Research)",
+    "renal (Renal & Acid-Base)",
+    "gi (GI & Hepatic Emergencies)",
+    "psych (Psychiatric & Behavioral)",
+    "onc (Oncologic Emergencies)",
+    "derm (Dermatologic Emergencies)"
   ],
   "questions": [
     {
@@ -23,9 +28,9 @@
       "stem": "Your clinical vignette / question stem goes here.",
       "options": ["Option A", "Option B", "Option C", "Option D"],
       "correctIndex": 1,
-      "rationale": "Explain why the correct answer is right (and ideally why others are wrong).",
+      "rationale": "Explain why the correct answer is right (and ideally why the others are wrong).",
       "tags": ["optional", "keywords"],
-      "source": "Optional citation"
+      "source": "Optional citation, e.g. the guideline and year"
     }
   ],
   "flashcards": [

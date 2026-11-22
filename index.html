@@ -3,50 +3,98 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>BCEMP Trainer — Emergency Medicine Pharmacist Exam Prep</title>
+  <title>EM Study: emergency medicine pharmacotherapy study &amp; refresh</title>
+  <meta name="description" content="Free board-style questions, flashcards and side-by-side tables for emergency medicine pharmacotherapy, including BCEMP exam prep. Works offline; your progress stays in your browser." />
+
+  <!-- link previews (Slack, Teams, iMessage, social) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="EM Study" />
+  <meta property="og:title" content="EM Study: emergency medicine pharmacotherapy" />
+  <meta property="og:description" content="Board-style questions, flashcards and comparison tables for studying or refreshing EM pharmacotherapy. Free, offline, no account." />
+  <meta property="og:url" content="https://dianakarp.github.io/emstudy/" />
+  <meta property="og:image" content="https://dianakarp.github.io/emstudy/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="EM Study: a sample question card in navy ink with a yellow highlighter mark." />
+  <meta name="twitter:card" content="summary_large_image" />
 
   <!-- PWA / installable + offline -->
   <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#FFF2F7" />
+  <meta name="theme-color" content="#F3F4F6" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#10151F" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="BCEMP" />
+  <meta name="apple-mobile-web-app-title" content="EM Study" />
 
+  <!-- apply a saved Light/Dark choice before first paint (System needs nothing) -->
+  <script>
+    try { var t = localStorage.getItem("emstudy_theme"); if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+  </script>
+  <link rel="preload" href="fonts/atkinson-hyperlegible-next-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/source-serif-4-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
   <div class="wrap">
-    <div class="topbar">
+    <header class="topbar">
       <div class="brand">
-        <div class="logo"><svg viewBox="0 0 48 48" width="32" height="32" aria-hidden="true"><rect x="8" y="16" width="32" height="16" rx="8" fill="#FFF6FA" stroke="#D14E86" stroke-width="2.2"/><path d="M16 16h8v16h-8a8 8 0 0 1-8-8 8 8 0 0 1 8-8z" fill="#C89BF0" opacity="0.35"/><path d="M24 17.2V30.8" stroke="#D14E86" stroke-width="2.2"/><circle cx="18.4" cy="24" r="1.7" fill="#55374A"/><circle cx="29.6" cy="24" r="1.7" fill="#55374A"/><circle cx="14.8" cy="26.4" r="1.5" fill="#FF9EC4" opacity="0.85"/><circle cx="33.2" cy="26.4" r="1.5" fill="#FF9EC4" opacity="0.85"/><path d="M21.6 27q2.4 2.1 4.8 0" stroke="#55374A" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg></div>
+        <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+          <g transform="rotate(-35 24 24)">
+            <rect x="6" y="15" width="36" height="18" rx="9" fill="#FFE45C"/>
+            <path class="ink" d="M15 15h9v18h-9a9 9 0 0 1 0-18z"/>
+            <rect class="ink-stroke" x="6" y="15" width="36" height="18" rx="9" fill="none" stroke-width="2.5"/>
+          </g>
+        </svg>
         <div>
-          <h1>BCEMP Trainer</h1>
-          <small>EMERGENCY MEDICINE PHARMACIST PREP</small>
+          <span class="brand-name">EM Study</span>
+          <span class="brand-sub">Emergency medicine pharmacotherapy: study &amp; refresh</span>
         </div>
       </div>
-      <nav class="nav" id="nav">
-        <button data-view="dashboard" class="active">Home</button>
-        <button data-view="compare">Compare</button>
-        <button data-view="stats">Stats</button>
-        <button data-view="progress">Progress</button>
-        <button data-view="settings">Settings</button>
+      <nav class="nav" id="nav" aria-label="Main">
+        <button data-view="dashboard" class="active" aria-current="page">
+          <span class="nav-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 11.2 12 4.8l8 6.4V19a1 1 0 0 1-1 1h-4.6v-5.2H9.6V20H5a1 1 0 0 1-1-1z"/></svg></span>
+          <span class="nav-label">Home</span>
+        </button>
+        <button data-view="library">
+          <span class="nav-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 6.6C10.2 5.3 7.8 4.8 4 5v13.2c3.8-.2 6.2.3 8 1.6 1.8-1.3 4.2-1.8 8-1.6V5c-3.8-.2-6.2.3-8 1.6zM12 6.6v13.2"/></svg></span>
+          <span class="nav-label">Library</span>
+        </button>
+        <button data-view="compare">
+          <span class="nav-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="14" rx="1.5"/><path d="M12 5v14M3.5 10h17"/></svg></span>
+          <span class="nav-label">Compare</span>
+        </button>
+        <button data-view="stats">
+          <span class="nav-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 5h-11l5.8 7-5.8 7h11"/></svg></span>
+          <span class="nav-label">Biostats</span>
+        </button>
+        <button data-view="progress">
+          <span class="nav-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18l5-6 4 3 7-8.5"/><path d="M15 6.5h5v5"/></svg></span>
+          <span class="nav-label">Progress</span>
+        </button>
       </nav>
-    </div>
+      <button class="icon-btn" data-view="settings" aria-label="Settings" title="Settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>
+      </button>
+    </header>
 
     <main id="app"><!-- rendered by ui.js --></main>
 
     <div class="disclaimer">
-      ⚕️ <b>Study aid only.</b> Content is authored for exam preparation and may contain simplifications or errors.
+      <b>Study aid only.</b> Content is authored for exam preparation and review and may contain simplifications or errors.
       Always verify dosing and management against current guidelines, primary literature, and your institution's
-      protocols before applying to patient care. Not medical advice.
+      protocols before applying it to patient care. Not medical advice.
     </div>
+
+    <footer class="site-footer">
+      A tiny project by <a href="https://github.com/dianakarp">dianakarp</a> to study · est. Jul 2026
+    </footer>
   </div>
 
   <!-- data (assign to window.*) -->
   <script src="data/domains.js"></script>
-  <script src="data/questions.js"></script>
   <script src="data/empc24-questions.js"></script>
   <script src="data/biostats-questions.js"></script>
   <script src="data/flashcards.js"></script>
@@ -64,12 +112,19 @@
   <script src="js/import.js"></script>
   <!-- ui + bootstrap -->
   <script src="js/ui.js"></script>
+  <script src="js/library.js"></script>
   <script src="js/app.js"></script>
 
   <!-- register offline service worker (no-op on file://; active when hosted over http/https) -->
   <script>
     if ("serviceWorker" in navigator && location.protocol.indexOf("http") === 0) {
       window.addEventListener("load", function () {
+        var hadController = !!navigator.serviceWorker.controller;
+        navigator.serviceWorker.addEventListener("controllerchange", function () {
+          if (hadController && window.App && App.UI) {
+            App.UI.toast("A new version of EM Study is ready.", { action: "Reload", onAction: function () { location.reload(); }, sticky: true });
+          }
+        });
         navigator.serviceWorker.register("sw.js").catch(function (e) { console.warn("SW registration failed:", e); });
       });
     }
