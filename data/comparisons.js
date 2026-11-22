@@ -119,14 +119,14 @@ window.BCEMP_COMPARISONS = [
     ["Clinical use","Compare tests intrinsically","Interpret your patient's actual test result"],
     ["Memory hook","'Test properties'","'Patient probabilities'"]
   ]},
-  {"title": "Bacterial vs Viral vs Fungal Meningitis (CSF)", "section": "Pediatrics / ID", "tagline": "Classic CSF profile distinguishes — memorize the pattern", "cols": ["Bacterial","Viral","Fungal"], "rows": [
+  {"title": "Bacterial vs Viral vs Fungal Meningitis (CSF)", "section": "Pediatrics / ID", "tagline": "Classic CSF profile distinguishes — memorize the pattern", "cols": ["Bacterial","Viral","Fungal"], "source": "IDSA bacterial meningitis guideline (2004); IDSA cryptococcal disease guideline (2010)", "updated": "2026-11", "rows": [
     ["Opening pressure","Increased (> 250)","Normal or mildly increased","Increased (> 200)"],
     ["WBC count","> 500 (often > 1000)","< 500","50-750"],
     ["Predominant cell","NEUTROPHILS (> 80%)","LYMPHOCYTES (< 50% PMN)","LYMPHOCYTES (< 50% PMN)"],
     ["Glucose","LOW (< 40)","Normal (> 40)","LOW (< 40)"],
-    ["CSF/serum glucose ratio","< 0.3","30-60","< 40"],
+    ["CSF/serum glucose ratio","≤ 0.4","Normal (about 0.6)","Low (≤ 0.4)"],
     ["Protein","HIGH (> 100)","Mildly elevated (< 100)","50-200"],
-    ["Gram stain","Often positive","Negative","India ink for Crypto"]
+    ["Gram stain","Often positive","Negative","Cryptococcal antigen (more sensitive than India ink)"]
   ]},
   {"title": "DKA vs HHS", "section": "Endocrine", "tagline": "Same hyperglycemia, very different pathophysiology and risk", "cols": ["DKA","HHS"], "rows": [
     ["Population","T1DM > T2DM, younger","T2DM, elderly"],
@@ -179,11 +179,11 @@ window.BCEMP_COMPARISONS = [
     ["New formulation","—","NEFFY (epinephrine nasal spray) 2 mg approved 2024 for ≥30 kg as alternative"],
     ["BB on board + refractory","—","GLUCAGON 1-5 mg IV over 5 min — bypasses β blockade via cAMP"]
   ]},
-  {"title": "TXA Indications by Scenario", "section": "Trauma / Heme", "tagline": "Dose + timing varies by bleeding source", "cols": ["Major Trauma (CRASH-2)","Postpartum Hemorrhage (WOMAN)","Massive Hemoptysis","Other"], "rows": [
-    ["Setting","Suspected significant bleeding in trauma","PPH, especially atony-related","> 500 mL/24h or > 100 mL/hr","GI bleed (negative HALT-IT), epistaxis, dental, surgical"],
-    ["Dose","1 g IV over 10 min, then 1 g over 8 hr","1 g IV over 10 min, repeat × 1 if continues","1 g IV over 10 min, then 1 g over 8 hr; can also nebulize 500-1000 mg q4-8h","1 g IV over 10 min for acute"],
-    ["Time window","Within 3 HOURS of injury (mortality benefit lost after)","Within 3 HOURS of delivery","ASAP","ASAP"],
-    ["Mortality benefit","Yes, CRASH-2: reduces death from bleeding (1.5% ARR)","Yes, WOMAN: reduces death from bleeding","Observational only","GI bleed: HALT-IT showed NO benefit + ↑ thromboembolism risk"],
+  {"title": "TXA Indications by Scenario", "section": "Trauma / Heme", "tagline": "Dose + timing varies by bleeding source", "cols": ["Major Trauma (CRASH-2)","Postpartum Hemorrhage (WOMAN)","Massive Hemoptysis","Other"], "source": "CRASH-2 (Lancet 2010); WOMAN (Lancet 2017) and WHO 2017 PPH recommendation; Wand O, et al. Chest 2018 (inhaled TXA); HALT-IT (Lancet 2020)", "updated": "2026-11", "rows": [
+    ["Setting","Suspected significant bleeding in trauma","PPH of any cause (WHO 2017)","> 500 mL/24h or > 100 mL/hr","GI bleed (negative HALT-IT), epistaxis, dental, surgical"],
+    ["Dose","1 g IV over 10 min, then 1 g over 8 hr","1 g IV over 10 min, repeat × 1 if continues","1 g IV over 10 min, then 1 g over 8 hr; or nebulized 500 mg TID (the regimen studied)","1 g IV over 10 min for acute"],
+    ["Time window","Within 3 HOURS of injury (after 3 h it increased bleeding deaths)","Within 3 HOURS of delivery","ASAP","ASAP"],
+    ["Mortality benefit","Yes, CRASH-2: all-cause death 14.5% vs 16.0% (1.5% ARR); bleeding deaths 4.9% vs 5.7%","Yes, WOMAN: bleeding deaths 1.5% vs 1.9%, mainly when given within 3 h","No mortality data; small RCTs of inhaled TXA (500 mg TID) reduced bleeding","GI bleed: HALT-IT showed NO benefit + ↑ thromboembolism risk"],
     ["Contraindications / Cautions","Active intravascular thrombosis, allergy","Same","Same","Same — and AVOID in GI bleed per HALT-IT"]
   ]}
 ];
