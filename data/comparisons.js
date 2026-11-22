@@ -13,14 +13,15 @@ window.BCEMP_COMPARISONS = [
     ["Treatment","STOP antipsychotic + supportive (cooling, IVF, benzos). Severe: DANTROLENE 2.5 mg/kg q6h + BROMOCRIPTINE 2.5 mg TID","STOP serotonergic agents + supportive + benzos. Severe: CYPROHEPTADINE 12 mg load → 2 mg q2h"],
     ["Memory hook","\"Lead-pipe + HYPO + slow\"","\"Clonus + HYPER + fast\""]
   ]},
-  {"title": "Warm Shock vs Cold Shock (Pediatric Septic Shock)", "section": "Pediatrics", "tagline": "Kids vasoconstrict — cold shock more common than in adults. Choose pressor by physiology", "cols": ["Warm / Distributive Shock","Cold / Cardiogenic Shock"], "rows": [
+  {"title": "Warm Shock vs Cold Shock (Pediatric Septic Shock)", "section": "Pediatrics", "tagline": "Kids vasoconstrict — cold shock more common than in adults. Choose pressor by physiology", "cols": ["Warm / Distributive Shock","Cold / Cardiogenic Shock"], "source": "Surviving Sepsis Campaign pediatric guidelines (2020); 2025 AHA/AAP PALS", "updated": "2026-11", "rows": [
     ["Skin","Warm, flushed extremities","Cool, mottled, delayed cap refill (>3s)"],
     ["Pulses","Bounding","Thready, weak"],
     ["Pulse pressure","Wide","Narrow"],
     ["Mechanism","Vasodilation, low SVR","Vasoconstriction, low CO, myocardial dysfunction"],
     ["More common in","Adults","Pediatrics"],
     ["Goal","Clamp down peripheral vasculature (increase SVR)","Support the heart (increase contractility)"],
-    ["First-line pressor","NOREPINEPHRINE","EPINEPHRINE"],
+    ["First-line pressor","NOREPINEPHRINE often chosen","EPINEPHRINE often chosen"],
+    ["Guideline note","SSC 2020 and 2025 PALS accept EITHER epinephrine or norepinephrine first (not dopamine); bedside warm-vs-cold assessment is imperfect, so reassess often","Same"],
     ["Memory hook","Warm = Wide pulse pressure = Want Norepi","Cold = Constricted = Crank up Epi"]
   ]},
   {"title": "Exertional vs Classic Heatstroke", "section": "Environmental Tox", "tagline": "Same diagnosis, different cooling strategies. Wrong choice = harm in elderly", "cols": ["Exertional Heatstroke","Classic Heatstroke"], "rows": [
@@ -128,19 +129,19 @@ window.BCEMP_COMPARISONS = [
     ["Protein","HIGH (> 100)","Mildly elevated (< 100)","50-200"],
     ["Gram stain","Often positive","Negative","Cryptococcal antigen (more sensitive than India ink)"]
   ]},
-  {"title": "DKA vs HHS", "section": "Endocrine", "tagline": "Same hyperglycemia, very different pathophysiology and risk", "cols": ["DKA","HHS"], "rows": [
+  {"title": "DKA vs HHS", "section": "Endocrine", "tagline": "Same hyperglycemia, very different pathophysiology and risk", "cols": ["DKA","HHS"], "source": "Umpierrez GE, et al. Hyperglycemic crises in adults with diabetes: consensus report. Diabetes Care 2024", "updated": "2026-11", "rows": [
     ["Population","T1DM > T2DM, younger","T2DM, elderly"],
-    ["Glucose","> 250 mg/dL","> 600 mg/dL"],
-    ["pH","< 7.3 (acidotic)","> 7.3 (preserved)"],
-    ["Bicarb","< 18","> 18"],
-    ["Anion gap","Elevated (ketones)","Variable (often normal)"],
-    ["Ketones","Significant (β-OHB)","Minimal/absent"],
-    ["Osmolality","Variable (often < 320)","MARKED (> 320)"],
+    ["Glucose","≥ 200 mg/dL, or known diabetes (euglycemic DKA occurs)","≥ 600 mg/dL"],
+    ["pH","< 7.3 and/or bicarbonate < 18","≥ 7.3"],
+    ["Bicarb","< 18 (or pH < 7.3)","≥ 15"],
+    ["Anion gap","Usually elevated, but no longer a diagnostic criterion (2024)","Variable (often normal)"],
+    ["Ketones","β-OHB ≥ 3.0 mmol/L (or urine ketones ≥ 2+)","β-OHB < 3.0 mmol/L"],
+    ["Osmolality","Variable","Effective osmolality > 300 (total > 320 mOsm/kg)"],
     ["Insulin","Absolute deficiency","Relative deficiency (enough to suppress ketogenesis)"],
     ["Mental status","May be AMS late","Often profoundly altered (osm-driven)"],
     ["Mortality","Lower (~1-2%)","Higher (~10-20%)"],
     ["Volume deficit","~6 L (5-8)","~9 L (8-12) — much greater"],
-    ["Treatment focus","Insulin + correcting acidosis + K","VOLUME first (slowly), then insulin"]
+    ["Treatment focus","Fluids (balanced crystalloid suggested) + insulin 0.1 units/kg/h; hold insulin until K > 3.5; dextrose when glucose < 250; bicarbonate only if pH < 7.0","VOLUME first, then lower-dose insulin (0.05 units/kg/h)"]
   ]},
   {"title": "Acetaminophen Toxicity Phases", "section": "Toxicology", "tagline": "Recognize where the patient is in the timeline to treat appropriately", "cols": ["Phase 1 (0-24h)","Phase 2 (24-72h)","Phase 3 (72-96h)","Phase 4 (recovery)"], "source": "Dart RC, et al. Acetaminophen poisoning consensus statement, JAMA Netw Open 2023", "updated": "2026-11", "rows": [
     ["Symptoms","Mild (N/V/anorexia) — or nothing","RUQ pain emerges","Lactic acidosis, hepatic failure, renal failure, jaundice, hypoglycemia, coagulopathy","Resolution if survived phase 3"],
@@ -170,13 +171,13 @@ window.BCEMP_COMPARISONS = [
     ["Frequency","Most common AKI in hospital","Common in critically ill","Common with BPH, malignancy"],
     ["Treatment","Restore volume / perfusion","Supportive, remove offending agent, treat cause","Foley, decompress (stent, nephrostomy)"]
   ]},
-  {"title": "Anaphylaxis 2023 Update: What Changed", "section": "Pulmonary", "tagline": "Old teaching is now wrong — the 2023 Joint Task Force shifted practice", "cols": ["OLD Teaching (pre-2023)","NEW (2023 Joint Task Force)"], "rows": [
+  {"title": "Anaphylaxis 2023 Update: What Changed", "section": "Pulmonary", "tagline": "Old teaching is now wrong — the 2023 Joint Task Force shifted practice", "cols": ["OLD Teaching (pre-2023)","NEW (2023 Joint Task Force)"], "source": "Golden DBK, et al. Anaphylaxis: a 2023 practice parameter update. Ann Allergy Asthma Immunol 2024; neffy prescribing information (2024, 2025)", "updated": "2026-11", "rows": [
     ["Epinephrine IM","First-line, definitive","UNCHANGED — still ONLY life-saving treatment"],
-    ["H1 + H2 antihistamines","Routine adjunct (Benadryl + famotidine)","NOT routine — symptom relief only. Cetirizine PO > IV Benadryl in adults"],
+    ["H1 + H2 antihistamines","Routine adjunct (Benadryl + famotidine)","NOT routine — symptom relief only; a second-generation agent (e.g., cetirizine) is preferred over diphenhydramine"],
     ["Corticosteroids","Routine to prevent biphasic","NOT recommended routinely — insufficient evidence"],
     ["Observation period","4-6 hours routine for all","1 hour OK if: full response to single epi dose, no asthma, reliable follow-up. Extended only for severe / asthmatic"],
-    ["Discharge epi","Single auto-injector","TWO auto-injectors prescribed + education"],
-    ["New formulation","—","NEFFY (epinephrine nasal spray) 2 mg approved 2024 for ≥30 kg as alternative"],
+    ["Discharge epi","Single auto-injector","More than one auto-injector if the patient ever needed multiple doses or had a biphasic reaction; otherwise shared decision. Teach every patient to use it"],
+    ["New formulation","—","NEFFY epinephrine nasal spray: 2 mg (2024) for ≥ 30 kg; 1 mg (2025) for age ≥ 4 and 15 to < 30 kg"],
     ["BB on board + refractory","—","GLUCAGON 1-5 mg IV over 5 min — bypasses β blockade via cAMP"]
   ]},
   {"title": "TXA Indications by Scenario", "section": "Trauma / Heme", "tagline": "Dose + timing varies by bleeding source", "cols": ["Major Trauma (CRASH-2)","Postpartum Hemorrhage (WOMAN)","Massive Hemoptysis","Other"], "source": "CRASH-2 (Lancet 2010); WOMAN (Lancet 2017) and WHO 2017 PPH recommendation; Wand O, et al. Chest 2018 (inhaled TXA); HALT-IT (Lancet 2020)", "updated": "2026-11", "rows": [
