@@ -62,6 +62,19 @@ window.BCEMP_BIOSTATS = {
 
   tests: [
     { group: "Continuous outcome, normally distributed — PARAMETRIC",
+      flow: {
+        start: "Continuous outcome, roughly normal",
+        ask: "How many groups?",
+        branches: [
+          { edge: "2 groups", ask: "Independent or paired?", leaves: [
+            { edge: "Independent", test: "Unpaired (Student) t-test" },
+            { edge: "Paired", test: "Paired t-test" } ] },
+          { edge: "3 or more", ask: "Independent or repeated?", leaves: [
+            { edge: "Independent", test: "One-way ANOVA", note: "If significant, a post-hoc test (Tukey, Bonferroni or Scheffé) finds which groups differ" },
+            { edge: "Repeated", test: "Repeated-measures ANOVA" } ] }
+        ],
+        also: [["Two or more factors", "Two-way ANOVA"], ["Adjusting for a covariate", "ANCOVA"]]
+      },
       head: ["What you are comparing", "Test", "Notes / assumptions"],
       rows: [
         ["2 independent groups", "Independent (unpaired) Student t-test", "Assumes normality and roughly equal variances. Example: mean SBP on drug vs placebo."],
@@ -74,6 +87,18 @@ window.BCEMP_BIOSTATS = {
       ] },
 
     { group: "Continuous or ordinal, NOT normally distributed — NONPARAMETRIC",
+      flow: {
+        start: "Ordinal or skewed data, or a small sample",
+        ask: "How many groups?",
+        branches: [
+          { edge: "2 groups", ask: "Independent or paired?", leaves: [
+            { edge: "Independent", test: "Mann-Whitney U", note: "Also called Wilcoxon rank-sum. Twin of the unpaired t-test" },
+            { edge: "Paired", test: "Wilcoxon signed-rank", note: "Twin of the paired t-test" } ] },
+          { edge: "3 or more", ask: "Independent or repeated?", leaves: [
+            { edge: "Independent", test: "Kruskal-Wallis", note: "Twin of one-way ANOVA" },
+            { edge: "Repeated", test: "Friedman test", note: "Twin of repeated-measures ANOVA" } ] }
+        ]
+      },
       head: ["What you are comparing", "Test", "Parametric equivalent"],
       rows: [
         ["2 independent groups", "Mann-Whitney U (Wilcoxon rank-sum)", "Unpaired t-test"],
