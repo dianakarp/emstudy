@@ -546,6 +546,46 @@ details[open] > summary .chev { transform: rotate(90deg); }
 .stat-table td.cmp-rl, .stat-table th.cmp-rl { background: var(--surface-2); color: var(--ink-2); font-weight: 700; }
 .tg { font-family: var(--font-head); font-size: 17px; font-weight: 600; }
 .stat-table td.tg-test { font-weight: 700; }
+
+/* ---------- test-selection flowcharts (Stats) ----------
+ * Ink connectors, the question in blue "pen", the answer highlighted.
+ * Top-down tree on wide screens; an indented outline on phones. */
+.flow { margin: 18px 0 6px; }
+.flow ul { list-style: none; margin: 0; padding: 0; }
+.flow-tree { display: flex; justify-content: center; }
+.flow-tree li { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; min-width: 0; }
+.flow-tree > li { flex: 1 1 auto; }
+.flow-tree ul { display: flex; justify-content: center; position: relative; width: 100%; padding-top: 18px; }
+.flow-tree ul > li { flex: 1 1 0; padding: 18px 6px 0; }
+.flow-tree ul::before { content: ""; position: absolute; top: 0; left: 50%; height: 18px; border-left: 2px solid var(--border-strong); }
+.flow-tree ul > li::before, .flow-tree ul > li::after { content: ""; position: absolute; top: 0; width: 50%; height: 18px; border-top: 2px solid var(--border-strong); }
+.flow-tree ul > li::before { right: 50%; }
+.flow-tree ul > li::after { left: 50%; border-left: 2px solid var(--border-strong); }
+.flow-tree ul > li:first-child::before, .flow-tree ul > li:last-child::after { border-top: 0; }
+.flow-tree ul > li:last-child::before { border-right: 2px solid var(--border-strong); border-top-right-radius: 8px; }
+.flow-tree ul > li:first-child::after { border-top-left-radius: 8px; }
+.flow-start { border: 2px solid var(--ink); border-radius: 8px; background: var(--surface); padding: 8px 14px; font-weight: 700; font-size: 15px; line-height: 1.35; max-width: 40ch; text-wrap: balance; }
+.flow-ask { margin-top: 8px; font-family: var(--font-head); font-style: italic; font-weight: 600; font-size: 16px; color: var(--pen); }
+.flow-edge { position: relative; z-index: 1; display: inline-block; font-size: 13px; font-weight: 700; color: var(--ink-2); background: var(--surface); border: 1px solid var(--border-strong); border-radius: 999px; padding: 1px 9px; }
+.flow-test { margin-top: 8px; font-weight: 700; font-size: 15px; line-height: 1.4; text-wrap: balance; }
+.flow-note { margin-top: 4px; font-size: 13px; line-height: 1.4; color: var(--ink-3); max-width: 24ch; text-wrap: balance; }
+.flow-also { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; margin: 18px 0 0; padding-top: 12px; border-top: 1px dashed var(--border); font-size: 14px; color: var(--ink-2); }
+.flow-also-t { font-weight: 700; color: var(--ink); }
+@media (max-width: 640px) {
+  .flow-tree, .flow-tree ul { display: block; }
+  .flow-tree li { display: block; text-align: left; }
+  .flow-start { display: inline-block; }
+  .flow-tree ul { width: auto; padding: 0; margin: 4px 0 0 10px; }
+  .flow-tree ul > li { padding: 8px 0 0 22px; }
+  .flow-tree ul::before { display: none; }
+  .flow-tree ul > li::before { left: 0; right: auto; top: 0; bottom: 0; width: 0; height: auto; border: 0; border-left: 2px solid var(--border-strong); }
+  .flow-tree ul > li:last-child::before { bottom: auto; height: 20px; border-right: 0; border-radius: 0; }
+  .flow-tree ul > li::after { left: 0; top: 19px; width: 18px; height: 0; border: 0; border-top: 2px solid var(--border-strong); }
+  .flow-tree ul > li:last-child::after { border-top: 2px solid var(--border-strong); }
+  .flow-tree ul > li:first-child::after { border-radius: 0; }
+  .flow-note { max-width: none; }
+  .flow-also { justify-content: flex-start; }
+}
 .term { padding: 10px 0; border-top: 1px solid var(--border); }
 .term.first { border-top: none; padding-top: 2px; }
 .term-t { font-size: 15px; font-weight: 700; margin-bottom: 2px; }

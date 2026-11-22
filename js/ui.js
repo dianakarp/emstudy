@@ -444,6 +444,34 @@ App.UI = {
   /* ==================================================================
    * BIOSTATS (drill + cheat sheet)
    * ================================================================== */
+
+  /* Decision-tree flowchart for a test-selection group (the `flow` object in
+   * data/biostats.js). Nested lists keep it readable for screen readers; CSS
+   * draws the connectors, top-down on wide screens and as an outline on phones. */
+  _flow: function (f, title) {
+    var self = this;
+    var html = '<figure class="flow" aria-label="' + self.esc("Flowchart: " + title) + '">' +
+      '<ul class="flow-tree"><li>' +
+      '<div class="flow-start">' + self.esc(f.start) + '</div>' +
+      '<div class="flow-ask">' + self.esc(f.ask) + '</div><ul>';
+    (f.branches || []).forEach(function (b) {
+      html += '<li><span class="flow-edge">' + self.esc(b.edge) + '</span>' +
+        (b.ask ? '<div class="flow-ask">' + self.esc(b.ask) + '</div>' : '') + '<ul>';
+      (b.leaves || []).forEach(function (l) {
+        html += '<li><span class="flow-edge">' + self.esc(l.edge) + '</span>' +
+          '<div class="flow-test"><span class="hl">' + self.esc(l.test) + '</span></div>' +
+          (l.note ? '<div class="flow-note">' + self.esc(l.note) + '</div>' : '') + '</li>';
+      });
+      html += '</ul></li>';
+    });
+    html += '</ul></li></ul>';
+    if (f.also && f.also.length) {
+      html += '<p class="flow-also"><span class="flow-also-t">Other designs</span>' +
+        f.also.map(function (a) { return '<span>' + self.esc(a[0]) + ': <b class="hl">' + self.esc(a[1]) + '</b></span>'; }).join("") + '</p>';
+    }
+    return html + '</figure>';
+  },
+
   renderStats: function () {
     var self = this;
     var B = window.BCEMP_BIOSTATS || { formulas: [], tables: [], terms: [], pearls: [] };
@@ -495,6 +523,7 @@ App.UI = {
         '<p class="lede">Ask in this order: what type of data is the outcome, how many groups, and are they paired?</p>';
       B.tests.forEach(function (g) {
         html += '<div class="card"><h3 class="tg">' + self.esc(g.group) + '</h3>';
+        if (g.flow) html += self._flow(g.flow, g.group);
         html += '<div class="cmp-scroll" style="margin-top:10px"><table class="stat-table"><thead><tr>';
         g.head.forEach(function (h, i) { html += '<th' + (i === 0 ? ' class="cmp-rl"' : '') + ' scope="col">' + self.esc(h) + '</th>'; });
         html += '</tr></thead><tbody>';
