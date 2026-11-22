@@ -40,8 +40,8 @@ window.BCEMP_FLASHCARDS = [
 
   /* NEUROLOGY */
   { id: "fc-neuro-01", domain: "neuro", front: "Alteplase dose for acute ischemic stroke?", back: "0.9 mg/kg (max 90 mg): 10% bolus over 1 min, remainder over 60 min.", tags: ["stroke","alteplase"] },
-  { id: "fc-neuro-02", domain: "neuro", front: "Tenecteplase dose for stroke?", back: "0.25 mg/kg IV single bolus (max 25 mg) — increasingly used alternative to alteplase.", tags: ["stroke","tenecteplase"] },
-  { id: "fc-neuro-03", domain: "neuro", front: "BP targets around IV thrombolysis for stroke?", back: "<185/110 before tPA; maintain <180/105 for 24 h after. Use labetalol or nicardipine.", tags: ["stroke","BP"] },
+  { id: "fc-neuro-02", domain: "neuro", front: "Tenecteplase dose for stroke?", back: "0.25 mg/kg IV single bolus (max 25 mg). FDA-approved for acute ischemic stroke in 2025, and the 2026 AHA/ASA guideline recommends it equally with alteplase within 4.5 h (class 1). The 0.4 mg/kg dose is not recommended.", tags: ["stroke","tenecteplase"], source: "2026 AHA/ASA Guideline for the Early Management of Patients With Acute Ischemic Stroke", updated: "2026-11" },
+  { id: "fc-neuro-03", domain: "neuro", front: "BP targets around IV thrombolysis for stroke?", back: "< 185/110 before thrombolysis; keep < 180/105 for 24 h after (labetalol, nicardipine, or clevidipine). Don't push lower: SBP < 140 adds nothing after thrombolysis and is harmful in the first 72 h after successful thrombectomy.", tags: ["stroke","BP"], source: "2026 AHA/ASA Guideline for the Early Management of Patients With Acute Ischemic Stroke", updated: "2026-11" },
   { id: "fc-neuro-04", domain: "neuro", front: "Status epilepticus: first-line and doses?", back: "Benzodiazepine: lorazepam 0.1 mg/kg IV (≤4 mg/dose), diazepam 0.15–0.2 mg/kg, or IM midazolam 10 mg. Then second-line: levetiracetam, fosphenytoin, or valproate.", tags: ["status epilepticus"] },
   { id: "fc-neuro-05", domain: "neuro", front: "Warfarin-associated ICH reversal?", back: "4-factor PCC + IV vitamin K 10 mg (vitamin K sustains reversal; PCC acts fast).", tags: ["ICH","warfarin"] },
 
@@ -54,7 +54,7 @@ window.BCEMP_FLASHCARDS = [
   /* TRAUMA & HEMOSTASIS */
   { id: "fc-trauma-01", domain: "trauma", front: "TXA in trauma: window and dose?", back: "Within 3 h of injury. 1 g IV over 10 min, then 1 g over 8 h. (CRASH-2)", tags: ["TXA"] },
   { id: "fc-trauma-02", domain: "trauma", front: "Reversal of dabigatran?", back: "Idarucizumab (Praxbind). Alt: activated PCC / hemodialysis.", tags: ["dabigatran","idarucizumab"] },
-  { id: "fc-trauma-03", domain: "trauma", front: "Reversal of apixaban/rivaroxaban?", back: "Andexanet alfa (approved). Alt: 4-factor PCC (off-label).", tags: ["Xa inhibitor","andexanet"] },
+  { id: "fc-trauma-03", domain: "trauma", front: "Reversal of apixaban/rivaroxaban?", back: "4-factor PCC (e.g., a fixed 2,000 units per the 2020 ACC pathway, or 25–50 units/kg); activated PCC is an alternative. Andexanet alfa was withdrawn from the US market in December 2025 (more thrombosis in ANNEXA-I).", tags: ["Xa inhibitor","andexanet"], source: "FDA safety communication on Andexxa (Dec 2025); 2020 ACC Expert Consensus Decision Pathway", updated: "2026-11" },
   { id: "fc-trauma-04", domain: "trauma", front: "Reversal of unfractionated heparin?", back: "Protamine sulfate (1 mg per ~100 units heparin, max 50 mg). Partial reversal of LMWH.", tags: ["heparin","protamine"] },
   { id: "fc-trauma-05", domain: "trauma", front: "Key electrolyte to monitor/replete in massive transfusion?", back: "Ionized calcium (citrate chelates Ca2+ → hypocalcemia). Also watch K+ and temperature.", tags: ["massive transfusion","calcium"] },
 
