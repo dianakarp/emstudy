@@ -8,7 +8,7 @@ It runs in any modern browser, can be installed to your home screen, and works o
 
 ## What's inside
 - **210 practice questions** with explanations: 185 originals written by Diana Karp, plus 25 added in November 2026 for the topics that had the fewest, each with its source
-- **368 flashcards**
+- **376 flashcards**
 - **21 comparison tables** for high-yield distinctions (for example, NMS vs serotonin syndrome)
 - **A biostatistics drill** (65 questions) plus a reference sheet: equations, 2×2 tables, choosing a test, definitions
 
